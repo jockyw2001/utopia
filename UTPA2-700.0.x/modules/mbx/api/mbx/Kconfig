@@ -1,0 +1,16 @@
+config API_MBX
+
+tristate "MBX"
+default y
+
+---help---
+Enable compilation option for API MBX
+
+if API_MBX
+config MBX_GROUP_PATCH
+	bool "Enable MBX group patch"
+	default n
+	help
+		Select if you want to enable MBX Group patch. If unsure, say 'N'.
+
+endif

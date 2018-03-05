@@ -1,0 +1,8 @@
+config DRV_RTC
+
+tristate "RTC"
+default n
+
+---help---
+Enable compilation option for driver RTC
+

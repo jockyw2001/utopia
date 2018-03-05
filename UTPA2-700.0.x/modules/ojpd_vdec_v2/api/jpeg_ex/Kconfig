@@ -1,0 +1,8 @@
+config API_JPEG_EX
+
+tristate "JPEG_EX"
+default n
+
+---help---
+Enable compilation option for API_JPEG_EX
+

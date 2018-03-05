@@ -1,0 +1,8 @@
+config DRV_SEAL
+
+tristate "SEAL"
+default n
+
+---help---
+Enable compilation option for driver SEAL
+

@@ -1,0 +1,8 @@
+config DRV_TSIO
+
+tristate "TSIO"
+default n
+
+---help---
+Enable compilation option for driver TSIO
+

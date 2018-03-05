@@ -1,0 +1,8 @@
+config DRV_DDC2BI
+
+tristate "DDC2BI"
+default n
+
+---help---
+Enable compilation option for driver DDC2BI
+

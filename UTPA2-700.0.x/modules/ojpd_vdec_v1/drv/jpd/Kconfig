@@ -1,0 +1,8 @@
+config DRV_JPD
+
+tristate "JPD"
+default n
+
+---help---
+Enable compilation option for driver JPD
+

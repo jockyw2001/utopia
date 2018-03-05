@@ -1,0 +1,1243 @@
+//<MStar Software>
+//******************************************************************************
+// MStar Software
+// Copyright (c) 2010 - 2012 MStar Semiconductor, Inc. All rights reserved.
+// All software, firmware and related documentation herein ("MStar Software") are
+// intellectual property of MStar Semiconductor, Inc. ("MStar") and protected by
+// law, including, but not limited to, copyright law and international treaties.
+// Any use, modification, reproduction, retransmission, or republication of all
+// or part of MStar Software is expressly prohibited, unless prior written
+// permission has been granted by MStar.
+//
+// By accessing, browsing and/or using MStar Software, you acknowledge that you
+// have read, understood, and agree, to be bound by below terms ("Terms") and to
+// comply with all applicable laws and regulations:
+//
+// 1. MStar shall retain any and all right, ownership and interest to MStar
+//    Software and any modification/derivatives thereof.
+//    No right, ownership, or interest to MStar Software and any
+//    modification/derivatives thereof is transferred to you under Terms.
+//
+// 2. You understand that MStar Software might include, incorporate or be
+//    supplied together with third party`s software and the use of MStar
+//    Software may require additional licenses from third parties.
+//    Therefore, you hereby agree it is your sole responsibility to separately
+//    obtain any and all third party right and license necessary for your use of
+//    such third party`s software.
+//
+// 3. MStar Software and any modification/derivatives thereof shall be deemed as
+//    MStar`s confidential information and you agree to keep MStar`s
+//    confidential information in strictest confidence and not disclose to any
+//    third party.
+//
+// 4. MStar Software is provided on an "AS IS" basis without warranties of any
+//    kind. Any warranties are hereby expressly disclaimed by MStar, including
+//    without limitation, any warranties of merchantability, non-infringement of
+//    intellectual property rights, fitness for a particular purpose, error free
+//    and in conformity with any international standard.  You agree to waive any
+//    claim against MStar for any loss, damage, cost or expense that you may
+//    incur related to your use of MStar Software.
+//    In no event shall MStar be liable for any direct, indirect, incidental or
+//    consequential damages, including without limitation, lost of profit or
+//    revenues, lost or damage of data, and unauthorized system use.
+//    You agree that this Section 4 shall still apply without being affected
+//    even if MStar Software has been modified by MStar in accordance with your
+//    request or instruction for your use, except otherwise agreed by both
+//    parties in writing.
+//
+// 5. If requested, MStar may from time to time provide technical supports or
+//    services in relation with MStar Software to you for your use of
+//    MStar Software in conjunction with your or your customer`s product
+//    ("Services").
+//    You understand and agree that, except otherwise agreed by both parties in
+//    writing, Services are provided on an "AS IS" basis and the warranty
+//    disclaimer set forth in Section 4 above shall apply.
+//
+// 6. Nothing contained herein shall be construed as by implication, estoppels
+//    or otherwise:
+//    (a) conferring any license or right to use MStar name, trademark, service
+//        mark, symbol or any other identification;
+//    (b) obligating MStar or any of its affiliates to furnish any person,
+//        including without limitation, you and your customers, any assistance
+//        of any kind whatsoever, or any information; or
+//    (c) conferring any license or right under any intellectual property right.
+//
+// 7. These terms shall be governed by and construed in accordance with the laws
+//    of Taiwan, R.O.C., excluding its conflict of law rules.
+//    Any and all dispute arising out hereof or related hereto shall be finally
+//    settled by arbitration referred to the Chinese Arbitration Association,
+//    Taipei in accordance with the ROC Arbitration Law and the Arbitration
+//    Rules of the Association by three (3) arbitrators appointed in accordance
+//    with the said Rules.
+//    The place of arbitration shall be in Taipei, Taiwan and the language shall
+//    be English.
+//    The arbitration award shall be final and binding to both parties.
+//
+//******************************************************************************
+//<MStar Software>
+////////////////////////////////////////////////////////////////////////////////
+//
+// Copyright (c) 2008-2009 MStar Semiconductor, Inc.
+// All rights reserved.
+//
+// Unless otherwise stipulated in writing, any and all information contained
+// herein regardless in any format shall remain the sole proprietary of
+// MStar Semiconductor Inc. and be kept in strict confidence
+// ("MStar Confidential Information") by the recipient.
+// Any unauthorized act including without limitation unauthorized disclosure,
+// copying, use, reproduction, sale, distribution, modification, disassembling,
+// reverse engineering and compiling of the contents of MStar Confidential
+// Information is unlawful and strictly prohibited. MStar hereby reserves the
+// rights to any and all damages, losses, costs and expenses resulting therefrom.
+//
+////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///
+/// @file   drvHVD.h
+/// @brief  HVD Driver Interface
+/// @author MStar Semiconductor Inc.
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#ifndef _DRV_HVD_DEF_H_
+#define _DRV_HVD_DEF_H_
+
+#include "drvHVD_Common.h"
+
+//-------------------------------------------------------------------------------------------------
+//  Driver Capability
+//-------------------------------------------------------------------------------------------------
+
+// HW capability
+#define HVD_HW_SVD  1
+#define HVD_HW_HVD  2
+#if defined(CHIP_T2)
+#define HVD_HW_VERSION      HVD_HW_SVD
+#else
+#define HVD_HW_VERSION      HVD_HW_HVD
+#endif
+
+//-------------------------------------------------------------------------------------------------
+//  Macro and Define
+//-------------------------------------------------------------------------------------------------
+// Feature switch
+#if defined(REDLION_LINUX_KERNEL_ENVI)
+    #define HVD_ENABLE_MUTEX_PROTECT                0
+    #define HVD_ENABLE_MIU_RST_PROTECT              1
+    #define HVD_ENABLE_AUTO_SET_REG_BASE            0
+    #define HVD_ENABLE_MSOS_SYSTEM_CALL             0
+    #define HVD_ENABLE_PATCH_ISFRAMERDY             0
+    #define HVD_ENABLE_STOP_ACCESS_OVER_256         0
+    #define HVD_ENABLE_AUTO_AVI_NULL_PACKET         0
+    #define HVD_ENABLE_MSOS_MIU1_BASE               0
+    #define HVD_ENABLE_BDMA_2_BITSTREAMBUF          0
+    #define HVD_ENABLE_EMBEDDED_FW_BINARY           1
+    #define HVD_ENABLE_CHECK_STATE_BEFORE_SET_CMD   0
+    #define HVD_ENABLE_WAIT_CMD_FINISHED            0
+    #define HVD_ENABLE_TIME_MEASURE                 0
+    #define HVD_ENABLE_REINIT_FAILED                1
+    #define HVD_ENABLE_RV_FEATURE                   0
+#else
+    #define HVD_ENABLE_MUTEX_PROTECT                1
+    #define HVD_ENABLE_MIU_RST_PROTECT              1
+    #if 1//defined( MSOS_TYPE_LINUX)
+        #define HVD_ENABLE_AUTO_SET_REG_BASE        1
+    #else
+        #define HVD_ENABLE_AUTO_SET_REG_BASE        0
+    #endif
+    #if defined(MSOS_TYPE_LINUX) || defined(MSOS_TYPE_ECOS) //|| defined( MSOS_TYPE_NOS)
+        #define HVD_ENABLE_PATCH_ISFRAMERDY         0
+        #define HVD_ENABLE_MSOS_SYSTEM_CALL         1
+    #else
+        #define HVD_ENABLE_PATCH_ISFRAMERDY         1
+        #define HVD_ENABLE_MSOS_SYSTEM_CALL         1
+    #endif
+    #if defined(MSOS_TYPE_NOS) && (defined(CHIP_T3) || defined(CHIP_T8) || defined(CHIP_J2))
+        #define HVD_ENABLE_STOP_ACCESS_OVER_256     1
+        #define HVD_ENABLE_BDMA_2_BITSTREAMBUF      1
+    #else
+        #define HVD_ENABLE_STOP_ACCESS_OVER_256     0
+        #define HVD_ENABLE_BDMA_2_BITSTREAMBUF      0
+    #endif
+
+    #define HVD_ENABLE_AUTO_AVI_NULL_PACKET         1
+
+    #if defined(CHIP_JANUS)
+    #define HVD_ENABLE_MSOS_MIU1_BASE   0
+    #else
+    #define HVD_ENABLE_MSOS_MIU1_BASE   1
+    #endif
+
+    #define HVD_ENABLE_CHECK_STATE_BEFORE_SET_CMD   0
+    #define HVD_ENABLE_WAIT_CMD_FINISHED   0
+    #define HVD_ENABLE_TIME_MEASURE     0
+    #define HVD_ENABLE_REINIT_FAILED        0
+
+    #if defined(CHIP_T2) || defined(CHIP_U3) || defined(CHIP_T3) || defined(CHIP_T4) || defined(CHIP_T7)
+        #define HVD_ENABLE_RV_FEATURE   0
+    #else
+        #define HVD_ENABLE_RV_FEATURE   0
+    #endif
+
+    #if defined(CHIP_T12) || \
+        defined(CHIP_J2) || \
+        defined(CHIP_A1) || \
+        defined(CHIP_A2) || \
+        defined(CHIP_A5) || \
+        defined(CHIP_A5P) || \
+        defined(CHIP_A7) || \
+        defined(CHIP_A3) || \
+        defined(CHIP_AMETHYST)|| \
+        defined(CHIP_AGATE) || \
+        defined(CHIP_EDISON) || \
+        defined(CHIP_EMERALD)|| \
+        defined(CHIP_EAGLE) || \
+        defined(CHIP_EIFFEL) || \
+        defined(CHIP_NIKE) || \
+        defined(CHIP_MADISON) || \
+        defined(CHIP_CLIPPERS) || \
+        defined(CHIP_MIAMI) || \
+        defined(CHIP_NUGGET) || \
+        defined(CHIP_KAISER) || \
+        defined(CHIP_NIKON)  || \
+        defined(CHIP_EINSTEIN)|| \
+        defined(CHIP_NAPOLI) || \
+        defined(CHIP_KERES)  || \
+        defined(CHIP_MONACO)  || \
+        defined(CHIP_MUJI)  || \
+        defined(CHIP_MUNICH) || \
+        defined(CHIP_MONET) || \
+        defined(CHIP_MANHATTAN) || \
+        defined(CHIP_MASERATI) || \
+        defined(CHIP_MESSI) || \
+        defined(CHIP_MAXIM) || \
+        defined(CHIP_K6)    || \
+        defined(CHIP_K6LITE)
+        #define HVD_ENABLE_MVC     1
+    #else
+        #define HVD_ENABLE_MVC     0
+    #endif
+
+#endif
+
+#define HVD_CMA_SUPPORT_MAX_MIU_NUM             2
+#define HVD_CMA_SUPPORTMAX_BLOCK_NUM            2
+
+#if defined(REDLION_LINUX_KERNEL_ENVI)
+    #include "drvHVD_redlion.h"
+#endif
+
+#if (HVD_ENABLE_MUTEX_PROTECT) || ( HVD_ENABLE_MSOS_SYSTEM_CALL )
+    #include "osalHVD_EX.h"
+#endif
+
+#if HVD_ENABLE_MSOS_MIU1_BASE
+    #include "halCHIP.h"
+#endif
+
+#if HVD_ENABLE_BDMA_2_BITSTREAMBUF
+    #include "drvBDMA.h"
+    #define HVD_dmacpy( DESTADDR, SRCADDR , LEN)   MDrv_BDMA_CopyHnd((MS_PHY)(SRCADDR), (MS_PHY)(DESTADDR), (LEN), E_BDMA_SDRAM2SDRAM1, BDMA_OPCFG_DEF)
+    #define HVD_BDMAcpy(DESTADDR, SRCADDR, LEN , Flag)   MDrv_BDMA_CopyHnd((MS_PHY)(SRCADDR), (MS_PHY)(DESTADDR), (LEN), (Flag), BDMA_OPCFG_DEF)
+#endif
+
+
+#if defined(MSOS_TYPE_ECOS)
+    #define HVD_PRINT   diag_printf
+    #define HVD_PRINTI  diag_printf
+    #define HVD_PRINTD  diag_printf
+    #define HVD_ERR     diag_printf
+#else
+    #include "ULog.h"
+    #define HVD_PRINT(format,args...)  ULOGD("VDEC", format, ##args)
+    #define HVD_PRINTI(format,args...)  ULOGI("VDEC", format, ##args)
+    #define HVD_PRINTD(format,args...)  ULOGD("VDEC", format, ##args)
+    #define HVD_ERR(format,args...) ULOGE("VDEC", format, ##args)
+#endif
+
+
+#define HVD_EX_MSG_MUST(format, args...)            \
+    do                                              \
+    {                                               \
+        if (u32UartCtrl & E_HVD_UART_CTRL_MUST)     \
+        {                                           \
+            HVD_ERR("[HVD][MUST]%s:", __FUNCTION__); \
+            HVD_ERR(format, ##args);                 \
+        }                                           \
+    } while (0)
+
+#define HVD_EX_MSG_ERR(format, args...)             \
+    do                                              \
+    {                                               \
+        if (u32UartCtrl & E_HVD_UART_CTRL_ERR)      \
+        {                                           \
+            HVD_ERR("[HVD][ERR]%s:", __FUNCTION__);  \
+            HVD_ERR(format, ##args);                 \
+        }                                           \
+    } while (0)
+
+#if ((defined(CHIP_A1) || defined(CHIP_A7) || defined(CHIP_AMETHYST) || defined(CHIP_EMERALD) || defined(CHIP_NUGGET) || defined(CHIP_NIKON)) && defined (__aeon__))
+#define HVD_EX_MSG_INF(format, args...)
+#define HVD_EX_MSG_DBG(format, args...)
+#define HVD_EX_MSG_TRACE()
+#else
+#define HVD_EX_MSG_INF(format, args...)             \
+    do                                              \
+    {                                               \
+        if (u32UartCtrl & E_HVD_UART_CTRL_INFO)     \
+        {                                           \
+            HVD_PRINTI("[HVD][INF]%s:", __FUNCTION__);  \
+            HVD_PRINTI(format, ##args);                 \
+        }                                           \
+    } while (0)
+
+#define HVD_EX_MSG_DBG(format, args...)             \
+    do                                              \
+    {                                               \
+        if (u32UartCtrl & E_HVD_UART_CTRL_DBG)      \
+        {                                           \
+            HVD_PRINTD("[HVD][DBG]%s:", __FUNCTION__);  \
+            HVD_PRINTD(format, ##args);                 \
+        }                                           \
+    } while (0)
+
+#define HVD_EX_MSG_TRACE()                          \
+    do                                              \
+    {                                               \
+        if (u32UartCtrl & E_HVD_UART_CTRL_TRACE)    \
+        {                                           \
+            HVD_PRINTD("[HVD][TRA]%s:", __FUNCTION__);  \
+        }                                           \
+    } while (0)
+#endif
+
+// Configs
+#define HVD_FW_IDLE_THRESHOLD     5000 // VPU ticks
+#define HVD_BBU_ST_ADDR_IN_BITSTREAMBUF     0x400
+
+#define HVD_DRV_CMD_WAIT_FINISH_TIMEOUT             100
+#define HVD_DRV_MAILBOX_CMD_WAIT_FINISH_TIMEOUT     1000
+
+// Util or Functions
+#define HVD_MAX3(x,y,z) (((x)>(y) ? (x):(y)) > (z) ? ((x)>(y) ? (x):(y)):(z))
+#define HVD_LWORD(x)    (MS_U16)((x)&0xffff)
+#define HVD_HWORD(x)    (MS_U16)(((x)>>16)&0xffff)
+#define HVD_U32_MAX     0xffffffffUL
+#define HVD_RV_BROKENBYUS_MASK    0x00800000
+
+#ifdef MSOS_TYPE_LINUX
+    #if HVD_ENABLE_MSOS_SYSTEM_CALL
+        #define HVD_VA2PA(x )  (x)//(MS_U32)(MS_VA2PA( (void*)(x))) // fixme
+    #else
+        #define HVD_VA2PA(x )  (x)//(MS_U32)(MS_VA2PA( (void*)(x))) // fixme
+    #endif
+#else
+#define HVD_VA2PA(x)        (x)
+#endif
+
+#if defined(REDLION_LINUX_KERNEL_ENVI)
+#define HVD_PA2VA(x )   (MS_VIRT)MDrv_SYS_PA2NonCacheSeg((void*)(x))
+#else
+#define HVD_PA2VA(x )   (MS_VIRT)MS_PA2KSEG1((MS_PHY)(x))
+#endif
+
+#if 0//def memcpy
+#define HVD_memcpy(x , y , z)   memcpy(x, y, z)
+#else
+
+#if 0
+#define HVD_memcpy(  pDstAddr, pSrcAddr, u32Size)           \
+    do {                                                                               \
+        MS_U32 i = 0;                                                               \
+        volatile MS_U8 *Dest = (volatile MS_U8 *)(pDstAddr );                     \
+        volatile MS_U8 *Src = ( volatile MS_U8 *)(pSrcAddr) ;                         \
+        for (i = 0; i < (u32Size); i++)                                     \
+        {                                                                           \
+            Dest[i] = Src[i];                                                      \
+        }                                                                               \
+    }while(0)
+#else
+#define HVD_memcpy(  pDstAddr, pSrcAddr, u32Size) \
+    do { \
+        register unsigned long u32I=0; \
+        register unsigned long u32Dst = (unsigned long)pDstAddr; \
+        void * pSrc = (void *)pSrcAddr; \
+        MS_U32 _u32memsize = u32Size; \
+        if( (u32Dst % 4) || ((unsigned long)pSrc % 4) ) \
+        { \
+            for( u32I=0; u32I< (unsigned long)(_u32memsize); u32I++) \
+            { \
+                ((volatile unsigned char *)u32Dst)[u32I] = ((volatile unsigned char *)pSrc)[u32I]; \
+            } \
+        } \
+        else \
+        { \
+            for( u32I=0; u32I < ((unsigned long)(u32Size)/4); u32I++) \
+            { \
+                ((volatile unsigned int *)u32Dst)[u32I] = ((volatile unsigned int *)pSrc)[u32I]; \
+            } \
+            if((_u32memsize)%4) \
+            { \
+                u32Dst += u32I*4; \
+                pSrc = (void *)((unsigned long)pSrc + u32I*4); \
+                for( u32I=0; u32I<((unsigned long)(_u32memsize)%4); u32I++) \
+                { \
+                    ((volatile unsigned char *)u32Dst)[u32I] = ((volatile unsigned char *)pSrc)[u32I]; \
+                } \
+            } \
+        } \
+    }while(0)
+#endif
+
+#endif
+
+
+
+#if HVD_ENABLE_MSOS_SYSTEM_CALL
+#define HVD_Delay_ms(x)     MsOS_DelayTaskUs(1000*x)
+#define HVD_SYSTEM_DELAY_MS_TYPE       2
+#elif defined(REDLION_LINUX_KERNEL_ENVI)
+#define HVD_Delay_ms(x)     msleep(x)
+//#define HVD_Delay_ms(x)     MHal_H264_Delay_ms(x)
+#define HVD_SYSTEM_DELAY_MS_TYPE       3
+#else
+#define HVD_Delay_ms(x)                                 \
+    do {                                                            \
+        volatile MS_U32 ticks=0;                                         \
+        while( ticks < ( ((MS_U32)(x)) <<13) )      \
+        {                                                               \
+            ticks++;                                                \
+        }                                                               \
+    } while(0)
+#define HVD_SYSTEM_DELAY_MS_TYPE       0
+#endif  // HVD_ENABLE_MSOS_SYSTEM_CALL
+
+
+#define HVD_DumpMemory( addr,  size ,  ascii , NonCacheMask)       \
+        do{                                                                                     \
+            MS_U32 i = 0;                                                                          \
+            MS_U32 j = 0;                                                                           \
+            MS_U8* temp = (MS_U8*)addr;                                                 \
+            MS_U8 string[17] ;                                                                      \
+            HVD_EX_MSG_DBG("HVD Dump Memory addr: 0x%x ; size: 0x%x \r\n", addr, size);    \
+            temp = (MS_U8*)(((MS_U32)temp) | NonCacheMask);              \
+            memset(string , 0 , sizeof(string));                                                        \
+            for (j = 0; j < (size >> 4); j++)                                                               \
+            {                                                                                                               \
+                if (ascii)                                                                                              \
+                {                                                                                                           \
+                    for (i = 0; i < 16; i++)                                                                        \
+                    {                                                                                                           \
+                        if (*(temp + i) >= 30 && *(temp + i) <= 126)                                        \
+                            string[i] = *(temp + i);                                                                    \
+                        else                                                                                                    \
+                            string[i] = '.';                                                                                    \
+                    }                                                                                                         \
+                    HVD_EX_MSG_DBG("0x%08x  %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x  %s\n"  \
+                           , j << 4 , *temp, *(temp + 1), *(temp + 2), *(temp + 3), *(temp + 4), *(temp + 5), *(temp + 6), *(temp + 7), *(temp + 8), *(temp + 9), *(temp + 10), *(temp + 11), *(temp + 12), *(temp + 13), *(temp + 14), *(temp + 15) , string); \
+                }                                                                       \
+                else                                                                                                            \
+                {                                                                                                                   \
+                    HVD_EX_MSG_DBG("0x%08x  %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x %02x\n"  \
+                           , j << 4 , *temp, *(temp + 1), *(temp + 2), *(temp + 3), *(temp + 4), *(temp + 5), *(temp + 6), *(temp + 7), *(temp + 8), *(temp + 9), *(temp + 10), *(temp + 11), *(temp + 12), *(temp + 13), *(temp + 14), *(temp + 15));  \
+                }                                       \
+                temp += 16;                                                         \
+            }                                           \
+            HVD_EX_MSG_DBG("0x%08x  " , j << 4);                                        \
+            memset(string , 0 , sizeof(string));                            \
+            for (i = 0; i < (size & 0x0f); i++)                                 \
+            {                                                                                   \
+                if (*(temp + i) >= 30 && *(temp + i) <= 126)                        \
+                    string[i] = *(temp + i);                                                    \
+                else                                                                                    \
+                    string[i] = '.';                                                                    \
+                HVD_EX_MSG_DBG("%02x ", *(MS_U8*)(temp + i));                                              \
+            }                                                               \
+            if (ascii)                                                                                      \
+            {                                                                                                       \
+                for (; i < 16  ; i++)                                                                           \
+                    HVD_EX_MSG_DBG("   ");                                                                                  \
+                HVD_EX_MSG_DBG(" %s\n" , string);                                                                       \
+            }                                                                       \
+            else                                                                                                        \
+                HVD_EX_MSG_DBG("\n");                                                                                       \
+        }while(0)
+
+
+#if HVD_ENABLE_MSOS_SYSTEM_CALL
+    #define HVD_GetSysTime_ms()    MsOS_GetSystemTime()
+    #define HVD_SYSTEM_CLOCK_TYPE       1
+#elif defined(REDLION_LINUX_KERNEL_ENVI)
+    #define HVD_GetSysTime_ms()    MHal_H264_GetSyetemTime()
+    #define HVD_SYSTEM_CLOCK_TYPE       2
+#else
+    #define HVD_GetSysTime_ms()    1
+    #define HVD_SYSTEM_CLOCK_TYPE       0
+#endif  // MsOS_GetSystemTime
+
+#if HVD_ENABLE_MSOS_SYSTEM_CALL
+    #include "asmCPU.h"
+    #define HAL_MEMORY_BARRIER()     MAsm_CPU_Sync()
+    #define HVD_MEMORY_BARRIER_TYPE       3
+#else
+    #if defined (__mips__)
+        #define HAL_MEMORY_BARRIER() __asm__ volatile ("sync;")
+        #define HVD_MEMORY_BARRIER_TYPE       1
+    #elif defined (__aeon__)
+        #ifdef __AEONR2__
+            #define HAL_MEMORY_BARRIER() __asm__ volatile ("b.syncwritebuffer;")
+            #define HVD_MEMORY_BARRIER_TYPE       22
+        #else
+            #if defined( CHIP_T2 )
+                #define HAL_MEMORY_BARRIER() __asm__ volatile ("l.msync;")
+                #define HVD_MEMORY_BARRIER_TYPE       21
+            #else
+                #define HAL_MEMORY_BARRIER() __asm__ volatile ("l.syncwritebuffer;")
+                #define HVD_MEMORY_BARRIER_TYPE       23
+            #endif
+        #endif
+    #else
+        #define HAL_MEMORY_BARRIER()
+        #define HVD_MEMORY_BARRIER_TYPE       0
+    #endif
+#endif
+
+#define HVD_DRV_MODE_EXTERNAL_DS_BUFFER         (1 << 0)
+
+//-------------------------------------------------------------------------------------------------
+//  Type and Structure
+//-------------------------------------------------------------------------------------------------
+typedef void (*HVD_ISRCallBack)(MS_U32 u32Sid);
+
+typedef enum
+{
+    E_HVD_RETURN_FAIL=0,
+    E_HVD_RETURN_SUCCESS,
+    E_HVD_RETURN_INVALID_PARAMETER,
+    E_HVD_RETURN_ILLEGAL_ACCESS,
+    E_HVD_RETURN_HARDWARE_BREAKDOWN,
+    E_HVD_RETURN_OUTOF_MEMORY,
+    E_HVD_RETURN_UNSUPPORTED,
+    E_HVD_RETURN_TIMEOUT,
+    E_HVD_RETURN_NOTREADY,
+    E_HVD_RETURN_MEMORY_OVERWIRTE,
+    E_HVD_RETURN_ES_FULL,
+    E_HVD_RETURN_RE_INIT,
+    E_HVD_RETURN_NOT_RUNNING,
+} HVD_Return;
+
+typedef enum
+{
+// share memory
+    E_HVD_GDATA_SHARE_MEM=0x1000,
+    // switch
+    //E_HVD_GDATA_SEMAPHORE,
+    E_HVD_GDATA_DISP_INFO_ADDR=(0x0100+E_HVD_GDATA_SHARE_MEM),
+    E_HVD_GDATA_MIU_SEL,
+    E_HVD_GDATA_FRAMEBUF_ADDR,
+    E_HVD_GDATA_FRAMEBUF_SIZE,
+    E_HVD_GDATA_FRAMEBUF2_ADDR,
+    E_HVD_GDATA_FRAMEBUF2_SIZE,
+    E_HVD_GDATA_CMA_USED,
+    E_HVD_GDATA_CMA_ALLOC_DONE,
+    E_HVD_GDATA_DYNMC_DISP_PATH_STATUS,
+    // report
+    E_HVD_GDATA_PTS=(0x0200+E_HVD_GDATA_SHARE_MEM),
+    E_HVD_GDATA_U64PTS,
+    E_HVD_GDATA_DECODE_CNT,
+    E_HVD_GDATA_DATA_ERROR_CNT,
+    E_HVD_GDATA_DEC_ERROR_CNT,
+    E_HVD_GDATA_ERROR_CODE,
+    E_HVD_GDATA_VPU_IDLE_CNT,
+    E_HVD_GDATA_DISP_FRM_INFO,
+    E_HVD_GDATA_DEC_FRM_INFO,
+    E_HVD_GDATA_ES_LEVEL,
+    E_HVD_GDATA_PTS_STC_DIFF,
+#if HVD_ENABLE_MVC
+    E_HVD_GDATA_DISP_FRM_INFO_SUB,
+    E_HVD_GDATA_DEC_FRM_INFO_SUB,
+#endif
+    E_HVD_GDATA_HVD_HW_MAX_PIXEL,
+    E_HVD_GDATA_TS_SEAMLESS_TARGET_PTS,
+    E_HVD_GDATA_TS_SEAMLESS_TARGET_POC,
+
+    // user data
+    E_HVD_GDATA_USERDATA_WPTR,
+    E_HVD_GDATA_USERDATA_IDX_TBL_ADDR,
+    E_HVD_GDATA_USERDATA_PACKET_TBL_ADDR,
+    E_HVD_GDATA_USERDATA_PACKET_SIZE,
+    E_HVD_GDATA_USERDATA_IDX_TBL_SIZE,
+    E_HVD_GDATA_USERDATA_PACKET_TBL_SIZE,
+    // report - modes
+    E_HVD_GDATA_IS_SHOW_ERR_FRM,
+    E_HVD_GDATA_IS_REPEAT_LAST_FIELD,
+    E_HVD_GDATA_IS_ERR_CONCEAL,
+    E_HVD_GDATA_IS_SYNC_ON,
+    E_HVD_GDATA_IS_PLAYBACK_FINISH,
+    E_HVD_GDATA_SYNC_MODE,
+    E_HVD_GDATA_SKIP_MODE,
+    E_HVD_GDATA_DROP_MODE,
+    E_HVD_GDATA_DISPLAY_DURATION,
+    E_HVD_GDATA_FRC_MODE,
+    E_HVD_GDATA_NEXT_PTS,
+    E_HVD_GDATA_DISP_Q_SIZE,
+    E_HVD_GDATA_DISP_Q_PTR,
+    E_HVD_GDATA_NEXT_DISP_FRM_INFO,
+    E_HVD_GDATA_REAL_FRAMERATE,
+    E_HVD_GDATA_IS_ORI_INTERLACE_MODE,
+    E_HVD_GDATA_FRM_PACKING_SEI_DATA,
+    E_HVD_GDATA_TYPE_FRAME_MBS_ONLY_FLAG,
+    E_HVD_GDATA_TYPE_IS_LEAST_DISPQ_SIZE,
+    E_HVD_GDATA_FIELD_PIC_FLAG,
+    E_HVD_GDATA_FW_STATUS_FLAG,
+    E_HVD_GDATA_NEXT_DISP_FRM_INFO_EXT,
+    E_HVD_GDATA_DISPLAY_COLOUR_VOLUME_SEI_DATA,
+    E_HVD_GDATA_U64PTS_PRE_PARSE,
+    E_HVD_GDATA_CONTENT_LIGHT_LEVEL_INFO,
+    E_HVD_GDATA_SEQ_CHANGE_INFO,
+
+    // internal control
+    E_HVD_GDATA_IS_1ST_FRM_RDY=(0x0300+E_HVD_GDATA_SHARE_MEM),
+    E_HVD_GDATA_IS_I_FRM_FOUND,
+    E_HVD_GDATA_IS_SYNC_START,
+    E_HVD_GDATA_IS_SYNC_REACH,
+    E_HVD_GDATA_FW_VERSION_ID,
+    E_HVD_GDATA_FW_IF_VERSION_ID,
+    E_HVD_GDATA_BBU_Q_NUMB,
+    E_HVD_GDATA_DEC_Q_NUMB,
+    E_HVD_GDATA_DISP_Q_NUMB,
+    E_HVD_GDATA_PTS_Q_NUMB,
+    E_HVD_GDATA_FW_INIT_DONE,
+    E_HVD_GDATA_FW_IS_IQMEM_SUPPORT,
+    E_HVD_GDATA_FW_IQMEM_CTRL,
+    E_HVD_GDATA_FW_FLUSH_STATUS,
+    E_HVD_GDATA_FW_CODEC_TYPE,
+    E_HVD_GDATA_FW_ES_BUF_STATUS,
+    E_HVD_GDATA_TS_SEAMLESS_STATUS,
+    E_HVD_GDATA_VIDEO_FULL_RANGE_FLAG,
+    E_HVD_GDATA_GET_NOT_SUPPORT_INFO,
+    E_HVD_GDATA_GET_MIN_TSP_DATA_SIZE,
+
+    // debug
+    E_HVD_GDATA_SKIP_CNT=(0x0400+E_HVD_GDATA_SHARE_MEM),
+    E_HVD_GDATA_GOP_CNT,
+    E_HVD_GDATA_DISP_CNT,
+    E_HVD_GDATA_DROP_CNT,
+    E_HVD_GDATA_DISP_STC,
+    E_HVD_GDATA_VSYNC_CNT,
+    E_HVD_GDATA_MAIN_LOOP_CNT,
+    // AVC
+    E_HVD_GDATA_AVC_LEVEL_IDC =(0x0500+E_HVD_GDATA_SHARE_MEM),
+    E_HVD_GDATA_AVC_LOW_DELAY,
+    E_HVD_GDATA_AVC_VUI_DISP_INFO,
+    //E_HVD_GDATA_AVC_SPS_ADDR,
+
+// SRAM
+    E_HVD_GDATA_SRAM=0x2000,
+    //E_HVD_GDATA_AVC_NAL_CNT,
+
+// Mailbox or Reg
+    E_HVD_GDATA_MBOX=0x3000,
+    E_HVD_GDATA_FW_STATE,       // HVD RISC MBOX 0 (esp. FW init done)
+    E_HVD_GDATA_IS_DISP_INFO_UNCOPYED,   // HVD RISC MBOX 0 (rdy only)
+    E_HVD_GDATA_IS_DISP_INFO_CHANGE,   // HVD RISC MBOX 0 (rdy only)
+    E_HVD_GDATA_HVD_ISR_STATUS,   // HVD RISC MBOX 1 (value only)
+    E_HVD_GDATA_IS_FRAME_SHOWED,    // HVD HI mbox 0 ( showed: rdy cleared ; not show: rdy enable )
+    E_HVD_GDATA_ES_READ_PTR,    //
+    E_HVD_GDATA_ES_WRITE_PTR,    //
+    E_HVD_GDATA_BBU_READ_PTR,    //
+    E_HVD_GDATA_BBU_WRITE_PTR,    //
+    E_HVD_GDATA_BBU_WRITE_PTR_FIRED,    //
+    E_HVD_GDATA_VPU_PC_CNT,    //
+    E_HVD_GDATA_ES_QUANTITY,
+
+// FW def
+    E_HVD_GDATA_FW_DEF=0x4000,
+    E_HVD_GDATA_FW_MAX_DUMMY_FIFO,  // AVC: 256Bytes AVS: 2kB RM:???
+    E_HVD_GDATA_FW_AVC_MAX_VIDEO_DELAY,
+    E_HVD_GDATA_FW_BBU_TOTAL_TBL_ENTRY,
+    E_HVD_GDATA_FW_BBU_TBL_ENTRY_NUMB,
+    E_HVD_GDATA_FW_PTS_TOTAL_ENTRY_NUMB,
+    E_HVD_GDATA_FW_DUMMY_WRITE_ADDR,
+    E_HVD_GDATA_FW_DS_BUF_ADDR,
+    E_HVD_GDATA_FW_DS_BUF_SIZE,
+    E_HVD_GDATA_FW_DS_VECTOR_DEPTH,
+    E_HVD_GDATA_FW_DS_INFO_ADDR,
+    E_HVD_GDATA_FW_DS_IS_ENABLED,
+#ifdef VDEC3
+    E_HVD_GDATA_FW_VBBU_ADDR,
+#endif
+// BBU size
+// default pitch number
+//
+} HVD_GetData;
+
+typedef enum
+{
+// share memory
+    E_HVD_SDATA_SHARE_MEM = 0x1000,
+    // switch
+    E_HVD_SDATA_FRAMEBUF_ADDR = (0x0100 + E_HVD_SDATA_SHARE_MEM),
+    E_HVD_SDATA_FRAMEBUF_SIZE,
+    E_HVD_SDATA_ERROR_CODE,
+    E_HVD_SDATA_DISP_INFO_TH,
+    E_HVD_SDATA_FW_FLUSH_STATUS,
+    E_HVD_SDATA_DMX_FRAMERATE,
+    E_HVD_SDATA_DMX_FRAMERATEBASE,
+    E_HVD_SDATA_MIU_SEL,
+    E_HVD_SDATA_FRAMEBUF2_ADDR,
+    E_HVD_SDATA_FRAMEBUF2_SIZE,
+    E_HVD_SDATA_CMA_USED,
+    E_HVD_SDATA_CMA_ALLOC_DONE,
+    E_HVD_SDATA_CMA_TWO_MIU,
+    E_HVD_SDATA_MAX_CMA_SIZE,
+    E_HVD_SDATA_MAX_CMA_SIZE2,
+    E_HVD_SDATA_DV_XC_SHM_SIZE,
+    E_HVD_SDATA_DYNMC_DISP_PATH_STATUS,
+    // display info
+    //E_HVD_SDATA_HOR_SIZE=(0x0200|E_HVD_SDATA_SHARE_MEM),
+    // report
+    //E_HVD_SDATA_PTS=0x0200,
+    // internal control
+    //E_HVD_SDATA_IDLE_CNT=0x0300,
+    // debug
+    //E_HVD_SDATA_SKIP_CNT=0x0400,
+    // RM
+    E_HVD_SDATA_RM_PICTURE_SIZES = (0x0500 | E_HVD_SDATA_SHARE_MEM),
+
+// SRAM
+// Mailbox or Reg
+    E_HVD_SDATA_MAILBOX = 0x3000,
+    E_HVD_SDATA_FW_CODE_TYPE = (0x0000 | E_HVD_SDATA_MAILBOX),
+    E_HVD_SDATA_TRIGGER_DISP,
+    E_HVD_SDATA_GET_DISP_INFO_DONE,
+    E_HVD_SDATA_GET_DISP_INFO_START,
+
+// FW def
+    E_HVD_SDATA_FW_DEF = 0x4000,
+    E_HVD_SDATA_VIRTUAL_BOX_WIDTH,
+    E_HVD_SDATA_VIRTUAL_BOX_HEIGHT,
+    //modify the state of the frame in DispQueue
+    E_HVD_SDATA_DISPQ_STATUS_VIEW,
+    E_HVD_SDATA_DISPQ_STATUS_DISP,
+    E_HVD_SDATA_DISPQ_STATUS_FREE,
+    E_HVD_SDATA_FW_IQMEM_CTRL,
+    E_HVD_SDATA_FW_IQMEM_ENABLE_IF_SUPPORT,
+    E_HVD_SDATA_DV_INFO,
+    E_HVD_SDATA_HDR_PERFRAME,
+    E_HVD_SDATA_VP9HDR10INFO,
+} HVD_SetData;
+
+typedef enum
+{
+    E_HVD_UART_CTRL_DISABLE = BIT(4),
+    E_HVD_UART_CTRL_ERR     = BIT(0),
+    E_HVD_UART_CTRL_INFO    = BIT(1),
+    E_HVD_UART_CTRL_DBG     = BIT(2),
+    E_HVD_UART_CTRL_FW      = BIT(3),
+    E_HVD_UART_CTRL_MUST    = BIT(4),
+    E_HVD_UART_CTRL_TRACE   = BIT(5),
+} HVD_Uart_Ctrl;
+
+typedef enum
+{
+    E_HVD_INIT_HW_MASK = BMASK(3:0),        ///< HW Type, should same as HVD_Codec_Type in fwHVD_if.h
+        E_HVD_INIT_HW_AVC = BITS(3:0, 0),   ///< HW deflaut: AVC 0X00
+        E_HVD_INIT_HW_AVS = BITS(3:0, 1),   ///< HW: AVS    0X01
+        E_HVD_INIT_HW_RM  = BITS(3:0, 2),   ///< HW: RM     0X10
+        E_HVD_INIT_HW_MVC = BITS(3:0, 3),   ///< HW: MVC    0x11
+        E_HVD_INIT_HW_VP8 = BITS(3:0, 4),   ///< HW: VP8    0X100
+        E_HVD_INIT_HW_MJPEG = BITS(3:0, 5), ///< HW: MJPEG  0x101
+        E_HVD_INIT_HW_VP6 = BITS(3:0, 6),   ///< HW: VP6    0x110
+        E_HVD_INIT_HW_HEVC = BITS(3:0, 7),  ///< HW: HEVC   0x111
+        E_HVD_INIT_HW_VP9 = BITS(3:0, 8),   ///< HW: VP9    0x1000
+        E_HVD_INIT_HW_HEVC_DV = BITS(3:0, 9),   ///< HW: HEVC_DV    0x1001
+    E_HVD_INIT_MAIN_MASK = BMASK(5:4),                  ///< main type
+        E_HVD_INIT_MAIN_FILE_RAW     = BITS(5:4, 0),    ///< main type: default: 0X00
+        E_HVD_INIT_MAIN_FILE_TS      = BITS(5:4, 1),    ///< main type: 0X01
+        E_HVD_INIT_MAIN_LIVE_STREAM  = BITS(5:4, 2),    ///< main type: 0X10
+    E_HVD_INIT_INPUT_MASK = BMASK(6:6),         ///< process path for filling BBU table:  file mode. use drive; TSP: use tsp mode
+        E_HVD_INIT_INPUT_TSP = BITS(6:6, 0),    ///< tsp input( default)
+        E_HVD_INIT_INPUT_DRV = BITS(6:6, 1),    ///< driver input
+    E_HVD_INIT_START_CODE_MASK = BMASK(7:7),                ///< AVC FILE MODE ONLY: mkv, mp4 container use.
+        E_HVD_INIT_START_CODE_REMAINED  = BITS(7:7, 0),     ///< start code remained.(Defualt)
+        E_HVD_INIT_START_CODE_REMOVED   = BITS(7:7, 1),     ///< start code removed.
+    E_HVD_INIT_UTOPIA_ENVI = BIT(8),        ///< check MIU sel and set it
+    E_HVD_INIT_DBG_FW      = BIT(9),        ///< check FW is debug version or not
+    E_HVD_INIT_DUAL_ES_MASK = BMASK(10:10),                 ///< Dual ES buffer iput.
+        E_HVD_INIT_DUAL_ES_DISABLE    = BITS(10:10, 0),     ///< Disable Dual ES buffer input.
+        E_HVD_INIT_DUAL_ES_ENABLE     = BITS(10:10, 1),     ///< Enable Dual ES buffer input.
+    //E_HVD_INIT_ENABLE_ISR_DISP =  BIT( 8)  ,      ///< enable display ISR. ISR occurs at every Vsync.
+} HVD_Init_Mode_Flag;
+
+typedef enum
+{
+    E_HVD_PLAY_NORMAL,
+    E_HVD_PLAY_PAUSE,
+    E_HVD_PLAY_STEP_DISPLAY,
+} HVD_Play_Type;
+
+typedef enum
+{
+    E_HVD_ESB_LEVEL_NORMAL = 0,
+    E_HVD_ESB_LEVEL_UNDER = BIT(0),
+    E_HVD_ESB_LEVEL_OVER = BIT(1),
+} HVD_ESBuf_Level;
+
+//-----------------------------------------------------------------------------
+/// @brief \b Enum \b Name: HVD_FWInputSourceType
+/// @brief \b Enum \b Description:  The type of fw binary input source
+//-----------------------------------------------------------------------------
+typedef enum
+{
+    E_HVD_FW_INPUT_SOURCE_NONE,       ///< No input fw.
+    E_HVD_FW_INPUT_SOURCE_DRAM,       ///< input source from DRAM.
+    E_HVD_FW_INPUT_SOURCE_FLASH,      ///< input source from FLASH.
+} HVD_FWInputSourceType;
+
+//-----------------------------------------------------------------------------
+/// @brief \b Enum \b Name: HVD_FB_Reduction_Type
+/// @brief \b Enum \b Description:  The type of frame buffer reduction type
+//-----------------------------------------------------------------------------
+typedef enum
+{
+    E_HVD_FB_REDUCTION_TYPE_NONE = 0,        ///< FB reduction disable
+    E_HVD_FB_REDUCTION_TYPE_1_2 = 1,         ///< FB reduction 1/2
+    E_HVD_FB_REDUCTION_TYPE_1_4 = 2,         ///< FB reduction 1/4
+} HVD_FBReductionType;
+
+typedef enum
+{
+    E_VDEC_EX_MAIN_VIEW = 0,                 ///< MVC main view
+    E_VDEC_EX_SUB_VIEW,                      ///< MVC sub view
+} VDEC_EX_View;
+
+typedef enum
+{
+    E_HVD_SECURE_MODE_NONE = 0,                 /// None secure
+    E_HVD_SECURE_MODE_TRUSTZONE              /// Secure for TrustZone
+} HVD_SECURE_MODE;
+
+typedef enum
+{
+    E_HWDEC_ISR_NONE = 0,
+    E_HWDEC_ISR_HVD = 1,    // For HW Decoder check
+    E_HWDEC_ISR_EVD = 2,
+    E_HWDEC_ISR_G2VP9 = 3
+} HWDEC_ISR_TYPE;
+
+//HVD set MFcodec Mode
+typedef enum
+{
+    E_HVD_DEF_MFCODEC_DEFAULT = 0,
+    E_HVD_DEF_MFCODEC_FORCE_ENABLE,
+    E_HVD_DEF_MFCODEC_FORCE_DISABLE,
+} HVD_MFCodec_mode;
+
+typedef enum
+{
+    E_HVD_DEF_FEATURE_DEFAULT = 0,
+    E_HVD_DEF_FEATURE_FORCE_MAIN_PROFILE = 1, //BIT0=1: HEVC Only support Main profile decode
+    E_HVD_DEF_FEATURE_DISABLE_TEMPORAL_SCALABILITY = 1 << 1, // Bit 1 = 1: do not support temporal scalibity
+} HVD_Feature;
+
+
+typedef enum
+{
+    // Indicates Dolby Vision stream profile is Unsupported.
+    E_DV_STREAM_PROFILE_ID_UNSUPPORTED = 0x0,
+    // Indicates Dolby Vision stream profile is "dvav.per".
+    E_DV_STREAM_PROFILE_ID_DVAV_PER    = 0x1,
+    // Indicates Dolby Vision stream profile is "dvav.pen".
+    E_DV_STREAM_PROFILE_ID_DVAV_PEN    = 0x2,
+    // Indicates Dolby Vision stream profile is "dvhe.der".
+    E_DV_STREAM_PROFILE_ID_DVHE_DER    = 0x4,
+    // Indicates Dolby Vision stream profile is "dvhe.den".
+    E_DV_STREAM_PROFILE_ID_DVHE_DEN    = 0x8,
+    // Indicates Dolby Vision stream profile is "dvhe.dtr".
+    E_DV_STREAM_PROFILE_ID_DVHE_DTR    = 0x10,
+    // Indicates Dolby Vision stream profile is "dvhe.stn".
+    E_DV_STREAM_PROFILE_ID_DVHE_STN    = 0x20,
+    // Indicates Dolby Vision stream profile is "dvhe.dth".
+    E_DV_STREAM_PROFILE_ID_DVHE_DTH    = 0x40,
+} DV_Stream_Profile;
+
+typedef enum
+{
+    // Indicates Dolby Vision stream level is unsupported.
+    E_DV_STREAM_LEVEL_ID_UNSUPPORTED = 0,
+    // Indicates Dolby Vision stream level is "HD24".
+    E_DV_STREAM_LEVEL_ID_HD24,
+    // Indicates Dolby Vision stream level is "HD30".
+    E_DV_STREAM_LEVEL_ID_HD30,
+    // Indicates Dolby Vision stream level is "FHD24".
+    E_DV_STREAM_LEVEL_ID_FHD24,
+    // Indicates Dolby Vision stream level is "FHD30".
+    E_DV_STREAM_LEVEL_ID_FHD30,
+    // Indicates Dolby Vision stream level is "FHD60".
+    E_DV_STREAM_LEVEL_ID_FHD60,
+    // Indicates Dolby Vision stream level is "UHD24".
+    E_DV_STREAM_LEVEL_ID_UHD24,
+    // Indicates Dolby Vision stream level is "UHD30".
+    E_DV_STREAM_LEVEL_ID_UHD30,
+    // Indicates Dolby Vision stream level is "UHD48".
+    E_DV_STREAM_LEVEL_ID_UHD48,
+    // Indicates Dolby Vision stream level is "UHD60".
+    E_DV_STREAM_LEVEL_ID_UHD60,
+} DV_Stream_Level;
+
+typedef enum
+{
+    E_HVD_ORIGINAL_MAIN_STREAM = 0,
+    E_HVD_ORIGINAL_SUB_STREAM,
+    E_HVD_ORIGINAL_N_STREAM,
+} HVD_Original_Stream;
+
+//-----------------------------------------------------------------------------
+/// @brief \b Struct \b Name: HVD_EX_MemMap
+/// @brief \b Struct \b Description:  Store the HVD driver config
+//-----------------------------------------------------------------------------
+typedef struct
+{
+    MS_PHY  u32MIU1BaseAddr;                //!< the physical memory start address of MIU 1 base address. 0: default value.
+    MS_PHY  u32MIU2BaseAddr;                //!< the physical memory start address of MIU 2 base address. 0: default value.
+    MS_VIRT   u32FWBinaryVAddr;               //!<  virtual address of input FW binary in DRAM
+    MS_PHY  u32FWBinaryAddr;                //!< the physical memory start address in Flash memory of FW code source.
+    MS_U32    u32FWBinarySize;                //!< the FW code size
+    MS_VIRT   u32VLCBinaryVAddr;              //!< VLC table binary data buffer start address
+    MS_PHY  u32VLCBinaryAddr;               //!< VLC table binary data buffer start address
+    MS_U32    u32VLCBinarySize;               //!<VLC table binary data buffer size
+    MS_VIRT   u32CodeBufVAddr;                //!< the virtual memory start address of code buffer
+    MS_PHY  u32CodeBufAddr;                 //!< the physical memory start address of code buffer
+    MS_U32    u32CodeBufSize;                 //!< the code buffer size
+    MS_VIRT   u32FrameBufVAddr;               //!< the virtual memory start address of frame buffer
+    MS_PHY  u32FrameBufAddr;                //!< the physical memory start address of frame buffer
+    MS_U32    u32FrameBufSize;                //!< the frame buffer size
+    MS_VIRT   u32BitstreamBufVAddr;           //!< the virtual memory start address of bit stream buffer
+    MS_PHY  u32BitstreamBufAddr;            //!< the physical memory start address of bit stream buffer
+    MS_U32    u32BitstreamBufSize;            //!< the bit stream buffer size
+    MS_VIRT   u32DrvProcessBufVAddr;          //!< the virtual memory start address of driver process buffer
+    MS_PHY  u32DrvProcessBufAddr;           //!< the physical memory start address of driver process buffer
+    MS_U32    u32DrvProcessBufSize;           //!< the driver process buffer size
+    MS_VIRT   u32DynSacalingBufVAddr;         //!< the virtual memory start address of dynamic scaling buffer
+    MS_PHY  u32DynSacalingBufAddr;          //!< the physical memory start address of dynamic scaling buffer
+    MS_U32    u32DynSacalingBufSize;          //!< the dynamic scaling buffer size
+    HVD_FWInputSourceType eFWSourceType;    //!< the input FW source type.
+#ifdef VDEC3
+    MS_PHY  u32TotalBitstreamBufAddr;
+    MS_U32    u32TotalBitstreamBufSize;
+#endif
+} HVD_EX_MemMap;
+
+//-----------------------------------------------------------------------------
+/// @brief \b Struct \b Name: HVD_Nal_Entry
+/// @brief \b Struct \b Description:  Store the information of one nal entry
+//-----------------------------------------------------------------------------
+typedef struct
+{
+    MS_U32  u32NalID;       ///< the ID nunber of this nal
+    MS_VIRT  u32NalAddr;     ///< the offset of this nal from bit stream buffer start address. unit: byte
+    MS_U32  u32NalSize;     ///< the size of this nal. unit: byte
+    MS_U32  u32NalPTS;      ///< the time stamp of this nal. unit: ms
+    MS_BOOL  bRVBrokenPacket;      ///< the RV only
+} HVD_Nal_Entry;
+
+//-----------------------------------------------------------------------------
+/// @brief \b Struct \b Name: RV_FileInfo
+/// @brief \b Struct \b Description:  RV file information
+//-----------------------------------------------------------------------------
+typedef struct
+{
+    MS_U16 RV_Version;      ///< Real Video Bitstream version
+    MS_U16 ulNumSizes;      ///< Real Video Number sizes
+    MS_U16 ulPicSizes_w[8]; ///< Real Video file width
+    MS_U16 ulPicSizes_h[8]; ///< Real Video file height
+} RV_FileInfo;
+
+//-----------------------------------------------------------------------------
+/// @brief \b Struct \b Name: HVD_FB_Reduction_Mode
+/// @brief \b Struct \b Description:  Set up frame buffer reduction mode
+//-----------------------------------------------------------------------------
+typedef struct
+{
+    HVD_FBReductionType eLumaFBReductionMode;     ///< Luma frame buffer reduction mode.
+    HVD_FBReductionType eChromaFBReductionMode;   ///< Chroma frame buffer reduction mode.
+    MS_U8                u8EnableAutoMode;            /// 0: Disable, 1: Enable
+} HVD_FBReductionMode;
+
+//-----------------------------------------------------------------------------
+/// @brief \b Struct \b Name: HVD_Init_Params
+/// @brief \b Struct \b Description:  Store the initialization settings
+//-----------------------------------------------------------------------------
+typedef struct
+{
+    MS_U32 u32ModeFlag;     ///< init mode flag, use HVD_INIT_* to setup HVD.
+    MS_U32 u32FrameRate;     ///< frame rate.
+    MS_U32 u32FrameRateBase;     ///< frame rate base. The value of u32FrameRate /u32FrameRateBase must be frames per sec.
+    MS_U8   u8MinFrmGap;    ///< set the min frame gap.
+    MS_U8   u8SyncType;         ///< HVD_EX_SyncType. sync type of current playback.
+    MS_U16 u16Pitch;   ///< not zero: specify the pitch. 0: use default value.
+    MS_U32 u32MaxDecTick;   ///< not zero: specify the max decode tick. 0: use default value.
+    MS_BOOL bSyncEachFrm;   ///< TRUE: sync STC at each frame. FALSE: not sync each frame.
+    MS_BOOL bAutoFreeES;   ///< TRUE: auto free ES buffer when ES buffer is full. FALSE: not do the auto free.
+    MS_BOOL bAutoPowerSaving;   ///< TRUE: auto power saving. FALSE: not do the auto power saving.
+    MS_BOOL bDynamicScaling;   ///< TRUE: enable Dynamic Scaling. FALSE: disable Dynamic Scaling.
+    MS_BOOL bFastDisplay;   ///< TRUE: enable Fast Display. FALSE: disable Fast Display.
+    MS_BOOL bUserData;   ///< TRUE: enable processing User data. FALSE: disable processing User data.
+    MS_U8 u8TurboInit;       ///< HVD_TurboInitLevel. set the turbo init mode.
+    MS_U8 u8TimeUnit;   ///< HVD_Time_Unit_Type.set the type of input/output time unit.
+    MS_U16 u16DecoderClock;      ///< HVD decoder clock speed. 0: default value. non-zero: any nearist clock.
+    MS_U16 u16ChipECONum;    ///< Chip revision, ECO number.
+    RV_FileInfo* pRVFileInfo;           ///< pointer to RV file info
+    HVD_FBReductionMode stFBReduction; ///< HVD Frame buffer reduction type
+} HVD_Init_Params;
+
+//-----------------------------------------------------------------------------
+/// @brief \b Struct \b Name: HVD_BBU_Info
+/// @brief \b Struct \b Description:  Store the packet information
+//-----------------------------------------------------------------------------
+typedef struct
+{
+    MS_VIRT u32Staddr;     ///< Packet offset from bitstream buffer base address. unit: byte.
+    MS_U32 u32Length;    ///< Packet size. unit: byte.
+    MS_VIRT u32Staddr2;     ///< Packet offset from bitstream buffer base address. unit: byte.
+    MS_U32 u32Length2;    ///< Packet size. unit: byte.
+    MS_U32 u32TimeStamp;    ///< Packet time stamp. unit: ms.
+    MS_U32 u32ID_L;    ///< Packet ID low part.
+    MS_U32 u32ID_H;    ///< Packet ID high part.
+    MS_U32 u32AllocLength;    ///< Allocated Packet size. unit: byte.
+    MS_U32 u32OriPktAddr;    ///< Original packet offset from bitstream buffer base address. unit: byte.
+    MS_BOOL  bRVBrokenPacket;      ///< the RV only
+} HVD_BBU_Info;
+
+//-----------------------------------------------------------------------------
+/// @brief \b Struct \b Name: HVD_Alive_Status
+/// @brief \b Struct \b Description:  Store the decoder living information
+//-----------------------------------------------------------------------------
+typedef struct
+{
+    MS_U32 u32DecCnt;
+    MS_U32 u32SkipCnt;
+    MS_U32 u32IdleCnt;
+    MS_U32 u32MainLoopCnt;
+    MS_U32 u32LastAliveTime;
+} HVD_Alive_Status;
+
+//-----------------------------------------------------------------------------
+/// @brief \b Struct \b Name: HVD_DISP_INFO_THRESHOLD
+/// @brief \b Struct \b Description:  Store the disp information threshold.
+//-----------------------------------------------------------------------------
+typedef struct
+{
+    MS_U32 u32FrmrateUpBound;       //Framerate filter upper bound
+    MS_U32 u32FrmrateLowBound;      //Framerate filter lower bound
+    MS_U32 u32MvopUpBound;          //mvop filter upper bound
+    MS_U32 u32MvopLowBound;         //mvop filter lower bound
+} HVD_Disp_Info_TH;
+
+//-----------------------------------------------------------------------------
+/// @brief \b Struct \b Name: HVD_Settings
+/// @brief \b Struct \b Description:  Store the settings of user requirment
+//-----------------------------------------------------------------------------
+typedef struct
+{
+// TODO: currently only DTV settings. Need to add more settings for MM.
+// Mode
+    HVD_Disp_Info_TH DispInfoTH;
+    MS_U32  u32IsrEvent;
+    MS_BOOL bEnISR;
+
+    MS_U8 u8SkipMode;                   // HVD_Skip_Decode_Type
+    MS_U8 bIsShowErrFrm;
+    MS_U8 u8FrcMode;              //HVD_EX_FrmRateConvMode
+
+    MS_BOOL bIsErrConceal;
+    MS_BOOL bAutoFreeES;
+    MS_BOOL bDisDeblocking;
+    MS_BOOL bDisQuarterPixel;
+
+    MS_U8 bIsSyncOn;
+    MS_U32 u32SyncTolerance;
+    MS_U32 u32SyncRepeatTH;
+    MS_U32 u32SyncVideoDelay;
+    MS_U32 u32SyncFreeRunTH;
+    MS_U32 u32MiuBurstLevel;
+} HVD_Settings;
+
+//-----------------------------------------------------------------------------
+/// @brief \b Struct \b Name: HVD_CC_Info
+/// @brief \b Struct \b Description:  HVD Close Caption Infomation.
+//-----------------------------------------------------------------------------
+typedef struct
+{
+    MS_U8 u8UserDataMode;
+    MS_U8 u8ParsingStatus;
+    MS_BOOL b708Enable;
+    MS_BOOL b608InfoEnhance;
+    //MS_BOOL bBufMiu1[2];
+    MS_U8 u8BufMiuSel[2];
+    MS_BOOL bOverFlow[2];
+    MS_PHY u32RingBufStartPAddr[2];//physical address
+    MS_U32 u32RingBufLen[2];
+    MS_U32 volatile u32RingBufVacancy[2];
+    MS_PHY volatile u32RingBufRPAddr[2], u32RingBufWPAddr[2];//physical address
+    MS_U32 volatile u32FWUsrDataRIdx, u32FWUsrDataWIdx;
+    MS_U32 u32PktLen708;
+    MS_VIRT u32PktHdrAddr708;
+    MS_U8 u8CC608buf[512];
+    MS_U8 u8CC708buf[512];
+} HVD_CC_Info;
+
+typedef struct
+{
+    MS_U16 u16TmpRef;
+    MS_U16 u16PicStruct;
+    MS_U32 u32Pts;
+    MS_U8  u8UsrDataCnt;
+} HVD_CC_608EnhanceInfo;
+
+
+//-----------------------------------------------------------------------------
+/// @brief \b Struct \b Name: HVD_ISR_Ctrl
+/// @brief \b Struct \b Description:  HVD driver ISR control.
+//-----------------------------------------------------------------------------
+typedef struct
+{
+    MS_BOOL bRegISR;
+    MS_BOOL bInISR;
+    MS_U32  u32ISRInfo;
+    MS_U32  u32IntCount;
+    HVD_ISRCallBack pfnISRCallBack;
+    MS_BOOL bDisableISRFlag;
+    MS_BOOL bIsHvdIsr;
+    MS_BOOL bIsG2Vp9Isr;
+    HWDEC_ISR_TYPE  eHWDecIsr; //HVD, EVD, G2VP9 ISR
+} HVD_ISR_Ctrl;
+
+//-----------------------------------------------------------------------------
+/// @brief \b Struct \b Name: HVD_EX_Drv_Ctrl
+/// @brief \b Struct \b Description:  HVD driver internal control.
+//-----------------------------------------------------------------------------
+typedef struct
+{
+// init stage
+    MS_BOOL bUsed;
+    HVD_EX_MemMap MemMap;         ///< HVD memory config
+    HVD_Init_Params InitParams;         ///< HVD init settings
+    MS_BOOL bNoDrvProccBuf;
+    MS_BOOL bAutoRmLastZeroByte;
+    MS_BOOL bCannotAccessMIU256;
+    MS_U32  u32CmdTimeout;          ///< HVD FW command timeout
+    void *pLastFrmInfo;
+    void *pLastFrmInfo_ext;
+
+// reset stage
+    MS_U32  u32CtrlMode;            ///< HVD run-time control flag
+    MS_U32  u32DummyWriteBuf;       ///< For dummy write MIU action.
+    //MS_U32  u32CPUNonCacheMask;         ///< CPU non-cache mask
+    MS_U32  u32NULLPacketSize;      ///< to store the size of AVI null packet pattern
+    MS_VIRT u32NULLPacketAddr;      ///< to store the start address of AVI null packet pattern from bitstream buffer base.
+    MS_U32  u32RV_FlushPacketSize;      ///< to store the size of rm flush packet pattern
+    MS_U32  u32RV_FlushPacketAddr;      ///< to store the start address of rm flush packet pattern from bitstream buffer base.
+    MS_U32  u32StepDecodeCnt;
+    //MS_U32  u32LastBBUPTS;
+    //MS_U32  u32DummyDataSize;           ///< buffer size of dummy data.
+    //MS_U32  u32RestSizeofPushDummy;
+    //MS_U32  u32AddrPushDummy;
+    MS_U32  u32LastESRptr;
+    MS_U32  u32BBUTblInBitstreamBufAddr;
+    MS_U32  u32BBUPacketCnt;
+    MS_U32  u32BBUWptr_Fired;
+    MS_U32  u32LastErrCode;
+    //MS_BOOL bPushingDummy;
+    MS_BOOL bIsDispInfoChg;
+    MS_BOOL bFrmRateSupported;
+    HVD_Nal_Entry  LastNal;
+    HVD_Alive_Status LivingStatus;
+
+// recovery stage
+    MS_BOOL bStepDecoding;
+    HVD_Settings Settings;
+
+    MS_U8 bTurboFWMode; //TRUE:not reload FW more than once if pre-decoder is the same.
+
+// ISR control
+    HVD_ISR_Ctrl HVDISRCtrl;
+    MS_U32 u32Sid; // stream ID
+
+// user data
+    MS_U32 u32UsrDataRd;
+    MS_U32 u32UsrDataWr;
+    HVD_CC_Info CloseCaptionInfo;
+
+    MS_U32 u32FlushRstPtr;  ///< flush rst ptr: 0: init, 1:after flush and before push packet
+
+// Secure Mode
+    MS_U8 u8SecureMode;  // Enum HVD_SECURE_MODE
+    MS_U8 u8SettingMode;   // Record Setting mode
+    MS_U8 u8Resv[2];
+    MS_U32 u32ExternalDSbuf; // External DS buffer
+    MS_U8 u8CodeMiuSel;
+    MS_U8 u8ESMiuSel;
+    MS_U8 u8FrmMiuSel;
+    MS_U8 u8Frm2MiuSel;
+    MS_U8 u8DrvProccMiuSel;
+#ifdef VDEC3
+    MS_BOOL bShareBBU;
+    MS_U32 u32BBUId;
+    HVD_Original_Stream eStream;
+#endif
+} HVD_EX_Drv_Ctrl;
+
+typedef void(*P_SC_ISR_Proc)(MS_U8 u8SCID);
+
+typedef struct
+{
+  MS_BOOL bEnable;
+  MS_U32 u32IapGnBufAddr;
+  MS_U32 u32IapGnBufSize;
+} HVD_EX_IapGnBufShareBWMode;
+
+typedef struct
+{
+    MS_BOOL bConnect;
+    MS_U8   eMvopPath;
+} HVD_EX_DynmcDispPath;
+
+typedef struct
+{
+    MS_BOOL bEnable;
+    HVD_EX_DynmcDispPath   stDynmcDispPath;
+} HVD_EX_PreCtrlDispPath;
+
+typedef struct
+{
+    MS_BOOL bEnable;
+    MS_U8   u8InputTsp;
+} HVD_EX_PreCtrlInputTsp;
+
+typedef struct
+{
+    MS_BOOL bOnePendingBuffer;
+    MS_BOOL bFrameRateHandling;
+    MS_U32  u32PreSetFrameRate;
+    HVD_EX_IapGnBufShareBWMode  stIapGnShBWMode;
+    MS_BOOL bDisableTspInBbuMode;
+    HVD_MFCodec_mode eMFCodecMode;
+    MS_BOOL bForce8BitMode;
+    MS_U32  eVdecFeature;
+    MS_BOOL bDVSingleLayerMode;
+    MS_BOOL bEnableDynamicCMA;
+    MS_BOOL bCalFrameRate;
+    HVD_EX_PreCtrlDispPath stPreConnectDispPath;
+    HVD_EX_PreCtrlInputTsp stPreConnectInputTsp;
+} HVD_Pre_Ctrl;
+
+//-------------------------------------------------------------------------------------------------
+//  Function and Variable
+//-------------------------------------------------------------------------------------------------
+extern MS_U32 u32UartCtrl;
+//extern MS_U32 u32InitSysTimeBase;
+
+#endif // _DRV_HVD_DEF_H_
+

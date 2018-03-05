@@ -1,0 +1,8 @@
+config DRV_AUDSP
+
+tristate "AUDSP"
+default n
+
+---help---
+Enable compilation option for driver AUDSP
+

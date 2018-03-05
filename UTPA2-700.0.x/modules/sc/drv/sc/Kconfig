@@ -1,0 +1,8 @@
+config DRV_SC
+
+tristate "SC"
+default n
+
+---help---
+Enable compilation option for driver SC
+

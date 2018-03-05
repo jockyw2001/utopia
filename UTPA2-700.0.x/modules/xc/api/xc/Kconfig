@@ -1,0 +1,25 @@
+config API_XC
+
+tristate "XC"
+default n
+
+---help---
+Enable compilation option for API XC
+
+---help---
+Enable compilation option for API XC
+if API_XC
+config XC_SEAMLESS_SCALING
+	bool "Enable XC SEAMLESS SCALING"
+	default n
+	help
+	  Select if you want to enable XC SEAMLESS SCALING. If unsure, say 'N'.
+	  
+config XC_4K2K_PATCH_ENABLE
+	bool "Enable XC 4K2K Patch"
+	default n
+	help
+	  Select if you want to enable XC 4K2K patch. If unsure, say 'N'.
+	  
+endif
+

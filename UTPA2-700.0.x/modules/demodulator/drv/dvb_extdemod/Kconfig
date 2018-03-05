@@ -1,0 +1,8 @@
+config DRV_MSB1233
+
+tristate "MSB1233"
+default n
+
+---help---
+Enable compilation option for driver MSB1233
+

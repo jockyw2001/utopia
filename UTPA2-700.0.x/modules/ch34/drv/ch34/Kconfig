@@ -1,0 +1,8 @@
+config DRV_CH34
+
+tristate "CH34"
+default n
+
+---help---
+Enable compilation option for driver CH34
+

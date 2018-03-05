@@ -1,0 +1,8 @@
+config API_HDMITX
+
+tristate "HDMITX"
+default n
+
+---help---
+Enable compilation option for API HDMITX
+

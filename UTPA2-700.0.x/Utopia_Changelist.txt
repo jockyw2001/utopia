@@ -1,0 +1,14 @@
+UTPA-14.5.1 - Update A7P bulid environment for uclibc.
+
+UTPA-14.5.0
+
+UTPA-14.4 Add DIP capture features.
+
+UTPA-14.3 Support Eden
+
+UTPA-14.2 Support Edison - High-End DTV chipset
+
+UTPA-14.1 Support Edison - Bringup version.
+
+UTPA-14.0
+Support MVC.

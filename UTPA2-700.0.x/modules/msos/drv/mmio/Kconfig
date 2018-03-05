@@ -1,0 +1,8 @@
+config DRV_MMIO
+
+tristate "MMIO"
+default n
+
+---help---
+Enable compilation option for driver MMIO
+

@@ -1,0 +1,9 @@
+#!/bin/sh
+_TEMP_PATH=`pwd`
+
+
+
+
+cd $_TEMP_PATH/project/u3_ecos; make clean sc
+cd $_TEMP_PATH/project/u3_linux; make clean sc
+

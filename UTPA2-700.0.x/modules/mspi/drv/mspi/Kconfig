@@ -1,0 +1,8 @@
+config DRV_MSPI
+
+tristate "MSPI"
+default n
+
+---help---
+Enable compilation option for driver MSPI
+

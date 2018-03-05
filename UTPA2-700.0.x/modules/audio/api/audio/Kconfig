@@ -1,0 +1,7 @@
+config API_AUDIO
+
+tristate "AUDIO"
+default n
+
+---help---
+Enable compilation option for API AUDIO

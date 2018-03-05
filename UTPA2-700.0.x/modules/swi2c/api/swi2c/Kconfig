@@ -1,0 +1,8 @@
+config API_SWI2C
+
+tristate "SWI2C"
+default n
+
+---help---
+Enable compilation option for API SWI2C
+

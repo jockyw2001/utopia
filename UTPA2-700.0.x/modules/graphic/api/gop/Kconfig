@@ -1,0 +1,75 @@
+config API_GOP
+
+tristate "GOP"
+default n
+
+---help---
+Enable compilation option for API GOP
+if API_GOP
+config GOP_POOL_ARRANGE
+	bool "Enable GOP POOL ARRANGE"
+	default y
+	help
+	  Select if you want to enable GOP POOL ARRANGE. If unsure, say 'N'.
+
+config GOP_GWIN_MISC
+	bool "Enable GOP GWIN MISC"
+	default y
+	help
+	  Select if you want to enable GOP GWIN MISC. If unsure, say 'N'.
+	  
+config GOP_2ND_PAL
+	bool "Enable GOP 2ND PAL"
+	default y
+	help
+	  Select if you want to enable GOP 2ND Palette. If unsure, say 'N'.
+	  
+config GOP_BG
+	bool "Enable GOP POOL ARRANGE"
+	default y
+	help
+	  Select if you want to enable GOP Back Ground. If unsure, say 'N'.
+	  
+config GOP_FADE
+	bool "Enable GOP FADE"
+	default y
+	help
+	  Select if you want to enable GOP FADE. If unsure, say 'N'.	  	  	  
+
+config GOP_YUV_SWAP
+	bool "Enable GOP POOL ARRANGE"
+	default y
+	help
+	  Select if you want to enable GOP YUV SWAP. If unsure, say 'N'.
+	  
+config GOP_CONTRAST
+	bool "Enable GOP CONTRAST"
+	default y
+	help
+	  Select if you want to enable GOP CONTRAST. If unsure, say 'N'.	  
+
+config GOP_VE_CAPTURE
+	bool "Enable GOP VE CAPTURE"
+	default y
+	help
+	  Select if you want to enable GOP VE CAPTURE. If unsure, say 'N'.
+	  
+config GOP_SCROLL
+	bool "Enable GOP SCROLL"
+	default y
+	help
+	  Select if you want to enable GOP SCROLL. If unsure, say 'N'.	 
+	  
+config GOP_TEST_PATTERN
+	bool "Enable GOP TEST PATTERN"
+	default y
+	help
+	  Select if you want to enable GOP TEST PATTERN. If unsure, say 'N'.
+
+config GOP_DISABLE_GFLIP
+	bool "Disabel GOP GFLIP"
+	default n
+	help
+	  Select if you want to disable GOP GFLIP. If unsure, say 'N'.
+
+endif

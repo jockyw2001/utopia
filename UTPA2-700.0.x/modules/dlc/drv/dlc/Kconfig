@@ -1,0 +1,8 @@
+config DRV_DLC
+
+tristate "DLC"
+default n
+
+---help---
+Enable compilation option for driver DLC
+

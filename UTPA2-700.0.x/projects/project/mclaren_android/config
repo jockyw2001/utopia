@@ -1,0 +1,212 @@
+
+# **********************************************
+# Build Configuration
+# **********************************************
+
+# Make Type: lib / exe / lint
+MAKE_TYPE   ?= lib
+
+# Link Type: static / dynamic(Linux)
+LINK_TYPE   ?= static
+
+# Build Type: debug / retail
+BLT_TYPE    ?= retail
+
+# Debug Level: Level 1(HAL), Level 2(Driver), Level 3(Middleware), Level 4(API), Level 5(Application)
+DEBUGLEVEL  = 5
+
+# FW Type: external / embedded
+FW_TYPE ?= embedded
+# MCU: aeon / mips4ke / mips34k / mips74k /arm9
+# TOOLCHAIN:
+#   ELF: mips-sde-elf / aeon / mipsisa32-elf
+#   Linux: mips-linux-gnu / mips2_fp_le / arm-none-linux-gnueabi / arm-none-eabi
+#   Android: mips-linux-gnu(mipsfroyo_2.2) / arm-eabi(gingerbread_2.3) / arm-linux-androideabi(ics_4.0/jb_4.1)
+#   GoogleTV: arm-unknown-linux-gnueabi(honeycomb_3.2)
+MCU_TYPE    = arm_ca12
+TOOLCHAIN  = arm-linux-androideabi
+
+# OS: ecos / linux / nos
+OS_TYPE     = linux
+PLATFORM    = android
+FPU_ENABLE = 1
+
+# Endianess: mlittle-endian only
+ENDIAN      = mlittle-endian
+
+# Chip: M7821
+CHIP        = M7821
+
+# TS2_SUPPORT: y / n
+TS2_ENABLE = y
+
+# VQ_ENABLE: y / n
+VQ_ENABLE = y
+
+# EXT_FILTER_ENABLE: y / n
+EXT_FILTER_ENABLE = y
+
+# MMFILEIN_ENABLE: y / n
+MMFILEIN_ENABLE = y
+
+# MMFI3D_ENABLE: y / n
+MMFI3D_ENABLE = y
+
+# MMFIMOBF_ENABLE: y / n
+MMFIMOBF_ENABLE = y
+
+# STC64_ENABLE: y / n
+STC64_ENABLE = y
+
+# HW_PCR_ENABLE: y / n
+HW_PCR_ENABLE = n
+
+# MOBF_ENABLE: y / n
+MOBF_ENABLE = y
+
+# DSCMB_CSA_ENABLE: y / n
+DSCMB_CSA_ENABLE = y
+
+# DSCMB_MULTI2_ENABLE: y/n
+DSCMB_MULTI2_ENABLE = y
+
+# Project name
+PROJNAME    = MDDI
+
+# Image name
+IMAGENAME   = $(CHIP)_$(OS_TYPE)
+
+#TODO: I hate this!!
+# working processor: HK/co-processor (used for HW mutex)
+PROCESSOR = HK
+
+# Lint Command, option file
+LINT_OPT    = opt_linux.lnt
+ifeq ($(shell uname -o),Cygwin)
+LINT_CMD    = $(CURDIR)/../../tools/lint/lint-nt.exe -b -v -zero -fff
+LINT_CMD    += -i$(shell cygpath -m $(CURDIR)/../../tools/lint/lnt) $(LINT_OPT)
+else
+LINT_CMD    = $(CURDIR)/../../tools/lint/flint -b -v -zero -fff
+LINT_CMD    += -i$(CURDIR)/../../tools/lint/lnt $(LINT_OPT)
+endif
+
+
+# **********************************************
+# Build Option
+# **********************************************
+
+CFG_BOARD   = BD_MST215A-D01A
+
+CFG_CC_DEFS = -D'CHIP_M7821' -D'MS_BOARD_TYPE_SEL=$(CFG_BOARD)' -D'MS_C_STDLIB'
+CFG_CC_OPTS =
+CFG_LD_OPTS =
+
+ifeq ($(MCU_TYPE),aeon)
+CFG_CC_DEFS += -D'MCU_AEON'
+endif
+ifeq ($(MCU_TYPE),mips4ke)
+CFG_CC_DEFS += -D'MCU_MIPS_4KE'
+endif
+ifeq ($(MCU_TYPE),mips34k)
+CFG_CC_DEFS += -D'MCU_MIPS_34K'
+endif
+ifeq ($(MCU_TYPE),mips74k)
+CFG_CC_DEFS += -D'MCU_MIPS_74K'
+endif
+ifeq ($(MCU_TYPE),arm9)
+CFG_CC_DEFS += -D'MCU_ARM_9'
+endif
+ifeq ($(MCU_TYPE),arm_ca12)
+CFG_CC_DEFS += -D'MCU_ARM_CA12'
+endif
+
+ifeq ($(OS_TYPE),ecos)
+CFG_CC_DEFS += -D'MSOS_TYPE_ECOS'
+endif
+ifeq ($(OS_TYPE),linux)
+CFG_CC_DEFS += -D'MSOS_TYPE_LINUX'
+endif
+ifeq ($(OS_TYPE),nos)
+CFG_CC_DEFS += -D'MSOS_TYPE_NOS'
+endif
+
+ifeq ($(FW_TYPE),external)
+CFG_CC_DEFS += -D'FW_EXTERNAL_BIN'
+endif
+ifeq ($(FW_TYPE),embedded)
+CFG_CC_DEFS += -D'FW_EMBEDDED_ASC'
+endif
+
+ifeq ($(CHIP),edison)          #if CHIP edison
+
+ifeq ($(TS2_ENABLE),y)
+CFG_CC_DEFS += -D'TS2_IF_SUPPORT'
+endif
+ifeq ($(VQ_ENABLE),y)
+CFG_CC_DEFS += -D'VQ_ENABLE'
+endif
+ifeq ($(EXT_FILTER_ENABLE),y)
+CFG_CC_DEFS += -D'EXT_FILTER_SUPPORT'
+endif
+ifeq ($(MMFILEIN_ENABLE),y)
+CFG_CC_DEFS += -D'MMFILEIN'
+endif
+ifeq ($(MMFI3D_ENABLE),y)
+CFG_CC_DEFS += -D'MMFI_VD3D'
+endif
+ifeq ($(MMFIMOBF_ENABLE),y)
+CFG_CC_DEFS += -D'MM_MOBF'
+endif
+ifeq ($(STC64_ENABLE),y)
+CFG_CC_DEFS += -D'STC64_SUPPORT'
+endif
+ifeq ($(HW_PCR_ENABLE),y)
+CFG_CC_DEFS += -D'HWPCR_ENABLE'
+endif
+ifeq ($(MOBF_ENABLE),y)
+CFG_CC_DEFS += -D'MOBF_ENABLE'
+endif
+ifeq ($(DSCMB_CSA_ENABLE),y)
+CFG_CC_DEFS += -D'DSCMB_CSA_ENABLE'
+endif
+ifeq ($(DSCMB_MULTI2_ENABLE),y)
+CFG_CC_DEFS += -D'DSCMB_MULTI2_ENABLE'
+endif
+
+endif                      #endif CHIP edison
+
+# **********************************************
+# Tool Chain Configuration
+#
+# Required ENV
+#       $(ROOT) e.g //utopia/
+#
+# Supported TOOLCHAIN
+#       mips-linux-gnu
+#       mips-sde-elf
+#       mips2_fp_le
+#       aeon
+#       mipsisa32-elf (OBSOLETE)
+#       arm-none-linux-gnueabi
+#       arm-eabi
+#
+# Effected ENV
+#       CFG_STDLIB_DIR =
+#       CFG_LINT       =
+#       CFG_CC_OPTS    +=
+#       CFG_LD_OPTS    +=
+#       CFG_AS_OPTS    +=
+# **********************************************
+
+include $(ROOTLIB)/cfg_tool.mk
+
+
+ifeq ($(LINK_TYPE),dynamic)
+CFG_LD_OPTS += -shared
+LIB_EXT     = so
+else
+CFG_LD_OPTS += --gc-sections -static
+LIB_EXT     = a
+endif
+
+

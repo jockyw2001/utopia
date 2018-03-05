@@ -1,0 +1,354 @@
+#ifndef __TVENCODER__
+#define __TVENCODER__
+
+#include "drvTVEncoder.h"
+
+#include "MsTypes.h"
+
+typedef enum{
+    E_TVENCODER_POOL_ID_VE0,
+} eTvencoderResourceID;
+
+typedef enum {
+    E_TVENCODER_FAIL = 0,
+    E_TVENCODER_OK,
+} E_TVENCODER_RET;
+
+//typedef MS_SWITCH_VE_SRC_STATUS (*IOCTL_TVENCODER_SETINPUTSRC)(PMS_VE_InputSrc_Info pInputSrcInfo);
+
+
+typedef enum{
+    //E_MDRV_CMD_TVENCODER_Init,
+    E_MDRV_CMD_TVE_GetInfo,
+    E_MDRV_CMD_TVE_GetStatues,
+    E_MDRV_CMD_TVE_SetDbgLevel,
+    E_MDRV_CMD_TVE_SwitchInputSRC,
+    E_MDRV_CMD_TVE_SetInputSRC,
+    E_MDRV_CMD_TVE_SwitchOutputDest,
+    E_MDRV_CMD_TVE_SetOutputCtrl,
+    E_MDRV_CMD_TVE_SetOutputVideoStd,
+    E_MDRV_CMD_TVE_SetMemoryBaseAddr,
+    E_MDRV_CMD_TVE_Init,
+    E_MDRV_CMD_TVE_Exit,
+    E_MDRV_CMD_TVE_SetWSSData,
+    E_MDRV_CMD_TVE_GetWSSData,
+    E_MDRV_CMD_TVE_SetMode,
+    E_MDRV_CMD_TVE_SetBlackSceen,
+    E_MDRV_CMD_TVE_IsBlackScreenEnabled,
+    E_MDRV_CMD_TVE_SetTtxBuffer,
+    E_MDRV_CMD_TVE_VE_GetTtxReadDoneStatus,
+    E_MDRV_CMD_TVE_EnableCcSw,
+    E_MDRV_CMD_TVE_SetCcRange,
+    E_MDRV_CMD_TVE_SendCcData,
+    E_MDRV_CMD_TVE_set_display_window,
+    E_MDRV_CMD_TVE_SetOSD,
+    E_MDRV_CMD_TVE_SetRGBIn,
+    //E_MDRV_CMD_TVE_set_display_window,
+    E_MDRV_CMD_TVE_Get_Output_Video_Std,
+    E_MDRV_CMD_TVE_SetCaptureMode,
+    E_MDRV_CMD_TVE_GetDstInfo,
+    E_MDRV_CMD_TVE_Set_TestPattern,
+    E_MDRV_CMD_TVE_DisableRegWrite,
+    E_MDRV_CMD_TVE_AdjustPositionBase,
+    E_MDRV_CMD_TVE_Set_Customer_Scaling,
+    E_MDRV_CMD_TVE_InitVECapture,
+    E_MDRV_CMD_TVE_EnaVECapture,
+    E_MDRV_CMD_TVE_Adjust_FrameStart,
+    E_MDRV_CMD_TVE_SetPowerState,
+
+    E_MDRV_CMD_TVE_Set_CusTable,
+    E_MDRV_CMD_TVE_EnableCusTable,
+    E_MDRV_CMD_TVE_Set_FrameColor,
+    E_MDRV_CMD_TVE_Set_OSDLayer,
+    E_MDRV_CMD_TVE_Get_OSDLayer,
+    E_MDRV_CMD_TVE_Set_VideoAlpha,
+    E_MDRV_CMD_TVE_Get_VideoAlpha,
+
+    E_MDRV_CMD_TVE_DCS_SetType,
+    E_MDRV_CMD_TVE_DCS_SetActivationKey,
+
+    E_MDRV_CMD_TVE_ReloadSetting,
+
+    E_MDRV_CMD_TVE_GetConfig,
+
+    E_MDRV_CMD_TVE_MAX,
+}eTvencoderIoctlOpt;
+
+typedef struct DLL_PACKED _TVE_GETINfO
+{
+    VE_DrvInfo *pVE_DrvInfo;
+    E_TVENCODER_RET eRet;
+}TVE_GETINFO, *PTVE_GETINFO;
+
+typedef struct DLL_PACKED _TVE_GETSTATUS
+{
+    VE_DrvStatus *pStaus;
+    E_TVENCODER_RET eRet;
+}TVE_GETSTATUS, *PTVE_GETSTATUS;
+
+typedef struct _TVE_SETDBGLEVEL
+{
+    MS_U16 u16Level;
+    E_TVENCODER_RET eRet;
+}TVE_SETDBGLEVEL, *PTVE_SETDBGLEVEL;
+
+/*typedef struct _TVE_GETCAPS
+{
+    VE_Caps* pCaps;
+}TVE_GETCAPS, *PTVE_GETCAPS;
+*/
+typedef struct _TVE_SWITCH_SRC_INFO
+{
+    PMS_Switch_VE_Src_Info pSwithcSrc_info;
+    E_TVENCODER_RET eRet;
+}TVE_SWITCH_SRC_INFO, *PTVE_SWITCH_SRC_INFO;
+
+typedef struct _TVE_SETINPUTSRC
+{
+    PMS_VE_InputSrc_Info pInputSrcInfo;
+    E_TVENCODER_RET eRet;
+}TVE_SETINPUTSRC, *PTVE_SETINPUTSRC;
+
+typedef struct _TVE_SWITCHOUTPUTDEST
+{
+    PMS_Switch_VE_Dest_Info pSwitchInfo;
+    E_TVENCODER_RET eRet;
+}TVE_SWITCHOUTPUTDEST, *PTVE_SWITCHOUTPUTDEST;
+
+typedef struct _TVE_SETOUTPUTCTRL
+{
+    PMS_VE_Output_Ctrl pOutputCtrl;
+    E_TVENCODER_RET eRet;
+}TVE_SETOUTPUTCTRL, *PTVE_SETOUTPUTCTRL;
+
+typedef struct _TVE_SETOUTPUTVIDEOSTD
+{
+    MS_VE_VIDEOSYS VideoSystem;
+    E_TVENCODER_RET eRet;
+}TVE_SETOUTPUTVIDEOSTD, *PTVE_SETOUTPUTVIDEOSTD;
+
+typedef struct DLL_PACKED _TVE_SETMEMORYBASEADDR
+{
+    MS_PHY phyMIUAddress;
+    MS_U32 u32MIUSize;
+}TVE_SETMEMORYBASEADDR, *PTVE_SETMEMORYBASEADDR;
+
+typedef struct DLL_PACKED _TVE_GETCONFIG
+{
+    MS_PHY *pMIUAddress;
+    E_TVENCODER_RET eRet;
+}TVE_GETCONFIG, *PTVE_GETCONFIG;
+
+typedef struct DLL_PACKED _TVE_INIT
+{
+    MS_PHY u32MIUAddress;
+    E_TVENCODER_RET eRet;
+}TVE_INIT, *PTVE_INIT;
+
+typedef struct _TVE_EXIT
+{
+    E_TVENCODER_RET eRet;
+}TVE_EXIT, *PTVE_EXIT;
+
+typedef struct _TVE_SETWSSDATA
+{
+    MS_BOOL bEn;
+    MS_U16
+ u16WSSData;
+    E_TVENCODER_RET eRet;
+}TVE_SETWSSDATA, *PTVE_SETWSSDATA;
+
+typedef struct _TVE_GETWSSDATA
+{
+    MS_U16 u16WSSData;
+}TVE_GETWSSDATA, *PTVE_GETWSSDATA;
+
+typedef struct DLL_PACKED _TVE_SETMODE
+{
+   
+MS_VE_Set_Mode_Type * pVESetMode;
+    E_TVENCODER_RET eRet;
+}TVE_SETMODE, *PTVE_SETMODE;
+
+typedef struct _TVE_SETBLACKSCREEN
+{
+    MS_BOOL bEnable;
+}TVE_SETBLACKSCREEN, *PTVE_SETBLACKSCREEN;
+
+typedef struct _TVE_ISBLACKSCREENENABLE
+{
+    MS_BOOL bEnable;
+}TVE_ISBLACKSCREENENABLE, *PTVE_ISBLACKSCREENENABLE;
+
+typedef struct _TVE_SETTTXBUFFER
+{
+    MS_PHY u32StartAddr;
+    MS_U32 u32Size;
+}TVE_SETTTXBUFFER, *PTVE_SETTTXBUFFER;
+
+typedef struct _TVE_GETTTXREADDONE
+{
+    MS_BOOL bDone;
+}TVE_GETTTXREADDONE, *PTVE_GETTTXREADDONE;
+
+typedef struct _TVE_ENABLECCSW
+{
+    MS_BOOL bEnable;
+}TVE_ENABLECCSW, *PTVE_ENABLECCSW;
+
+typedef struct _TVE_SETCCRANGE
+{
+    MS_U16 u16odd_start;
+    MS_U16 u16odd_end;
+    MS_U16 u16even_start;
+    MS_U16 u16even_end;
+}TVE_SETCCRANGE, *PTVE_SETCCRANGE;
+
+typedef struct _TVE_SENDCCDATA
+{
+    MS_BOOL bIsOdd;
+    MS_U16 u16data;
+}TVE_SENDCCDATA, *PTVE_SENDCCDATA;
+
+typedef struct _TVE_SETDISPLAYWIN
+{
+    MS_VE_WINDOW_TYPE 
+stDispWin;
+}TVE_SETDISPLAYWIN, *PTVE_SETDISPLAYWIN;
+
+typedef struct _TVE_SETOSD
+{
+    MS_BOOL bEnable;
+}TVE_SETOSD, *PTVE_SETOSD;
+
+typedef struct _TVE_SETRGBIN
+{
+    MS_BOOL bEnable;
+}TVE_SETRGBIN, *PTVE_SETRGBIN;
+
+typedef struct _TVE_GETOUTPUTVIDEOSTD
+{
+    MS_VE_VIDEOSYS stVideoSys;
+}TVE_GETOUTPUTVIDEOSTD, *PTVE_GETOUTPUTVIDEOSTD;
+
+typedef struct _TVE_SETCAPMODE
+{
+    MS_BOOL bEnable;
+}TVE_SETCAPMODE, *PTVE_SETCAPMODE;
+
+typedef struct DLL_PACKED _TVE_GETDSTINFO
+{
+    MS_VE_DST_DispInfo *pDstInfo;
+    MS_U32 u32SizeofDstInfo;
+    E_TVENCODER_RET eRet;
+}TVE_GETDSTINFO, *PTVE_GETDSTINFO;
+
+typedef struct _TVE_SETTESTPATTERN
+{
+    MS_BOOL bEnable;
+}TVE_SETTESTPATTERN, *PTVE_SETTESTPATTERN;
+
+typedef struct _TVE_DISABLEREGWRITE
+{
+    MS_BOOL bFlag;
+    E_TVENCODER_RET eRet;
+}TVE_DISABLEREGWRITE, *PTVE_DISABLEREGWRITE;
+
+typedef struct _TVE_ADJPOSITIONBASE
+{
+    MS_S32 s32WAddrAdjustment;
+    MS_S32 s32RAddrAdjustment;
+    E_TVENCODER_RET eRet;
+}TVE_ADJPOSITIONBASE, *PTVE_ADJPOSITIONBASE;
+
+typedef struct DLL_PACKED _TVE_SETCUSSCALING
+{
+    MS_VE_CusScalingInfo *pstVECusScalingInfo;
+    E_TVENCODER_RET eRet;
+}TVE_SETCUSSCALING, *PTVE_SETCUSSCALING;
+
+typedef struct DLL_PACKED _TVE_INITCAPTURE
+{
+    PMS_VE_Output_CAPTURE pVECapture;
+}_TVE_INITCAPTURE, *P_TVE_INITCAPTURE;
+
+typedef struct _TVE_ENACAPTURE
+{
+    PMS_VE_VECAPTURESTATE pstVECapState;
+    E_TVENCODER_RET eRet;
+}TVE_ENACAPTURE, *PTVE_ENACAPTURE;
+
+typedef struct DLL_PACKED _TVE_ADJFRAMESTART
+{
+    MS_VE_WINDOW_TYPE *stSrcWin;
+    MS_S16 pixel_offset;
+    E_TVENCODER_RET eRet;
+}TVE_ADJFRAMESTART, *PTVE_ADJFRAMESTART;
+
+typedef struct _TVE_SETPOWERSTATE
+{
+    EN_POWER_MODE ePowerState;
+    E_TVENCODER_RET eRet;
+}TVE_SETPOWERSTATE, *PTVE_SETPOWERSTATE;
+
+typedef struct DLL_PACKED _TVE_SETCUSTABLE
+{
+    MS_VE_VIDEOSYS VideoSystem;
+    MS_U8* pTbl;
+    E_TVENCODER_RET eRet;
+}TVE_SETCUSTABLE, *PTVE_SETCUSTABLE;
+
+typedef struct _TVE_ENABLECUSTABLE
+{
+    MS_BOOL bEnable;
+}TVE_ENABLECUSTABLE, *PTVE_ENABLECUSTABLE;
+
+typedef struct _TVE_SETFRAMECOLOR
+{
+    MS_U32 u32aRGB;
+    E_TVENCODER_RET eRet;
+}TVE_SETFRAMECOLOR, *PTVE_SETFRAMECOLOR;
+
+typedef struct _TVE_SETOSDLAYER
+{
+    MS_VE_OSD_LAYER_SEL eVideoOSDLayer;
+    E_TVENCODER_RET eRet;
+}TVE_SETOSDLAYER, *PTVE_SETOSDLAYER;
+
+typedef struct _TVE_GETOSDLAYER
+{
+    MS_VE_OSD_LAYER_SEL eRet;
+}TVE_GETOSDLAYER, *PTVE_GETOSDLAYER;
+
+typedef struct _TVE_SETVIDEOALPHA
+{
+    MS_U8 u8Val;
+    E_TVENCODER_RET eRet;
+}TVE_SETVIDEOALPHA, *PTVE_SETVIDEOALPHA;
+
+typedef struct DLL_PACKED _TVE_GETVIDEOALPHA
+{
+    MS_U8* pu8Val;
+    E_TVENCODER_RET eRet;
+}TVE_GETVIDEOALPHA, *PTVE_GETVIDEOALPHA;
+
+typedef struct _TVE_DCSSETTYPE
+{
+    MS_BOOL bEnable;
+    MS_U32 eType;
+    E_TVENCODER_RET eRet;
+}TVE_DCSSETTYPE, *PTVE_DCSSETTYPE;
+
+typedef struct DLL_PACKED _TVE_DCSSETACTIVATIONKEY
+{
+    MS_U8 *pu8ActivationKeyTbl;
+    MS_U8 u8ActivationKeyTblSize;
+    E_TVENCODER_RET eRet;
+}TVE_DCSSETACTIVATIONKEY, *PTVE_DCSSETACTIVATIONKEY;
+
+typedef struct _TVE_RELOADSETTING
+{
+    E_TVENCODER_RET eRet;
+}TVE_RELOADSETTING, *PTVE_RELOADSETTING;
+
+#endif // __TVENCODER__

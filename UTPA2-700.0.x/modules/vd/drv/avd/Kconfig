@@ -1,0 +1,8 @@
+config DRV_AVD
+
+tristate "AVD"
+default n
+
+---help---
+Enable compilation option for driver AVD
+

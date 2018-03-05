@@ -1,0 +1,8 @@
+config API_VDEC_LITE
+
+tristate "VDEC_LITE"
+default n
+
+---help---
+Enable compilation option for API VDEC_LITE
+

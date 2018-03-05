@@ -1,0 +1,77 @@
+//THEALE/utopia (named as utopia) Code Line Policy
+
+////////////////////////////////////////////
+Description
+////////////////////////////////////////////
+Utopia mainline
+
+////////////////////////////////////////////
+What test mechanism before submit code
+////////////////////////////////////////////
+1. DS pass
+2. Code review.
+
+////////////////////////////////////////////
+// Integration test (Module test) duration. 
+// 1. 寫出測試的週期, 怎麼測試 (auto test, SQC test, manuel test, etc), 若 test case單純, 也可以將 test case 列在這裡
+// 2. test case 中請區分 performance index test. (若發生 performance issue, 可以馬上被測出來), 及其他的 functionality test.
+////////////////////////////////////////////
+[Auto Test]
+1. Sanity_Inputsource_AV
+2. Sanity_Inputsource_SVideo
+3. Sanity_Inputsource_YPbPr
+4. Sanity_Inputsource_SCART
+5. Sanity_Inputsource_HDMI
+6. Sanity_Inputsource_VGA
+7. Sanity_DTVScan_UK
+8. Sanity_ATVScan_UK
+9. Sanity_Inputsource_ATV
+10. Sanity_Inputsource_DTV
+11. Performance_DTV_boot_step
+12. Performance_ATV_boot
+13. MM_Movie_bbcjapan1080p_quick
+14. MM_Movie_Cartoon_quick
+15. MM_Movie_MPG1080_quick
+16. MM_Movie_1080PH264_quick
+17. MM_Movie_FirstBlood_quick
+18. MM_Movie_sonyMav_quick
+19. MM_Movie_Jewelry_I_really_like_you_quick
+20. MM_Movie_Tonight_MJPG_quick
+21. MM_Movie_Skydiving_480p_quick
+
+////////////////////////////////////////////
+What test mechanism before release
+////////////////////////////////////////////
+The citeria of Utopia release is only passing the auto test. (Utopia daily build and release to SN right.)
+
+On-going plan:
+1. Utopia release line - "UTPA-14.5.x". (50% ready, auto DZ/build/test/submit didn't ready)
+2. Proprietary test program. (RR_530)
+
+
+////////////////////////////////////////////
+Activity on this code line
+////////////////////////////////////////////
+For bug fixing, new feature implementation and new chip configuration is allowed
+
+On-going plan:
+When release line "UTPA-14.5.x" is ready, Only bug fixing is allowed to apply on release line. 
+Any new features and new chip implementations are located on main line and develop line.
+
+
+////////////////////////////////////////////
+Check-in flow: (Please define it)
+////////////////////////////////////////////
+1.	Get Latest source code and merge your change.
+2.	Do a private build (build your source on your PC or build server without error)
+3.	Run DZ
+4.	Get ticket from YMY after passing Reviewers-review.
+5.	Check-in code
+
+////////////////////////////////////////////
+// How to get binary or source code (這裡說的是非 Module maintainer)
+// (1. 若是抓 binary的話, 到那裡抓.)
+// (2. 若是抓 code 的話, 要抓那一版, 去那裡才可以取得 ChangeList. 若是抓 Label 的話,請告知 Label 名稱.)
+////////////////////////////////////////////
+1. SN user: Get the libs from //DAILEO/Supernova/develop/lib/target/[chip name]
+2. Utopia user: Get the source code from //THEALE/utopia_release/UTPA-14.5.x

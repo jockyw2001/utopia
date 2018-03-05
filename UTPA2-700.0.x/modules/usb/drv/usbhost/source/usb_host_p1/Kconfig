@@ -1,0 +1,8 @@
+config DRV_USB_HOST_P1
+
+bool "Apply Host P1"
+default n
+
+---help---
+Enable compilation option for driver USB_HOST_P1
+

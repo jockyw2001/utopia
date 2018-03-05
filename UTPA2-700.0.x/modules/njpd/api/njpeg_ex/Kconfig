@@ -1,0 +1,8 @@
+config API_NJPEG_EX
+
+tristate "NJPEG_EX"
+default n
+
+---help---
+Enable compilation option for API NJPEG_EX
+

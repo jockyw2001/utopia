@@ -1,0 +1,8 @@
+config DRV_UART
+
+tristate "UART"
+default n
+
+---help---
+Enable compilation option for driver UART
+

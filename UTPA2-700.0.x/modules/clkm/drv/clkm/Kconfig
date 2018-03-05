@@ -1,0 +1,14 @@
+config MSTAR_CLKM
+
+tristate "CLKM"
+default n
+
+---help---
+Enable compilation option for driver CLKM
+
+config MSTAR_SRAMPD
+	bool "Enable Sram pd"
+	default n
+	help
+	  Select if you want to enable sram pd. If unsure, say 'N'.
+	  

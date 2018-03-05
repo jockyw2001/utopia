@@ -1,0 +1,895 @@
+#
+# For a description of the syntax of this configuration file,
+# see Documentation/kbuild/kconfig-language.txt.
+#
+mainmenu "Utopia Configuration"
+
+choice
+	prompt "Mstar CHIP"
+    default None
+
+config EMERALD
+	bool "Emerald"
+	help
+	  Select If the operation system is on Emerald.
+	  If unsure, say 'N'.
+
+config EDISON
+	bool "Edison"
+	help
+	  Select If the operation system is on Edison.
+	  If unsure, say 'N'.
+
+config EDEN
+	bool "Eden"
+	help
+	  Select If the operation system is on Eden.
+	  If unsure, say 'N'.
+
+config EIFFEL
+	bool "Eiffel"
+	help
+	  Select If the operation system is on Eiffel
+	  If unsure, say 'N'.
+
+config EULER
+	bool "Euler"
+	help
+	  Select If the operation system is on Euler.
+	  If unsure, say 'N'.
+
+config AMETHYST
+	bool "Amethyst"
+	help
+	  Select If the operation system is on Amethyst.
+	  If unsure, say 'N'.
+
+config MACAW12
+	bool "Macaw12"
+	help
+	  Select If the operation system is on Macaw12.
+	  If unsure, say 'N'.
+
+config K1
+	bool "K1"
+	help
+	  Select If the operation system is on K1.
+	  If unsure, say 'N'.
+
+config KERES
+	bool "Keres"
+	help
+	  Select If the operation system is on Keres.
+	  If unsure, say 'N'.
+
+config KIRIN
+	bool "Kirin"
+	help
+	  Select If the operation system is on kirin.
+	  If unsure, say 'N'.
+
+config KRIS
+	bool "Kris"
+	help
+	  Select If the operation system is on kris.
+	  If unsure, say 'N'.
+
+config NIKE
+	bool "Nike"
+	help
+	  Select If the operation system is on Nike.
+	  If unsure, say 'N'.
+
+config MADISON
+	bool "Madison"
+	help
+	  Select If the operation system is on Madison.
+	  If unsure, say 'N'.
+
+config MIAMI
+	bool "Miami"
+	help
+	  Select If the operation system is on Miami.
+	  If unsure, say 'N'.
+
+config EINSTEIN
+	bool "Einstein"
+	help
+	  Select If the operation system is on Einstein.
+	  If unsure, say 'N'.
+
+config NAPOLI
+	bool "Napoli"
+	help
+	  Select If the operation system is on Einstein.
+	  If unsure, say 'N'.
+
+config EINSTEIN3
+	bool "Einstein3"
+	help
+	  Select If the operation system is on Einstein3.
+	  If unsure, say 'N'.
+
+config KAISER
+	bool "Kaiser"
+	help
+	  Select If the operation system is on Kaiser.
+	  If unsure, say 'N'.
+
+config MONACO
+	bool "Monaco"
+	help
+	  Select If the operation system is on Monaco.
+	  If unsure, say 'N'.
+
+config CLIPPERS
+	bool "Clippers"
+	help
+	  Select If the operation system is on Clippers.
+	  If unsure, say 'N'.
+
+config CELTICS
+	bool "Celtics"
+	help
+	  Select If the operation system is on Celtics.
+	  If unsure, say 'N'.
+
+config MUJI
+	bool "Muji"
+	help
+	  Select If the operation system is on Muji.
+	  If unsure, say 'N'.
+
+config MUNICH
+	bool "Munich"
+	help
+	  Select If the operation system is on Munich.
+	  If unsure, say 'N'.
+
+config KANO
+        bool "Kano"
+        help
+          Select If the operation system is on Munich.
+          If unsure, say 'N'.
+
+config MONET
+	bool "Monet"
+	help
+	  Select If the operation system is on Monet.
+	  If unsure, say 'N'.
+
+config MANHATTAN
+	bool "Manhattan"
+	help
+	  Select If the operation system is on Manhattan.
+	  If unsure, say 'N'.
+
+config MESSI
+	bool "Messi"
+	help
+	  Select If the operation system is on Messi.
+	  If unsure, say 'N'.
+
+config MASERATI
+	bool "Maserati"
+	help
+	  Select If the operation system is on Maserati.
+	  If unsure, say 'N'.
+
+config M7821
+	bool "M7821"
+	help
+	  Select If the operation system is on M7821.
+	  If unsure, say 'N'.
+
+config MAXIM
+	bool "Maxim"
+	help
+	  Select If the operation system is on Maxim.
+	  If unsure, say 'N'.
+
+config K6
+        bool "K6"
+        help
+          Select If the operation system is on K6.
+          If unsure, say 'N'.
+
+config K6LITE
+        bool "K6Lite"
+        help
+          Select If the operation system is on K6Lite.
+          If unsure, say 'N'.
+
+config K7U
+        bool "K7U"
+        help
+          Select If the operation system is on K7U.
+          If unsure, say 'N'.
+
+config CURRY
+        bool "Curry"
+        help
+          Select If the operation system is on Curry.
+          If unsure, say 'N'.
+
+config MUSTANG
+        bool "Mustang"
+        help
+          Select If the operation system is on Mustang.
+          If unsure, say 'N'.
+          
+config M7621
+	bool "M7621"
+	help
+	  Select If the operation system is on M7621.
+	  If unsure, say 'N'.
+
+endchoice
+
+config CHIP
+	string
+	default "emerald" if EMERALD
+	default "edison" if EDISON
+	default "eden" if EDEN
+	default "eiffel" if EIFFEL
+	default "euler" if EULER
+	default "amethyst" if AMETHYST
+	default "macaw12" if MACAW12
+	default "k1" if K1
+	default "keres" if KERES
+	default "kirin" if KIRIN
+	default "kris" if KRIS
+	default "nike" if NIKE
+	default "madison" if MADISON
+	default "miami" if MIAMI
+	default "einstein" if EINSTEIN
+	default "napoli" if NAPOLI
+	default "einstein3" if EINSTEIN3
+	default "kaiser" if KAISER
+	default "monaco" if MONACO
+	default "clippers" if CLIPPERS
+	default "celtics" if CELTICS
+	default "muji" if MUJI
+	default "munich" if MUNICH
+	default "kano" if KANO
+	default "monet" if MONET
+	default "messi" if MESSI
+	default "manhattan" if MANHATTAN
+	default "maserati" if MASERATI
+	default "M7821" if M7821
+	default "maxim" if MAXIM
+	default "k6" if K6
+	default "k6lite" if K6LITE
+	default "k7u" if K7U
+        default "curry" if CURRY
+	default "M7621" if M7621
+	default "mustang" if MUSTANG
+	help
+	  Mstar Chip
+#
+#
+#
+#
+#
+
+menu "Utopia Platform Configuration"
+
+choice
+	prompt "CPU Type"
+    default None
+
+config ARM_CA53
+	bool "ARM_CA53"
+	select DLMALLOC
+	help
+	  Select If the architecture of this chip is based on ARM_CA53 architecture.
+	  If unsure, say 'N'.
+
+config ARM_CA12
+	bool "ARM_CA12"
+	help
+	  Select If the architecture of this chip is based on ARM_CA12 architecture.
+	  If unsure, say 'N'.
+
+config ARM_CA9
+	bool "ARM_CA9"
+	help
+	  Select If the architecture of this chip is based on ARM_CA9 architecture.
+	  If unsure, say 'N'.
+
+config ARM_CA7
+	bool "ARM_CA7"
+	help
+	  Select If the architecture of this chip is based on ARM_CA7 architecture.
+	  If unsure, say 'N'.
+
+config MIPS_4KE
+	bool "MIPS_4KE"
+	help
+	  Select If the architecture of this chip is based on MIPS_4KE architecture.
+	  If unsure, say 'N'.
+
+config MIPS_34K
+	bool "MIPS_34K"
+	help
+	  Select If the architecture of this chip is based on MIPS_34K architecture.
+	  If unsure, say 'N'.
+
+config MIPS_74K
+	bool "MIPS_74K"
+	help
+	  Select If the architecture of this chip is based on MIPS_74K architecture.
+	  If unsure, say 'N'.
+
+config AEON
+	bool "AEON"
+	help
+	  Select If the architecture of this chip is based on AEON architecture.
+	  If unsure, say 'N'.
+
+config R2
+	bool "R2"
+	help
+	  Select If the architecture of this chip is based on R2 architecture.
+	  If unsure, say 'N'.
+endchoice
+
+config MCU_TYPE
+	string
+	default "arm_ca53" if ARM_CA53
+	default "arm_ca12" if ARM_CA12
+	default "arm9" if ARM_CA9
+	default "arm_ca7" if ARM_CA7
+	default "mips4ke" if MIPS_4KE
+	default "mips34k" if MIPS_34K
+	default "mips74k" if MIPS_74K
+	default "aeon" if AEON
+	default "aeon" if R2
+	help
+	  Select the architecture of this platform.
+#
+#
+#
+#
+#
+#
+
+choice
+	prompt "FPU Type"
+    default None
+
+config SOFT
+	bool "soft float"
+	help
+	  Select If the operation system use soft floating point unit.
+	  If unsure, say 'N'.
+
+config HARD
+	bool "hard float"
+	help
+	  Select If the operation system use hard floating point unit.
+	  If unsure, say 'N'.
+endchoice
+
+config FPU
+	string
+	default "soft" if SOFT
+	default "hard" if HARD
+	help
+	  Floating point unit selection
+#
+#
+#
+#
+#
+#
+
+choice
+	prompt "OS Type"
+    default None
+
+config NOS
+	bool "Non-os system"
+	help
+	  Select If the operation system of this chip is Non-os system.
+	  If unsure, say 'N'.
+
+config LINUX
+	bool "Linux system"
+	help
+	  Select If the operation system of this chip is Linux system.
+	  If unsure, say 'N'.
+
+config MS_DEBUG_XC_LOG
+bool "xc debug switch"
+depends on LINUX
+default y
+---help---
+Enable the xc log switch
+
+config ECOS
+	bool "Ecos system"
+	help
+	  Select If the operation system of this chip is Ecos system.
+	  If unsure, say 'N'.
+
+config NUTTX
+	bool "Nuttx system"
+	help
+	  Select If the operation system of this chip is Nuttx system.
+	  If unsure, say 'N'.
+
+config UCOS
+	bool "ucos system"
+	help
+	  Select If the operation system of this chip is ucos system.
+	  If unsure, say 'N'.
+
+config OPTEE
+	bool "Optee system"
+	help
+	  Select If the operation system of this chip is Optee system.
+	  If unsure, say 'N'.
+
+endchoice
+
+config OS_TYPE
+	string
+	default "nos" if NOS
+	default "linux" if LINUX
+	default "ecos" if ECOS
+	default "nuttx" if NUTTX
+	default "ucos" if UCOS
+	default "optee" if OPTEE
+	help
+	  Select the operation system.
+#
+#
+#
+#
+#
+#
+
+choice
+	prompt "Project extended Flag"
+    default None
+
+config TVOS
+	bool "TVOS"
+	help
+	  Select If the operation system of this chip is ecos system.
+	  If unsure, say 'N'.
+
+config ANDROID
+	bool "Android"
+	help
+	  Select If the operation system of this chip is ecos system.
+	  If unsure, say 'N'.
+
+config MBOOT
+	bool "Mboot"
+	help
+	  Select If the operation system of this chip is Nuttx system.
+	  If unsure, say 'N'.
+
+config CHAKRA2
+	bool "Chakra2"
+	help
+	  Select If the operation system of this chip is non-os system.
+	  It is a Chakra2-like systems including Chakra2,Chakra3, etc.
+	  If unsure, say 'N'.
+
+config PUMABOOT
+	bool "PumaBoot"
+	help
+	  Select If the operation system of this chip is non-os system.
+	  It is a Chakra2-like systems including Pumaboot(BootVideo), etc.
+	  If unsure, say 'N'.
+
+config FRC
+	bool "FRC"
+	help
+	  Select If the operation system of this chip is non-os system.
+	  If unsure, say 'N'.
+endchoice
+
+config EXT_PLATFORM_FLAG
+	string
+	default "tvos" if TVOS
+	default "android" if ANDROID
+	default "mboot" if MBOOT
+	default "chakra2" if CHAKRA2
+	default "pumaboot" if PUMABOOT
+	default "frc" if FRC
+	help
+	  Select extra platform option.
+
+choice
+	prompt "Customization Flag"
+	default None
+
+config None
+	bool "None"
+	
+config ROLLS_ROYCE
+	bool "ROLLS_ROYCE"
+	
+endchoice
+#
+#
+#
+#
+#
+#
+
+choice
+	prompt "Kernel Version"
+    default None
+
+config KERN_3_1_10
+	bool "3.1.10"
+	help
+	  Select If the Linux Kernel version is 3.1.10 used for kernel driver.
+	  If unsure, say 'N'.
+
+config KERN_3_10_23
+	bool "3.10.23"
+	help
+	  Select If the Linux Kernel version is 3.10.23 used for kernel driver.
+	  If unsure, say 'N'.
+
+config KERN_3_10_40
+	bool "3.10.40"
+	help
+	  Select If the Linux Kernel version is 3.10.40 used for kernel driver.
+	  If unsure, say 'N'.
+
+config KERN_3_10_86
+	bool "3.10.86"
+	help
+	  Select If the Linux Kernel version is 3.10.86 used for kernel driver.
+	  If unsure, say 'N'.
+
+endchoice
+
+config KERN_VER
+	string
+	default "3.1.10" if KERN_3_1_10
+	default "3.10.23" if KERN_3_10_23
+	default "3.10.40" if KERN_3_10_40
+	default "3.10.86" if KERN_3_10_86
+	help
+	  Linux Kernel Version for K-Driver.
+
+config FPGA
+	bool "FPGA environment"
+	default n
+
+config DLMALLOC
+	bool "MsOS use dlmalloc do memory management"
+	default n
+
+config KERNEL_DLMALLOC
+	bool "MsOS trigger kernel_dlmalloc do memory management"
+		default n
+
+config CHIP_INT_SPI_MODE
+	bool "Enable GIC spi mode"
+	default n
+
+config DONT_USE_CMA
+	bool "Do not use CMA"
+	default n
+
+config MLOG
+	bool "Framework has MLog support"
+	help
+	  Select If the framework of this chip supports MLog.
+	  If unsure, say 'N'.
+	default n
+
+choice
+	prompt "MLog Library Version"
+    default None
+    depends on MLOG
+
+config MLOG_ARM_472
+	bool "ARM 4.7.2 library"
+
+config MLOG_ARM_483
+	bool "ARM 4.8.3 library"
+
+config MLOG_ARM_49X
+	bool "ARM 4.9.X library"
+
+endchoice
+
+config MSOS_EVENTGROUP_MAX_SEL
+	bool "Manually select maximum number of msos event group"
+	default n
+
+config MSOS_EVENTGROUP_MAX_NUM
+	int "Maximum number of msos event group"
+	default 64
+	depends on MSOS_EVENTGROUP_MAX_SEL
+
+endmenu
+#
+#
+#
+#
+#
+#
+
+
+menu "General Setup"
+
+config TOOLCHAIN
+	string "CROSS COMPILE"
+	default "arm-none-linux-gnueabi"
+	help
+	  Select the cross compiler
+
+config TOOLCHAIN_VER
+    string "Cross compiler version"
+    default "4.7.2" if TOOLCHAIN="arm-none-linux-gnueabi"
+    default "4.9.2" if TOOLCHAIN="aarch64-linux-gnu"
+    help
+        Select cross compiler version
+
+config ENDIAN
+	string "Endian"
+	default "mlittle-endian"
+	help
+	  Select big or little endian
+
+endmenu
+#
+#
+#
+#
+#
+
+menu "Build Options"
+
+choice
+	prompt "LINK_TYPE"
+	default None
+
+config STATIC
+	bool "Static"
+	help
+	  Select If the operation system of this chip is Nuttx system.
+	  If unsure, say 'N'.
+
+config DYNAMIC
+	bool "Dynamic"
+	help
+	  Select If the operation system of this chip is Nuttx system.
+	  If unsure, say 'N'.
+endchoice
+
+config LINK_TYPE
+	string
+	default "static" if STATIC
+	default "dynamic" if DYNAMIC
+	help
+	  Select the the linking type
+#
+#
+#
+#
+#
+
+choice
+	prompt "MAKE_TYPE"
+	default None
+
+config LIB
+	bool "Lib"
+	help
+	  Select If the library is built as 'lib' format
+	  If unsure, say 'N'.
+
+config EXE
+	bool "Exe"
+	help
+	  Select If the library is built as 'exe' format
+	  If unsure, say 'N'.
+
+config LINT
+	bool "Lint"
+	help
+	  Select If the library is built as 'lint' format
+	  If unsure, say 'N'.
+endchoice
+
+config MAKE_TYPE
+	string
+	default "lib" if LIB
+	default "exe" if EXE
+	default "lint" if LINT
+	help
+	  Make type
+#
+#
+#
+#
+#
+
+choice
+	prompt "Release Type"
+	default None
+
+config DEBUG
+	bool "Debug"
+	help
+	  Select If the libraries release is on debug level.
+	  If unsure, say 'N'.
+
+config RETAIL
+	bool "Retail"
+	help
+	  Select If the libraries release is on retail level.
+	  If unsure, say 'N'.
+endchoice
+
+config BLT_TYPE
+	string
+	default "debug" if DEBUG
+	default "retail" if RETAIL
+	help
+	  Select the type of libraries release.
+#
+#
+#
+#
+#
+
+choice
+	prompt "Debug Level"
+	default None
+
+config LEVEL_1
+	bool "Level 1(HAL)"
+	help
+	  Select If the operation system of this chip is Nuttx system.
+	  If unsure, say 'N'.
+
+config LEVEL_2
+	bool "Level 2(Driver)"
+	help
+	  Select If the operation system of this chip is Nuttx system.
+	  If unsure, say 'N'.
+
+config LEVEL_3
+	bool "Level 3(Middleware)"
+	help
+	  Select If the operation system of this chip is Nuttx system.
+	  If unsure, say 'N'.
+
+config LEVEL_4
+	bool "Level 4(API)"
+	help
+	  Select If the operation system of this chip is Nuttx system.
+	  If unsure, say 'N'.
+
+config LEVEL_5
+	bool "Level 5(Application)"
+	help
+	  Select If the operation system of this chip is Nuttx system.
+	  If unsure, say 'N'.
+endchoice
+
+config DEBUG_LEVEL
+	string
+	default "1" if LEVEL_1
+	default "2" if LEVEL_2
+	default "3" if LEVEL_3
+	default "4" if LEVEL_4
+	default "5" if LEVEL_5
+	help
+	  Select the debug level
+#
+#
+#
+#
+#
+
+choice
+	prompt "Firmware Type"
+	default None
+
+config FW_TYPE_EXTERNAL
+	bool "external"
+	help
+	  Select If you want to use external firmware
+
+config FW_TYPE_EMBEDDED
+	bool "embedded"
+	help
+	  Select If you want to use embedded firmware
+
+endchoice
+
+config PURE_SN
+	bool "for pure sn config"
+	default n
+
+config BIFROST_32BIT_MODE
+	bool "for bifrost 32bit mode"
+	default n
+
+config MIU_64BIT_DOMAIN_SEL
+	bool "for miu 64bit domain setting"
+	default n
+
+config FW_TYPE
+	string
+	default "external" if FW_TYPE_EXTERNAL
+	default "embedded" if FW_TYPE_EMBEDDED
+	help
+	  Select If you want to use external or embedded  firmware
+#
+#
+#
+#
+#
+
+config INCREMENTAL_BUILD
+        bool "Incremental Build"
+        default n
+        help
+            Enable incremental Build
+
+config STACK_PROTECTOR
+        bool "Stack protector" if (LINUX && TOOLCHAIN_VER!="4.7.2")
+        default n
+        help
+            Enable Stack protector build option -fstack-protector
+
+#
+#
+#
+#
+#
+
+choice
+	prompt "Assert Type"
+	default None
+
+config NON_BLOCK
+	bool "non_block"
+	help
+	  Not cause core dump when asert happen.
+
+config BLOCK
+	bool "block"
+	help
+	  Cause core dump when asert happen.
+endchoice
+
+config ASSERT_TYPE
+	string
+	default "non_block" if NON_BLOCK
+	default "block" if BLOCK
+	help
+	  Select the type of utopia assert.
+
+config VERSION_INFO_EMBADE
+        bool "Embade the ChangeList number of version_info into library"
+        default n
+        help
+            Enable version information embadder
+
+config UTOPIA_20
+        bool "UTOPIA 20"
+        default y
+        help
+          Select if you want to enable Utopia 2_0. If unsure, say 'Y'.
+endmenu
+
+
+source "../../mxlib/drv/Kconfig"
+source "../../mxlib/api/Kconfig"
+source "../../mxlib/utopia_core/Kconfig"

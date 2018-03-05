@@ -1,0 +1,193 @@
+#include <linux/kernel.h>
+#include <linux/sched.h>
+#include <linux/string.h>
+#include <linux/slab.h>
+#include <asm/uaccess.h>
+#include "XC_DWIN_adp.h"
+#include "utopia.h"
+#include "utopia_adp.h"
+#include "apiXC_DWIN_v2.h"
+#include "apiXC_DWIN.h"
+
+UADP_SDT_NAMEn_DEF(DIP_NULL,0);
+
+
+//MDrv_CMD_DIP_INIT,
+//MDrv_CMD_DIP_GET_RESOURCE,
+//MDrv_CMD_DIP_RELEASE_RESOURCE,
+//MDrv_CMD_DIP_QUERY_RESOURCE,
+UADP_SDT_NAMEn_DEF(DIP_RESOURCE,0);
+//MDrv_CMD_DIP_SET_INPUTSOURCE,
+//MDrv_CMD_DIP_SET_WINDOW,
+UADP_SDT_NAMEn_DEF(DIP_SET_WINDOW,0);
+//MDrv_CMD_DIP_SET_WINPROPERTY,
+#ifdef BIFROST_32BIT_MODE
+UADP_SDT_NAMEn_DEF(DIP_SET_WIN_PROPERTY_A0,2);
+UADP_SDT_NAMEn_DEF(DIP_SET_WIN_PROPERTY,1);
+#else
+UADP_SDT_NAMEn_DEF(DIP_SET_WIN_PROPERTY,0);
+#endif
+//MDrv_CMD_DIP_SET_PROPERTY,
+#ifdef BIFROST_32BIT_MODE
+UADP_SDT_NAMEn_DEF(DIP_SET_PROPERTY_A0_B0,1);
+UADP_SDT_NAMEn_DEF(DIP_SET_PROPERTY_A0,1);
+UADP_SDT_NAMEn_DEF(DIP_SET_PROPERTY,1);
+#else
+UADP_SDT_NAMEn_DEF(DIP_SET_PROPERTY,0);
+#endif
+//MDrv_CMD_DIP_GET_BUFINFO,
+#ifdef BIFROST_32BIT_MODE
+UADP_SDT_NAMEn_DEF(DIP_BUF_INFO_A0,16);
+UADP_SDT_NAMEn_DEF(DIP_BUF_INFO,1);
+#else
+UADP_SDT_NAMEn_DEF(DIP_BUF_INFO,0);
+#endif
+//MDrv_CMD_DIP_INTERRUPT,
+UADP_SDT_NAMEn_DEF(DIP_INTER_STUS,0);
+//MDrv_CMD_DIP_TRIGGER,
+UADP_SDT_NAMEn_DEF(DIP_TRIGGER_MODE,0);
+//MDrv_CMD_DIP_SET_DIPR_PROPERTY,
+#ifdef BIFROST_32BIT_MODE
+UADP_SDT_NAMEn_DEF(DIP_SET_DIPR_PROPERTY_A0,4);
+UADP_SDT_NAMEn_DEF(DIP_SET_DIPR_PROPERTY,1);
+#else
+UADP_SDT_NAMEn_DEF(DIP_SET_DIPR_PROPERTY,0);
+#endif
+
+#define SPT(Name) spt_##Name
+
+
+MS_U32 DIP_adp_Init(FUtopiaIOctl* pIoctl)
+{
+
+    //MDrv_CMD_DIP_INIT,
+    //MDrv_CMD_DIP_GET_RESOURCE,
+    //MDrv_CMD_DIP_RELEASE_RESOURCE,
+    //MDrv_CMD_DIP_QUERY_RESOURCE,
+    UADP_SDT_NAME0(DIP_RESOURCE,DIP_RESOURCE);
+	//MDrv_CMD_DIP_SET_INPUTSOURCE,
+    //MDrv_CMD_DIP_SET_WINDOW,
+    UADP_SDT_NAME0(DIP_SET_WINDOW,DIP_SET_WINDOW);
+    //MDrv_CMD_DIP_SET_WINPROPERTY,
+#ifdef BIFROST_32BIT_MODE
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME2(DIP_SET_WIN_PROPERTY_A0,ST_XC_DIP_WINPROPERTY, UADP_SDT_AT, u32BufStart,DIP_NULL, UADP_SDT_AT, u32BufEnd,DIP_NULL);
+    UADP_SDT_NAME1(DIP_SET_WIN_PROPERTY,DIP_SET_WIN_PROPERTY, UADP_SDT_ES, WinProperty,DIP_SET_WIN_PROPERTY_A0);
+#else
+    UADP_SDT_NAME0(DIP_SET_WIN_PROPERTY,DIP_SET_WIN_PROPERTY);
+#endif
+    //MDrv_CMD_DIP_SET_PROPERTY,
+#ifdef BIFROST_32BIT_MODE
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME1(DIP_SET_PROPERTY_A0_B0,ST_XC_DIP_PINPON, UADP_SDT_AT, u32PinponAddr,DIP_NULL);
+    UADP_SDT_NAME1(DIP_SET_PROPERTY_A0,ST_XC_DIP_PROPERTY, UADP_SDT_ES, stPinpon,DIP_SET_PROPERTY_A0_B0);
+    UADP_SDT_NAME1(DIP_SET_PROPERTY,DIP_SET_PROPERTY,UADP_SDT_ES, Property,DIP_SET_PROPERTY_A0);
+#else
+    UADP_SDT_NAME0(DIP_SET_PROPERTY,DIP_SET_PROPERTY);
+#endif
+    //MDrv_CMD_DIP_GET_BUFINFO,
+#ifdef BIFROST_32BIT_MODE
+	UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME16(DIP_BUF_INFO_A0,BUFFER_INFO, UADP_SDT_AT, u32YBuf[0],DIP_NULL, UADP_SDT_AT, u32YBuf[1],DIP_NULL,UADP_SDT_AT,u32YBuf[2],DIP_NULL, UADP_SDT_AT, u32YBuf[3],DIP_NULL,\
+     UADP_SDT_AT,u32YBuf[4],DIP_NULL, UADP_SDT_AT, u32YBuf[5],DIP_NULL,UADP_SDT_AT,u32YBuf[6],DIP_NULL, UADP_SDT_AT, u32YBuf[7],DIP_NULL,\
+     UADP_SDT_AT,u32CBuf[0],DIP_NULL, UADP_SDT_AT, u32CBuf[1],DIP_NULL,UADP_SDT_AT,u32CBuf[2],DIP_NULL, UADP_SDT_AT, u32CBuf[3],DIP_NULL,\
+     UADP_SDT_AT,u32CBuf[4],DIP_NULL, UADP_SDT_AT, u32CBuf[5],DIP_NULL,UADP_SDT_AT,u32CBuf[6],DIP_NULL, UADP_SDT_AT, u32CBuf[7],DIP_NULL);
+    UADP_SDT_NAME1(DIP_BUF_INFO,DIP_BUF_INFO,UADP_SDT_ES,BufInfo,DIP_BUF_INFO_A0);
+#else
+    UADP_SDT_NAME0(DIP_BUF_INFO,DIP_BUF_INFO);
+#endif
+    //MDrv_CMD_DIP_INTERRUPT,
+    UADP_SDT_NAME0(DIP_INTER_STUS,DIP_INTER_STUS);
+    //MDrv_CMD_DIP_TRIGGER,
+    UADP_SDT_NAME0(DIP_TRIGGER_MODE,DIP_TRIGGER_MODE);
+    //MDrv_CMD_DIP_SET_DIPR_PROPERTY,
+#ifdef BIFROST_32BIT_MODE
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME0(DIP_NULL,0);
+    UADP_SDT_NAME4(DIP_SET_DIPR_PROPERTY_A0,ST_XC_DIPR_PROPERTY,UADP_SDT_AT,u32YBufAddr,DIP_NULL,UADP_SDT_AT,u32CBufAddr,DIP_NULL,\
+    UADP_SDT_AT,u32YBufAddr10Bits,DIP_NULL,UADP_SDT_AT,u32CBufAddr10Bits,DIP_NULL);
+    UADP_SDT_NAME1(DIP_SET_DIPR_PROPERTY,DIP_SET_DIPR_PROPERTY,UADP_SDT_ES,DIPRProperty,DIP_SET_DIPR_PROPERTY_A0);
+#else
+    UADP_SDT_NAME0(DIP_SET_DIPR_PROPERTY,DIP_SET_DIPR_PROPERTY);
+#endif
+	printk("\33[0;36m   %s:%d    \33[m \n",__FUNCTION__,__LINE__);
+	*pIoctl= (FUtopiaIOctl)DIP_adp_Ioctl;
+    return 0;
+}
+
+MS_U32 DIP_adp_Ioctl(void* pInstanceTmp, MS_U32 u32Cmd, void* const pArgs)
+{
+    MS_U32 u32Ret = 0;
+	char buffer_arg[2048];
+
+    //printk("\33[0;31m [Start][%s][%d]u32Cmd=%d \33[m;\n",__FUNCTION__,__LINE__,u32Cmd);
+    switch(u32Cmd)
+    {
+        case MDrv_CMD_DIP_INIT:
+            u32Ret=UADPBypassIoctl(pInstanceTmp,u32Cmd,pArgs,SPT(DIP_RESOURCE),SPT(DIP_RESOURCE), buffer_arg,sizeof(buffer_arg));
+            break;
+        case MDrv_CMD_DIP_GET_RESOURCE:
+            u32Ret=UADPBypassIoctl(pInstanceTmp,u32Cmd,pArgs,SPT(DIP_RESOURCE),SPT(DIP_RESOURCE), buffer_arg,sizeof(buffer_arg));
+            break;
+        case MDrv_CMD_DIP_RELEASE_RESOURCE:
+            u32Ret=UADPBypassIoctl(pInstanceTmp,u32Cmd,pArgs,SPT(DIP_RESOURCE),SPT(DIP_RESOURCE), buffer_arg,sizeof(buffer_arg));
+            break;
+        case MDrv_CMD_DIP_QUERY_RESOURCE:
+            u32Ret=UADPBypassIoctl(pInstanceTmp,u32Cmd,pArgs,SPT(DIP_RESOURCE),SPT(DIP_RESOURCE), buffer_arg,sizeof(buffer_arg));
+            break;
+        case MDrv_CMD_DIP_SET_INPUTSOURCE:
+
+            break;
+        case MDrv_CMD_DIP_SET_WINDOW:
+            u32Ret=UADPBypassIoctl(pInstanceTmp,u32Cmd,pArgs,SPT(DIP_SET_WINDOW),SPT(DIP_SET_WINDOW), buffer_arg,sizeof(buffer_arg));
+            break;
+        case MDrv_CMD_DIP_SET_WINPROPERTY:
+            u32Ret=UADPBypassIoctl(pInstanceTmp,u32Cmd,pArgs,SPT(DIP_SET_WIN_PROPERTY),SPT(DIP_SET_WIN_PROPERTY), buffer_arg,sizeof(buffer_arg));
+            break;
+        case MDrv_CMD_DIP_SET_PROPERTY:
+            u32Ret=UADPBypassIoctl(pInstanceTmp,u32Cmd,pArgs,SPT(DIP_SET_PROPERTY),SPT(DIP_SET_PROPERTY), buffer_arg,sizeof(buffer_arg));
+            break;
+        case MDrv_CMD_DIP_GET_BUFINFO:
+            u32Ret=UADPBypassIoctl(pInstanceTmp,u32Cmd,pArgs,SPT(DIP_BUF_INFO),SPT(DIP_BUF_INFO), buffer_arg,sizeof(buffer_arg));
+            break;
+        case MDrv_CMD_DIP_INTERRUPT:
+            u32Ret=UADPBypassIoctl(pInstanceTmp,u32Cmd,pArgs,SPT(DIP_INTER_STUS),SPT(DIP_INTER_STUS), buffer_arg,sizeof(buffer_arg));
+            break;
+        case MDrv_CMD_DIP_TRIGGER:
+            u32Ret=UADPBypassIoctl(pInstanceTmp,u32Cmd,pArgs,SPT(DIP_TRIGGER_MODE),SPT(DIP_TRIGGER_MODE), buffer_arg,sizeof(buffer_arg));
+            break;
+        case MDrv_CMD_DIP_SET_DIPR_PROPERTY:
+            u32Ret=UADPBypassIoctl(pInstanceTmp,u32Cmd,pArgs,SPT(DIP_SET_DIPR_PROPERTY),SPT(DIP_SET_DIPR_PROPERTY), buffer_arg,sizeof(buffer_arg));
+            break;
+		default:
+			break;
+
+    }
+    //printk("\33[0;34m [End][%s][%d]u32Cmd=%d \33[m;\n",__FUNCTION__,__LINE__,u32Cmd);
+
+
+	return u32Ret;
+   // return UtopiaIoctl(pModuleDDI->pInstant,u32Cmd,arg);
+}
+
+
+
+

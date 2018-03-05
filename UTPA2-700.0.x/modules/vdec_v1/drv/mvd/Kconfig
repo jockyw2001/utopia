@@ -1,0 +1,8 @@
+config DRV_MVD
+
+tristate "MVD"
+default n
+
+---help---
+Enable compilation option for driver MVD
+

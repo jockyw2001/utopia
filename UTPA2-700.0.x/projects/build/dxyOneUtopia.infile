@@ -1,0 +1,3 @@
+INPUT += \ 
+./bsp/include/ \
+./main_page.h

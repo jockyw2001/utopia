@@ -1,0 +1,179 @@
+config API_DMX
+
+tristate "DMX"
+default n
+
+---help---
+Enable compilation option for API DMX
+
+if API_DMX
+
+config DMX_UTOPIA_20_ENABLE
+	bool "Enable DMX 20"
+	default y
+	help
+	  Select if you want to enable DMX Utopia 2_0. If unsure, say 'Y'.
+
+config STC64_ENABLE
+	bool "Enable STC64"
+	default y
+	help
+	  Select if you want to enable STC64. If unsure, say 'Y'.
+
+config VQ_ENABLE
+	bool "Enable VQ"
+	default y
+	help
+	  Select if you want to enable VQ. If unsure, say 'Y'.
+
+config FIVQ_ENABLE
+	bool "Enable File-in VQ"
+	default y
+	help
+	  Select if you want to enable VQ. If unsure, say 'Y'.
+
+config FQ_ENABLE
+    bool "Enable FQ"
+    default n
+    help
+      Select if you want to enable FQ. If unsure, say 'N'.
+
+config EXT_FILTER_ENABLE
+	bool "Enable Externel Filter"
+	default n
+	help
+	  Select if you want to enable externel filter. If unsure, say 'N'.
+
+config TSP2_ENABLE
+	bool "Enable TS2"
+	default n
+	help
+	  Select if you want to enable TS2. If unsure, say 'N'.
+
+config TSP3_ENABLE
+	bool "Enable TS3"
+	default n
+	help
+	  Select if you want to enable TS3 IF. If unsure, say 'N'.
+
+config MMFILEIN_ENABLE
+	bool "Enable MM file in"
+	default y
+	help
+	  Select if you want to enable MM file in. If unsure, say 'Y'.
+
+config MMFI3D_ENABLE
+	bool "Enable MM file in 3D"
+	default n
+	help
+	  Select if you want to enable MM file in 3D. If unsure, say 'N'.
+
+config MMFI2_EXTRA_AUFIFO_ENABLE
+	bool "Enable Extra AU FIFOs"
+	default n
+	help
+	  Select if you want to enable extra audio fifos. If unsure, say 'N'.
+
+config MOBF_ENABLE
+	bool "Enable MOBF"
+	default n
+	help
+	  Select if you want to enable MOBF. If unsure, say 'N'.
+
+config MMFIMOBF_ENABLE
+	bool "Enable MM file in MOBF"
+	default n
+	help
+	  Select if you want to enable MM file in MOBF. If unsure, say 'N'.
+
+config USE_HWPCR_ENABLE
+	bool "Enable HW PCR"
+	default n
+	help
+	  Select if you want to enable HW PCR. If unsure, say 'N'.
+
+config DMX_DEBUG_TABLE_ENABLE
+	bool "Enable Debug Table"
+	default n
+	help
+	  Select if you want to enable debug table. If unsure, say 'N'.
+
+config TSP3_DULFLT_ENABLE
+	bool "Enable TSP3 Duplicate Filter"
+	default n
+	help
+	  Select if you want to enable TSP3 duplicate filters. If unsure, say 'N'.
+
+config EXTRA_PVR1_FLT_ENABLE
+	bool "Enable Extra PVR1 Filter"
+	default n
+	help
+	  Select if you want to enable extra pvr1 filter. If unsure, say 'N'.
+
+config TS2_LIVE_ENABLE
+	bool "Enable TS2 Live"
+	default n
+	help
+	  Select if you want to enable TS2 live path. If unsure, say 'N'.
+
+config RASP_SUPPORT
+	bool "Enable RASP Support"
+	default n
+	help
+	  Select if you want to enable RASP. If unsure, say 'N'.
+
+config TSIO_SUPPORT
+	bool "Enable TSIO Support"
+	default n
+	help
+	  Select if you want to enable tso. If unsure, say 'N'.
+
+config TSO_SUPPORT
+	bool "Enable TSO Support"
+	default n
+	help
+	  Select if you want to enable tso. If unsure, say 'N'.
+
+config TSO_VER_20_SUPPORT
+	bool "Enable TSO Version 2.0 Support"
+	default n
+	help
+	  Select if you want to enable tso. If unsure, say 'N'.
+
+config TSO_HW_BOX_SERIES
+	bool "Enable TSO BOX Series Support"
+	default n
+	help
+	  Select if you want to enable tso. If unsure, say 'N'.
+
+config MERGE_STREAM_SUPPORT
+	bool "Enable Merge Stream Support"
+	default n
+	help
+	  Select if you want to enable tso. If unsure, say 'N'.
+
+config GENERAL_DSCMB_SUPPORT
+	bool "Enable General DSCMB Support"
+	default n
+	help
+	  Select if you want to enable tso. If unsure, say 'N'.
+
+config OTV_SUPPORT
+	bool "Enable OTV Support"
+	default n
+	help
+	  Select if you want to enable OTV. If unsure, say 'N'.
+
+config SECURE_PVR_SUPPORT
+	bool "Secure PVR Support"
+	default n
+	help
+	  Select if you want to enable secure pvr. If unsure, say 'N'.
+
+config TSO_PVR_SUPPORT
+	bool "TSO PVR Support"
+	default n
+	help
+	  Select if you want to enable tso pvr. If unsure, say 'N'.
+
+endif

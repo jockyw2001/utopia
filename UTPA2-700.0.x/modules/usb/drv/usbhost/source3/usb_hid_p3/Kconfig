@@ -1,0 +1,8 @@
+config DRV_USB_HID_P3
+
+bool "Apply HID P3"
+default n
+
+---help---
+Enable compilation option for driver USB_HID_P3
+

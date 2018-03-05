@@ -1,0 +1,7 @@
+config DRV_TSP_TEE
+
+tristate "TSP_TEE"
+default n
+
+---help---
+Enable compilation option for driver TSP_TEE

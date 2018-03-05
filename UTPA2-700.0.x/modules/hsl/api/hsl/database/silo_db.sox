@@ -1,0 +1,317 @@
+<?xml version="1.0"?>
+<SILO_DECODER version="2.0" creationDate="2006/11/13 09:21:22" scheme="utopia" depends="">
+<LOGID id="0x0000" type="printf" fixed="1" raw16="0" hide="2">
+<IDNAME>LogIdUnitialised</IDNAME>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x0001" type="array16" fixed="1" hide="2">
+<IDNAME>HdrUnKnown</IDNAME>
+<INFMT>HdrUnKnown: %#04X</INFMT>
+<OUTFMT>HdrUnKnown: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%#04X" pad="0" prefix="0x" width="4">DEFAULT</VARX>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x0002" type="printf" fixed="1" raw16="0" hide="2">
+<IDNAME>Unprocessed Log Point i.e. ID has not been specifed</IDNAME>
+<INFMT>Unprocessed Log Point i.e. ID has not been specifed</INFMT>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x0003" type="array16" fixed="1" hide="2">
+<IDNAME>DecodeError</IDNAME>
+<INFMT>DecodeError: %#02X</INFMT>
+<OUTFMT>DecodeError: %1</OUTFMT>
+<VARX ext="1" nameAlt="varx" orig="%#02X" pad="0" precision="2" prefix="0x">HEX8</VARX>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x0004" type="array16" fixed="1" hide="2">
+<IDNAME>Inconsistent Decoding</IDNAME>
+<INFMT>Inconsistent Decoding: %#04X</INFMT>
+<OUTFMT>Inconsistent Decoding: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%#04X" pad="0" prefix="0x" width="4">DEFAULT</VARX>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x0005" type="printf" fixed="1" raw16="1" hide="1">
+<IDNAME>Tcu Event</IDNAME>
+<GROUPID>LG_TCU_EVENT</GROUPID>
+<INFMT>Tcu Event: %(TcuEvent)e</INFMT>
+<OUTFMT>Tcu Event: %1</OUTFMT>
+<VAR1 ext="1" nameAlt="var1" orig="%(TcuEvent)e" symbol="TcuEvent" precision="0" width="16">ENUM_SYMBOL</VAR1>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x0006" type="array16" fixed="1" hide="1">
+<IDNAME>ItrHeaders</IDNAME>
+<INFMT>ItrHeaders: %#04X</INFMT>
+<OUTFMT>ItrHeaders: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%#04X" pad="0" prefix="0x" width="4">DEFAULT</VARX>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x0007" type="printf" fixed="1" raw16="2" hide="1">
+<IDNAME>LogIdObsolete</IDNAME>
+<INFMT>LogId=%lu not consistent or not found in SILOX database</INFMT>
+<OUTFMT>LogId=%1 not consistent or not found in SILOX database</OUTFMT>
+<VAR1 ext="1" nameAlt="var1" orig="%lu">UINT32</VAR1>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x0008" type="printf" fixed="1" raw16="2" hide="2">
+<IDNAME>M_U1DbgLogKernelTick</IDNAME>
+<INFMT>M_U1DbgLogKernelTick: kiTickTime=%lu</INFMT>
+<OUTFMT>M_U1DbgLogKernelTick: kiTickTime=%1</OUTFMT>
+<VAR1 ext="1" nameAlt="var1" orig="%lu">UINT32</VAR1>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x0009" type="typedef" fixed="1" hide="2">
+<IDNAME typedef="HslMessageLogPoint">Message</IDNAME>
+<INFMT>Message: %s</INFMT>
+<OUTFMT>Message: %1</OUTFMT>
+<VARX ext="1" nameAlt="varx" orig="%s">STRING</VARX>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x000A" type="typedef" fixed="1" hide="1">
+<IDNAME typedef="ST_HSL_CMD_RESP">ST_HSL_CMD_RESP</IDNAME>
+<GROUPID>HSL_DBG_UTOPIA_ALL_DEBUG</GROUPID>
+<INFMT>ST_HSL_CMD_RESP: %#04X</INFMT>
+<OUTFMT>ST_HSL_CMD_RESP: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%#04X" pad="0" prefix="0x" width="4">HEX16</VARX>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x000B" type="typedef" fixed="1" hide="1">
+<IDNAME typedef="ST_HSL_CMD_REQ">ST_HSL_CMD_REQ</IDNAME>
+<GROUPID>HSL_DBG_UTOPIA_ALL_DEBUG</GROUPID>
+<INFMT>ST_HSL_CMD_REQ: %#04X</INFMT>
+<OUTFMT>ST_HSL_CMD_REQ: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%#04X" pad="0" prefix="0x" width="4">HEX16</VARX>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x000C" type="printf" fixed="1" raw16="8">
+<IDNAME>Genie log</IDNAME>
+<INFMT>Genie log: Record number=%lu (Frame #%lu), sigId=%lu, %(SignalIdTag)le</INFMT>
+<OUTFMT>Genie log: Record number=%1 (Frame #%2), sigId=%3, %4</OUTFMT>
+<VAR1 ext="1" nameAlt="var1" orig="%lu">UINT32</VAR1>
+<VAR2 ext="1" nameAlt="var2" orig="%lu">UINT32</VAR2>
+<VAR3 ext="1" nameAlt="var3" orig="%lu">UINT32</VAR3>
+<VAR4 ext="1" nameAlt="var4" orig="%(SignalIdTag)le" symbol="SignalIdTag" precision="0" width="32">LONG_ENUM_SYMBOL</VAR4>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x000D" type="printf" fixed="1" raw16="5">
+<IDNAME>Genie synchro</IDNAME>
+<INFMT>Genie synchro: Record number=%lu (Frame #%lu), synchroCnt=%u</INFMT>
+<OUTFMT>Genie synchro: Record number=%1 (Frame #%2), synchroCnt=%3</OUTFMT>
+<VAR1 ext="1" name="recNum" nameAlt="var1" orig="%lu">UINT32</VAR1>
+<VAR2 ext="1" name="frameNum" nameAlt="var2" orig="%lu">UINT32</VAR2>
+<VAR3 ext="1" name="synchroCnt" nameAlt="var3" orig="%u">UINT16</VAR3>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x000E" type="printf" fixed="1" raw16="0" hide="1">
+<IDNAME>LogIdReserved14</IDNAME>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x000F" type="printf" fixed="1" raw16="0" hide="1">
+<IDNAME>LogIdReserved15</IDNAME>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x0714" type="array16" fixed="1" hide="2">
+<IDNAME>Lg_Packet</IDNAME>
+<INFMT>Lg_Packet: %#04X</INFMT>
+<OUTFMT>Lg_Packet: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%#04X" pad="0" prefix="0x" width="4">DEFAULT</VARX>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x0743" type="array16" fixed="1" hide="2">
+<IDNAME>LG_L1_Arb_Frame_Number</IDNAME>
+<INFMT>LG_L1_Arb_Frame_Number: %#04X</INFMT>
+<OUTFMT>LG_L1_Arb_Frame_Number: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%#04X" pad="0" prefix="0x" width="4">DEFAULT</VARX>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x0744" type="array16" fixed="1" hide="2">
+<IDNAME>LG_L1_Com_Tim</IDNAME>
+<INFMT>LG_L1_Com_Tim: %#04X</INFMT>
+<OUTFMT>LG_L1_Com_Tim: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%#04X" pad="0" prefix="0x" width="4">DEFAULT</VARX>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x080C" type="printf" fixed="1" raw16="1" hide="2">
+<IDNAME>Bandsaw Event</IDNAME>
+<GROUPID>LG_MDF_BDSAW_TRIGGER</GROUPID>
+<INFMT>Bandsaw Event: 0x%.4X</INFMT>
+<OUTFMT>Bandsaw Event: %1</OUTFMT>
+<VAR1 nameAlt="var1" orig="%.4X" precision="4">HEX16</VAR1>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x080E" type="array16" fixed="1" hide="2">
+<IDNAME>Acquisition_Error</IDNAME>
+<GROUPID>LG_MDF_MSG_TRUNCATION</GROUPID>
+<INFMT>Acquisition_Error: 0x%.4X</INFMT>
+<OUTFMT>Acquisition_Error: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%.4X" precision="4">DEFAULT</VARX>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x080F" type="printf" fixed="1" raw16="2" hide="2">
+<IDNAME>LgMdfTimerWrapStream2</IDNAME>
+<GROUPID>LG_MDF_TIMER_WRAP_STREAM_2</GROUPID>
+<INFMT>LgMdfTimerWrapStream2: 0x%.4X Ox%.4X</INFMT>
+<OUTFMT>LgMdfTimerWrapStream2: %1 %2</OUTFMT>
+<VAR1 nameAlt="var1" orig="%.4X" precision="4">HEX16</VAR1>
+<VAR2 nameAlt="var2" orig="%.4X" precision="4">HEX16</VAR2>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x0810" type="printf" fixed="1" raw16="0" hide="2">
+<IDNAME>Hacksaw Event</IDNAME>
+<GROUPID>LG_MDF_HKSAW_TRIGGER</GROUPID>
+<INFMT>Hacksaw Event</INFMT>
+<OUTFMT>Hacksaw Event</OUTFMT>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x085A" type="printf" fixed="1" raw16="0">
+<IDNAME>HSL framework initialised.</IDNAME>
+<GROUPID>HSL_DBG_UTOPIA_ALL_DEBUG</GROUPID>
+<INFMT>HSL framework initialised.</INFMT>
+<OUTFMT>HSL framework initialised.</OUTFMT>
+<LOC lineNo="1" module="mxlib\api\hsl\apiHSL.c"></LOC>
+</LOGID>
+<LOGID id="0x090F" type="printf" raw16="0">
+<IDNAME>Data synchronisation after data dump!</IDNAME>
+<GROUPID>HSL_DBG_UTOPIA_ALL_DEBUG</GROUPID>
+<INFMT>Data synchronisation after data dump!</INFMT>
+<OUTFMT>Data synchronisation after data dump!</OUTFMT>
+<LOC lineNo="13" module="mxlib\api\hsl\logpointdefs.c"></LOC>
+</LOGID>
+<LOGID id="0x0DF5" type="printf" raw16="0">
+<IDNAME>System profiling, dynamic library info table full!:</IDNAME>
+<GROUPID>HSL_DBG_UTOPIA_ALL_DEBUG</GROUPID>
+<INFMT>System profiling, dynamic library info table full!:</INFMT>
+<OUTFMT>System profiling, dynamic library info table full!:</OUTFMT>
+<LOC lineNo="5" module="mxlib\api\hsl\apiHSL.c"></LOC>
+</LOGID>
+<LOGID id="0x0E25" type="printf" raw16="0">
+<IDNAME>System profiling, thread name table full!:</IDNAME>
+<GROUPID>HSL_DBG_UTOPIA_ALL_DEBUG</GROUPID>
+<INFMT>System profiling, thread name table full!:</INFMT>
+<OUTFMT>System profiling, thread name table full!:</OUTFMT>
+<LOC lineNo="9" module="mxlib\api\hsl\apiHSL.c"></LOC>
+</LOGID>
+<LOGID id="0x0E5D" type="printf" fixed="1" raw16="2">
+<IDNAME>LgWaypoint</IDNAME>
+<GROUPID>LG_WAYPOINT</GROUPID>
+<INFMT>LgWaypoint: group=%u count=%u</INFMT>
+<OUTFMT>LgWaypoint: group=%1 count=%2</OUTFMT>
+<VAR1 nameAlt="var1" orig="%u">UINT16</VAR1>
+<VAR2 nameAlt="var2" orig="%u">UINT16</VAR2>
+<LOC lineNo="1304" module="sys\plk\plkd.mod\api\inc\plkd_lgm.h"></LOC>
+</LOGID>
+<LOGID id="0x0E5E" type="printf" fixed="1" raw16="2">
+<IDNAME>LgWaypoint</IDNAME>
+<GROUPID>LG_WAYPOINT</GROUPID>
+<INFMT>LgWaypoint: group=%u count=%u</INFMT>
+<OUTFMT>LgWaypoint: group=%1 count=%2</OUTFMT>
+<VAR1 nameAlt="var1" orig="%u">UINT16</VAR1>
+<VAR2 nameAlt="var2" orig="%u">UINT16</VAR2>
+<LOC lineNo="1320" module="sys\plk\plkd.mod\api\inc\plkd_lgm.h"></LOC>
+</LOGID>
+<LOGID id="0x4000" type="printf" fixed="1" raw16="1" hide="2">
+<IDNAME>Tcu_Event</IDNAME>
+<GROUPID>LG_TCU_EVENT</GROUPID>
+<INFMT>Tcu_Event: 0x%.4X</INFMT>
+<OUTFMT>Tcu_Eventt: %1</OUTFMT>
+<VAR1 nameAlt="var1" orig="%.4X" precision="4">HEX16</VAR1>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x4890" type="printf" raw16="0">
+<IDNAME>HSL SelfTest printf 0 arg:</IDNAME>
+<GROUPID>HSL_DBG_SN_ALL_DEBUG</GROUPID>
+<INFMT>HSL SelfTest printf 0 arg:</INFMT>
+<OUTFMT>HSL SelfTest printf 0 arg:</OUTFMT>
+<LOC lineNo="71" module="mxlib\api\hsl\frhsl_ringbuffer.c"></LOC>
+</LOGID>
+<LOGID id="0x80AB" type="typedef" filter="1">
+<IDNAME typedef="ST_LIBRARY_SHORT_INFO">Dynamic library base address</IDNAME>
+<GROUPID>HSL_DBG_UTOPIA_ALL_DEBUG</GROUPID>
+<INFMT>Dynamic library base address: %d</INFMT>
+<OUTFMT>Dynamic library base address: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%d">INT16</VARX>
+<LOC lineNo="1059" module="mxlib\api\hsl\frhsl_ringbuffer.c"></LOC>
+</LOGID>
+<LOGID id="0x83C2" type="array32" filter="1" fixed="1">
+<IDNAME>Dropped LogPoints</IDNAME>
+<GROUPID>DEFAULT_GROUP</GROUPID>
+<INFMT>Dropped LogPoints: 0x%#lx</INFMT>
+<OUTFMT>Dropped LogPoints: 0x%1</OUTFMT>
+<VARX ext="1" nameAlt="varx" orig="%#lx" prefix="0x">HEX32</VARX>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x87D3" type="typedef" filter="1">
+<IDNAME typedef="ST_LIBRARY_SHORT_INFO">Dynamic library base address</IDNAME>
+<GROUPID>HSL_DBG_UTOPIA_ALL_DEBUG</GROUPID>
+<INFMT>Dynamic library base address: %d</INFMT>
+<OUTFMT>Dynamic library base address: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%d">INT16</VARX>
+<LOC lineNo="7" module="mxlib\api\hsl\apiHSL.c"></LOC>
+</LOGID>
+<LOGID id="0x8DA6" type="typedef" filter="1">
+<IDNAME typedef="ST_THREAD_INFO">Thread name</IDNAME>
+<GROUPID>HSL_DBG_UTOPIA_ALL_DEBUG</GROUPID>
+<INFMT>Thread name: %d</INFMT>
+<OUTFMT>Thread name: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%d">INT16</VARX>
+<LOC lineNo="11" module="mxlib\api\hsl\apiHSL.c"></LOC>
+</LOGID>
+<LOGID id="0xA4A4" type="typedef" filter="1" fixed="1" hide="1">
+<IDNAME typedef="ST_TEST_STRUCT">HSL SelfTest typedef</IDNAME>
+<GROUPID>HSL_DBG_SN_ALL_DEBUG</GROUPID>
+<INFMT>HSL SelfTest typedef: %d</INFMT>
+<OUTFMT>HSL SelfTest typedef: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%d">INT16</VARX>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0xAB54" type="array32" filter="1">
+<IDNAME>HSL SelfTest array32</IDNAME>
+<GROUPID>HSL_DBG_SN_ALL_DEBUG</GROUPID>
+<INFMT>HSL SelfTest array32: %X</INFMT>
+<OUTFMT>HSL SelfTest array32: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%X">HEX16</VARX>
+<LOC lineNo="87" module="mxlib\api\hsl\frhsl_ringbuffer.c"></LOC>
+</LOGID>
+<LOGID id="0xAD99" type="array16" filter="1">
+<IDNAME>HSL SelfTest array16</IDNAME>
+<GROUPID>HSL_DBG_SN_ALL_DEBUG</GROUPID>
+<INFMT>HSL SelfTest array16: %X</INFMT>
+<OUTFMT>HSL SelfTest array16: %1</OUTFMT>
+<VARX nameAlt="varx" orig="%X">HEX16</VARX>
+<LOC lineNo="81" module="mxlib\api\hsl\frhsl_ringbuffer.c"></LOC>
+</LOGID>
+<LOGID id="0xC0DE" type="printf" fixed="1" raw16="0" hide="1">
+<IDNAME>IllegalLogPointId</IDNAME>
+<GROUPID>LG_HDR_DEBUG</GROUPID>
+<INFMT>IllegalLogPointId</INFMT>
+<OUTFMT>IllegalLogPointId</OUTFMT>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0xFFFF" type="printf" fixed="1" raw16="0" hide="1">
+<IDNAME>LogIdKeepExisting</IDNAME>
+<LOC lineNo="0" module="(hardcoded)"></LOC>
+</LOGID>
+<LOGID id="0x37D05" type="printf" raw16="1">
+<IDNAME>HSL SelfTest printf 1 arg</IDNAME>
+<GROUPID>HSL_DBG_SN_ALL_DEBUG</GROUPID>
+<INFMT>HSL SelfTest printf 1 arg: %X</INFMT>
+<OUTFMT>HSL SelfTest printf 1 arg: %1</OUTFMT>
+<VAR1 nameAlt="var1" orig="%X">HEX16</VAR1>
+<LOC lineNo="75" module="mxlib\api\hsl\frhsl_ringbuffer.c"></LOC>
+</LOGID>
+<LOGID id="0x38659" type="printf" raw16="1">
+<IDNAME>Critical Buffer overflow, some data has been lost and system's operation may have been temporarily blocked</IDNAME>
+<GROUPID>HSL_DBG_UTOPIA_ALL_DEBUG</GROUPID>
+<INFMT>Critical Buffer overflow, some data has been lost and system's operation may have been temporarily blocked: %X</INFMT>
+<OUTFMT>Critical Buffer overflow, some data has been lost and system's operation may have been temporarily blocked: %1</OUTFMT>
+<VAR1 nameAlt="var1" orig="%X">HEX16</VAR1>
+<LOC lineNo="3" module="mxlib\api\hsl\frhsl_ringbuffer.c"></LOC>
+</LOGID>
+<LOGID id="0x3D03B" type="printf" raw16="1">
+<IDNAME>Buffer overflow, some data has been lost</IDNAME>
+<GROUPID>HSL_DBG_UTOPIA_ALL_DEBUG</GROUPID>
+<INFMT>Buffer overflow, some data has been lost: %X</INFMT>
+<OUTFMT>Buffer overflow, some data has been lost: %1</OUTFMT>
+<VAR1 nameAlt="var1" orig="%X">HEX16</VAR1>
+<LOC lineNo="1" module="mxlib\api\hsl\frhsl_ringbuffer.c"></LOC>
+</LOGID>
+</SILO_DECODER>

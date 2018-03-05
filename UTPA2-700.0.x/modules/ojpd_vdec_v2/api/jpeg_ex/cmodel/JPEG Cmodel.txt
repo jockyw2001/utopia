@@ -1,0 +1,1 @@
+./a.exe input.jpg output.tga 0   > RLE.txt         (0:thunbnail ,1:main Picture)

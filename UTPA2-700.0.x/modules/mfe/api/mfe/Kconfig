@@ -1,0 +1,8 @@
+config API_MFE
+
+tristate "MFE"
+default n
+
+---help---
+Enable compilation option for API MFE
+

@@ -1,0 +1,8 @@
+config DRV_TSP3
+
+tristate "TSP3"
+default n
+
+---help---
+Enable compilation option for driver TSP3
+

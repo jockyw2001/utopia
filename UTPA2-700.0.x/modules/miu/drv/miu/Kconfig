@@ -1,0 +1,8 @@
+config DRV_MIU
+
+tristate "MIU"
+default n
+
+---help---
+Enable compilation option for driver MIU
+

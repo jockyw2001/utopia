@@ -1,0 +1,8 @@
+config DRV_XC
+
+tristate "XC"
+default n
+
+---help---
+Enable compilation option for driver XC
+

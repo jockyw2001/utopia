@@ -1,0 +1,42 @@
+# mxlib/api/Kconfig
+
+menu "Utopia API Library Selection"
+
+#===================================================
+# Utopia API Libraries
+#===================================================
+comment "Utopia API Libraries"
+
+source "../../mxlib/api/ace/Kconfig"
+source "../../mxlib/api/acp/Kconfig"
+source "../../mxlib/api/audio/Kconfig"
+source "../../mxlib/api/cec/Kconfig"
+source "../../mxlib/api/dac/Kconfig"
+source "../../mxlib/api/dlc/Kconfig"
+source "../../mxlib/api/dmx/Kconfig"
+source "../../mxlib/api/dmx_tee/Kconfig"
+source "../../mxlib/api/gfx/Kconfig"
+source "../../mxlib/api/gop/Kconfig"
+source "../../mxlib/api/gopsc/Kconfig"
+source "../../mxlib/api/gopscd/Kconfig"
+source "../../mxlib/api/gpd/Kconfig"
+source "../../mxlib/api/hdmitx/Kconfig"
+source "../../mxlib/api/hdmitx2/Kconfig"
+source "../../mxlib/api/hsl/Kconfig"
+source "../../mxlib/api/jpeg/Kconfig"
+source "../../mxlib/api/jpeg_ex/Kconfig"
+source "../../mxlib/api/mfe/Kconfig"
+source "../../mxlib/api/mfe_ex/Kconfig"
+source "../../mxlib/api/mhl/Kconfig"
+source "../../mxlib/api/njpeg_ex/Kconfig"
+source "../../mxlib/api/pnl/Kconfig"
+source "../../mxlib/api/swi2c/Kconfig"
+source "../../mxlib/api/mbx/Kconfig"
+source "../../mxlib/api/vdec/Kconfig"
+source "../../mxlib/api/vdec_ex/Kconfig"
+source "../../mxlib/api/vdec_v3/Kconfig"
+source "../../mxlib/api/vdec_lite/Kconfig"
+source "../../mxlib/api/xc/Kconfig"
+#source "../../mxlib/api/localdimm/Kconfig"
+
+endmenu

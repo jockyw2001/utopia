@@ -1,0 +1,8 @@
+config DRV_VE
+
+tristate "VE"
+default n
+
+---help---
+Enable compilation option for driver VE
+

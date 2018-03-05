@@ -1,0 +1,27 @@
+config DRV_HWI2C
+
+tristate "HWI2C"
+default n
+
+---help---
+Enable compilation option for driver HWI2C
+
+config MSTAR_UTPA2K_HWI2C_ENABLE
+    bool "Enable Mstar UTPA2K HWI2C"
+    default n
+    help
+       Select if you want to enable UTPA2K
+config MSTAR_HWI2C_KERNEL_MODE
+    bool "Enable HWI2C Kernel Mode"
+    default n
+    help
+       Select if you want to enable KernelMode
+
+if DRV_HWI2C
+config HWIIC_INTERRUPT_MODE_ENABLE
+	bool "Enable HWIIC interrupt mode"
+	default n
+	help
+	  Select if you want to enable HWIIC interrupt mode. If unsure, say 'N'.
+
+endif

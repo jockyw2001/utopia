@@ -1,0 +1,8 @@
+config DRV_NJPD_EX
+
+tristate "NJPD_EX"
+default n
+
+---help---
+Enable compilation option for driver NJPD_EX
+

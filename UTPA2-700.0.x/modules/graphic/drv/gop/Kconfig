@@ -1,0 +1,8 @@
+config DRV_GOP
+
+tristate "GOP"
+default n
+
+---help---
+Enable compilation option for driver GOP
+

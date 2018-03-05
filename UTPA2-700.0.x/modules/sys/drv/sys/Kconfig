@@ -1,0 +1,8 @@
+config DRV_SYS
+
+tristate "SYS"
+default n
+
+---help---
+Enable compilation option for driver SYS
+

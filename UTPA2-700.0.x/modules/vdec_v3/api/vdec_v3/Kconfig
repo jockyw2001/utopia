@@ -1,0 +1,8 @@
+config API_VDEC_V3
+
+tristate "VDEC_V3"
+default n
+
+---help---
+Enable compilation option for API VDEC_V3
+

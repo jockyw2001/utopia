@@ -1,0 +1,25 @@
+config DRV_PCMCIA
+
+tristate "PCMCIA"
+default n
+
+---help---
+Enable compilation option for driver PCMCIA
+
+if DRV_PCMCIA
+
+config PCMCIA_MSPI
+	bool "MOLESKINE PCMCIA"
+	default n
+	help
+	  Select if project MOLESKINE
+	  
+config PCMCIA_MSPI_BURST
+	bool "BURST mode"
+	depends on PCMCIA_MSPI
+	default n
+	help
+	  Select if PCMCIA burst mode
+	  
+endif	  
+

@@ -1,0 +1,8 @@
+config DRV_RVD
+
+tristate "RVD"
+default n
+
+---help---
+Enable compilation option for driver RVD
+

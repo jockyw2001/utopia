@@ -1,0 +1,8 @@
+config DRV_NOR_FLASH
+
+bool "Apply nor flash device"
+default n
+
+---help---
+Enable compilation option for driver NOR_FLASH
+

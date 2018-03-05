@@ -1,0 +1,13 @@
+config DRV_GPIO
+
+tristate "GPIO"
+default n
+
+---help---
+Enable compilation option for driver GPIO
+
+config MSTAR_UTPA2K_GPIO_ENABLE
+    bool "Enable Mstar UTPA2K GPIO"
+    default n
+    help
+       Select if you want to enable UTPA2K

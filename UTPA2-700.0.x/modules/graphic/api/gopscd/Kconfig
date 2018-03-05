@@ -1,0 +1,8 @@
+config API_GOPSCD
+
+tristate "GOPSCD"
+default n
+
+---help---
+Enable compilation option for API GOPSCD
+

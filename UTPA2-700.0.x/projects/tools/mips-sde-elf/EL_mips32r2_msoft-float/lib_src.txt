@@ -1,0 +1,4 @@
+libgcc.a        C:\Program Files\CodeSourcery\Sourcery G++ Lite\lib\gcc\mips-sde-elf\4.3.2\el\sof
+libgcov.a       C:\Program Files\CodeSourcery\Sourcery G++ Lite\lib\gcc\mips-sde-elf\4.3.2\el\sof
+libstdc++.a     C:\Program Files\CodeSourcery\Sourcery G++ Lite\mips-sde-elf\lib\el\sof
+libsupc++.a     C:\Program Files\CodeSourcery\Sourcery G++ Lite\mips-sde-elf\lib\el\sof

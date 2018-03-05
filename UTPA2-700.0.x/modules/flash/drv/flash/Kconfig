@@ -1,0 +1,12 @@
+config DRV_FLASH
+
+tristate "FLASH"
+default n
+
+---help---
+Enable compilation option for driver flash
+
+if DRV_FLASH
+source "../../mxlib/drv/flash/nor/Kconfig"
+source "../../mxlib/drv/flash/serial/Kconfig"
+endif

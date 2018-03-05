@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FLOGGER_XFORM version="0.2" creationDate="2007/01/31 09:00:00">
+  <PLATFORM type="TITANIA">
+    </PLATFORM>
+
+  <PLATFORM type="Common">
+  <SYMBOL name="TcuEvent_BankA" type="#define" offset="0">
+      <ITEM i="0" x="RxOnBBC" />
+      <ITEM i="1" x="TxEnBBC" />
+      <ITEM i="2" x="TxRxSm" />
+      <ITEM i="3" x="GPO 3 [unknown]" />
+      <ITEM i="4" x="GPO 4 [unknown]" />
+      <ITEM i="5" x="RadioPwrCtrl" />
+      <ITEM i="6" x="TxEn (RadioEn)" />
+      <ITEM i="7" x="GPI 7 [unknown]" />
+      <ITEM i="8" x="DcsSel" />
+      <ITEM i="9" x="GsmSel" />
+      <ITEM i="10" x="GPO 10 [unknown]" />
+      <ITEM i="11" x="TxPa" />
+      <ITEM i="12" x="GPO 12 [unknown]" />
+      <ITEM i="13" x="GPO 13 [unknown]" />
+      <ITEM i="14" x="GPO 14 [unknown]" />
+      <ITEM i="15" x="GPO 15 [unknown]" />
+    </SYMBOL>
+    <SYMBOL name="TcuEvent_BankB" type="#define" offset="0">
+      <ITEM i="0" x="0" />
+      <ITEM i="1" x="1" />
+      <ITEM i="2" x="2" />
+      <ITEM i="3" x="3" />
+      <ITEM i="4" x="4" />
+      <ITEM i="5" x="5" />
+      <ITEM i="6" x="6" />
+      <ITEM i="7" x="7" />
+      <ITEM i="8" x="8" />
+      <ITEM i="9" x="9" />
+      <ITEM i="10" x="10" />
+      <ITEM i="11" x="11" />
+      <ITEM i="12" x="12" />
+      <ITEM i="13" x="13" />
+      <ITEM i="14" x="14" />
+      <ITEM i="15" x="15" />
+    </SYMBOL>
+    <SYMBOL name="TcuEvent_BankC" type="#define" offset="0">
+      <ITEM i="0" x="0" />
+      <ITEM i="1" x="1" />
+      <ITEM i="2" x="2" />
+      <ITEM i="3" x="3" />
+      <ITEM i="4" x="4" />
+      <ITEM i="5" x="5" />
+      <ITEM i="6" x="6" />
+      <ITEM i="7" x="7" />
+      <ITEM i="8" x="8" />
+      <ITEM i="9" x="9" />
+      <ITEM i="10" x="10" />
+      <ITEM i="11" x="11" />
+      <ITEM i="12" x="12" />
+      <ITEM i="13" x="13" />
+      <ITEM i="14" x="14" />
+      <ITEM i="15" x="15" />
+    </SYMBOL>
+    <SYMBOL name="TcuEvent_MCUInt" type="#define" offset="0">
+      <ITEM i="0" x="Frame Interrupt" />
+      <ITEM i="1" x="Sorter Interrupt" />
+      <ITEM i="2" x="Sleep Interrupt" />
+      <ITEM i="3" x="Wakeup Interrupt" />
+      <ITEM i="4" x="GPRS PTM Odd Interrupt" />
+      <ITEM i="5" x="GPRS Idle PRACH Interrupt" />
+      <ITEM i="6" x="Unknown [6]" />
+      <ITEM i="7" x="Unknown [7]" />
+      <ITEM i="8" x="Unknown [8]" />
+      <ITEM i="9" x="Unknown [9]" />
+      <ITEM i="10" x="Unknown [10]" />
+      <ITEM i="11" x="Unknown [11]" />
+      <ITEM i="12" x="Unknown [12]" />
+      <ITEM i="13" x="Unknown [13]" />
+      <ITEM i="14" x="Unknown [14]" />
+      <ITEM i="15" x="Unknown [15]" />
+    </SYMBOL>
+    <SYMBOL name="TcuEvent_DspInt" type="#define" offset="0">
+      <ITEM i="0" x="0" />
+      <ITEM i="1" x="1" />
+      <ITEM i="2" x="2" />
+      <ITEM i="3" x="3" />
+      <ITEM i="4" x="4" />
+      <ITEM i="5" x="5" />
+      <ITEM i="6" x="6" />
+      <ITEM i="7" x="7" />
+      <ITEM i="8" x="8" />
+      <ITEM i="9" x="9" />
+      <ITEM i="10" x="10" />
+      <ITEM i="11" x="11" />
+      <ITEM i="12" x="12" />
+      <ITEM i="13" x="13" />
+      <ITEM i="14" x="14" />
+      <ITEM i="15" x="15" />
+    </SYMBOL>
+    <SYMBOL name="TcuEvent_DmaInt" type="#define" offset="0">
+      <ITEM i="0" x="0" />
+      <ITEM i="1" x="1" />
+      <ITEM i="2" x="2" />
+      <ITEM i="3" x="3" />
+      <ITEM i="4" x="4" />
+      <ITEM i="5" x="5" />
+      <ITEM i="6" x="6" />
+      <ITEM i="7" x="7" />
+      <ITEM i="8" x="8" />
+      <ITEM i="9" x="9" />
+      <ITEM i="10" x="10" />
+      <ITEM i="11" x="11" />
+      <ITEM i="12" x="12" />
+      <ITEM i="13" x="13" />
+      <ITEM i="14" x="14" />
+      <ITEM i="15" x="15" />
+    </SYMBOL>
+    <SYMBOL name="TcuEvent_GPPulseSigA" type="#define" offset="0">
+      <ITEM i="0" x="0" />
+      <ITEM i="1" x="1" />
+      <ITEM i="2" x="2" />
+      <ITEM i="3" x="3" />
+      <ITEM i="4" x="4" />
+      <ITEM i="5" x="5" />
+      <ITEM i="6" x="6" />
+      <ITEM i="7" x="7" />
+      <ITEM i="8" x="8" />
+      <ITEM i="9" x="9" />
+      <ITEM i="10" x="10" />
+      <ITEM i="11" x="11" />
+      <ITEM i="12" x="12" />
+      <ITEM i="13" x="13" />
+      <ITEM i="14" x="14" />
+      <ITEM i="15" x="15" />
+    </SYMBOL>
+    <SYMBOL name="TcuEvent_GPPulseSigB" type="#define" offset="0">
+      <ITEM i="0" x="0" />
+      <ITEM i="1" x="1" />
+      <ITEM i="2" x="2" />
+      <ITEM i="3" x="3" />
+      <ITEM i="4" x="4" />
+      <ITEM i="5" x="5" />
+      <ITEM i="6" x="6" />
+      <ITEM i="7" x="7" />
+      <ITEM i="8" x="8" />
+      <ITEM i="9" x="9" />
+      <ITEM i="10" x="10" />
+      <ITEM i="11" x="11" />
+      <ITEM i="12" x="12" />
+      <ITEM i="13" x="13" />
+      <ITEM i="14" x="14" />
+      <ITEM i="15" x="15" />
+    </SYMBOL>
+  </PLATFORM>
+</FLOGGER_XFORM>

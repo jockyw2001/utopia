@@ -1,0 +1,8 @@
+config DRV_TSO
+
+tristate "TSO"
+default n
+
+---help---
+Enable compilation option for driver TSO
+

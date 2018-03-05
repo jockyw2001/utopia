@@ -1,0 +1,8 @@
+config DRV_GE
+
+tristate "GE"
+default n
+
+---help---
+Enable compilation option for driver GE
+

@@ -1,0 +1,8 @@
+config DRV_RASP
+
+tristate "RASP"
+default n
+
+---help---
+Enable compilation option for driver RASP
+

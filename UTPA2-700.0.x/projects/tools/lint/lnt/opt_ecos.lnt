@@ -1,0 +1,33 @@
+// Please note -- this is a representative set of error suppression
+//                options.  Please adjust to suit your own policies
+//                See  manual (chapter LIVING WITH LINT)
+//                for further details.
+
+// for GNU compiler
+co-gnu3.lnt
+
++macros
+
++libclass( ansi, angle )
+-elib(27)
+-elib(14)
+
+// Suppress error
+-w1
+-e46
+
+-e160                                                               // jerry.tsao: for XC macro
+
+-si4
+-sp4
+
+-dasm=_to_brackets                                                  // jerry.tsao: for asmCPU
+
+-d__mips__
+-d__signed=signed
+
+//-os(lint_test.log)
+//bypass too large line error
+-e91
+-e156
+

@@ -1,0 +1,8 @@
+config DRV_PNL
+
+tristate "PNL"
+default n
+
+---help---
+Enable compilation option for driver PNL
+

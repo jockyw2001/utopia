@@ -1,0 +1,20 @@
+config DRV_CIPHER
+
+tristate "CIPHER"
+default n
+
+---help---
+Enable compilation option for driver CIPHER
+
+if DRV_CIPHER
+config CIPHER_UTOPIA_20_ENABLE
+	bool "Enable CIPHER 20"
+	default y
+	help
+	  Select if you want to enable CIPHER Utopia 2_0. If unsure, say 'Y'.
+config CIPHER_NO_PRINTF_ENABLE
+	bool "Enable No Print Message"
+	default n
+	help
+	  Select if you want to remove printf message. If unsure, say 'N'.
+endif

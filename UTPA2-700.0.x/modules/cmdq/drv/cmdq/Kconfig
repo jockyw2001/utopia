@@ -1,0 +1,8 @@
+config DRV_CMDQ
+
+tristate "CMDQ"
+default n
+
+---help---
+Enable compilation option for driver CMDQ
+

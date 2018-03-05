@@ -1,0 +1,7 @@
+config DRV_DMS
+
+tristate "DMS"
+default n
+
+---help---
+Enable compilation option for driver DMS

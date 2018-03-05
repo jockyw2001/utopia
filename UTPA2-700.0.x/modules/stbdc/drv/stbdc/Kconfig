@@ -1,0 +1,8 @@
+config DRV_STBDC
+
+tristate "STBDC"
+default n
+
+---help---
+Enable compilation option for driver STBDC
+

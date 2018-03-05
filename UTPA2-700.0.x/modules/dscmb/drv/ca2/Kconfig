@@ -1,0 +1,21 @@
+config DRV_CA2
+
+tristate "CA2"
+default n
+
+---help---
+Enable compilation option for driver CA
+
+if DRV_CA2
+config CA2_UTOPIA_20_ENABLE
+	bool "Enable CA2 20"
+	default y
+	help
+	  Select if you want to enable CA2 Utopia 2_0. If unsure say 'Y'.
+
+config CA2_NO_PRINTF_ENABLE
+	bool "Enable No Print Message"
+	default n
+	help
+	  Select if you want to remove printf message. If unsure, say 'N'.
+endif

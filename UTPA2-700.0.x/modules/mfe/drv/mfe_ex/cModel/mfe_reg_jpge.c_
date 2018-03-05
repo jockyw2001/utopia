@@ -1,0 +1,402 @@
+
+
+
+#include "MFE_chip.h"
+#include "mfe_common.h"
+#include "mfe_type.h"
+#include "ms_dprintf.h"
+#ifdef __MOBILE_CASE__
+#include <stdio.h>
+#include <string.h>
+#endif
+#if defined(WIN32)
+	#include "sigdump/sigdump_api.h"
+#endif
+#include "Exif.h"
+#include "jcmarker.h"
+#if (DEBUG_LEVEL & DRV_L6)
+extern int mfe_starttime;
+//int endtime=0;
+#endif
+/*
+typedef struct _JpgInfo
+{
+	int nFrameMode;
+	int nUseMST422;
+	int nUseYVYU;
+	int nWidth, nHeight;
+	int nLastZZ;
+	int QTable[2][64];
+	int nQFactor;
+} JpgInfo;
+*/
+
+static void OutputSwCfg1_Jpg(MFE_U32 nFrmNum, MFE_CONFIG* pConfig);
+
+
+static void jpeg_add_quant_table (JpgInfo* cinfo, int which_tbl,
+		      const unsigned int *basic_table,
+		      int scale_factor, MFE_BOOL force_baseline)
+{
+
+    long temp;
+    int i;
+    for (i = 0; i < DCTSIZE2; i++) {
+        temp = ((long) basic_table[i] * scale_factor + 50L) / 100L;
+        /* limit the values to the valid range */
+        if (temp <= 0L) temp = 1L;
+        if (temp > 32767L) temp = 32767L; /* max quantizer needed for 12 bits */
+        if (force_baseline && temp > 255L)
+          temp = 255L;		/* limit to baseline range if requested */
+        cinfo->QTable[which_tbl][i] = (MFE_U16) temp;
+    }
+
+}
+
+static void jpeg_set_linear_quality (JpgInfo* cinfo, int scale_factor, MFE_BOOL force_baseline)
+{
+  jpeg_add_quant_table(cinfo, 0, QTable_default_0,
+		       scale_factor, force_baseline);
+  jpeg_add_quant_table(cinfo, 1, QTable_default_1,
+		       scale_factor, force_baseline);
+}
+
+static int jpeg_quality_scaling (int quality)
+{
+  if (quality <= 0) quality = 1;
+  if (quality > 100) quality = 100;
+
+  if (quality < 50)
+    quality = 5000 / quality;
+  else
+    quality = 200 - quality*2;
+
+  return quality;
+}
+
+void mfeJPE_Set_QTABLE(MFE_CONFIG *pConfig)
+{
+	int quality;
+	JpgInfo* pInfo = &pConfig->ctxJpgInfo;
+	quality = jpeg_quality_scaling(pConfig->m_quality);
+	jpeg_set_linear_quality(pInfo, quality, TRUE);
+}
+
+void mfeJPE_Init(MFE_CONFIG *pConfig)
+{
+	int i;
+	JpgInfo* pInfo = &pConfig->ctxJpgInfo;
+	int quality;
+	memset(pInfo, 0, sizeof(JpgInfo));
+
+	pInfo->nFrameMode = pConfig->m_bFrameMode;
+	pInfo->nUseMST422 = 1;
+	pInfo->nUseYVYU = 0;
+	pInfo->nQFactor = 3;
+	pInfo->nLastZZ = 63;
+	pInfo->nWidth = pConfig->nBufWidth;
+	pInfo->nHeight = pConfig->nBufHeight;
+	pInfo->fdc_mode = pConfig->m_bFDC_mode;
+
+	quality = jpeg_quality_scaling(pConfig->m_quality);
+	jpeg_set_linear_quality(pInfo, quality, TRUE);
+
+    //print Q table
+        ms_dprintk(DRV_L1, "table 0");
+    for(i=0;i<64;i+=8){
+        ms_dprintk(DRV_L1, "%d,%d,%d,%d,%d,%d,%d,%d",pInfo->QTable[0][i+0],pInfo->QTable[0][i+1],
+            pInfo->QTable[0][i+2],pInfo->QTable[0][i+3],
+            pInfo->QTable[0][i+4],pInfo->QTable[0][i+5],
+            pInfo->QTable[0][i+6],pInfo->QTable[0][i+7]);
+    }
+
+        ms_dprintk(DRV_L1, "table 1");
+    for(i=0;i<64;i+=8){
+        ms_dprintk(DRV_L1, "%d,%d,%d,%d,%d,%d,%d,%d\n",pInfo->QTable[1][i+0],pInfo->QTable[1][i+1],
+            pInfo->QTable[1][i+2],pInfo->QTable[1][i+3],
+            pInfo->QTable[1][i+4],pInfo->QTable[1][i+5],
+            pInfo->QTable[1][i+6],pInfo->QTable[1][i+7]);
+    }
+
+}
+
+void mfeJPE_EncodeFrame(MFE_CONFIG *pConfig, GOPINFO* pGopInfo)
+{
+
+#if (DEBUG_LEVEL & DRV_L6)
+        mfe_starttime = MsOS_GetSystemTime();
+#endif
+    OutputSwCfg1_Jpg(0 , pConfig);
+
+}
+
+void OutputSwCfg1_Jpg(MFE_U32 nFrmNum, MFE_CONFIG* pConfig)
+{
+
+    int nTarWriteCount;
+    int nRegWriteCount;
+    int nTarFDCCount;
+    int nRegFDCCount;
+
+    void* pContext;
+    JpgInfo*  pJpgInfo = &pConfig->ctxJpgInfo;
+    BitsInfo* pBitsInfo = &pConfig->ctxBitsInfo;
+    BufInfo*  pBufInfo = &pConfig->ctxBufInfo;
+
+    pContext = (void*)pBitsInfo;
+
+	//////////////////////////////////////////////////////////////////////////
+	// Sequence-wide settings
+
+	if (nFrmNum==0) {
+		memset(mfe_reg, 0, sizeof(MFE_REG));	// Initial
+		mfe_reg->reg_mfe_g_enc_mode = REG_ENC_MODE_JPEG;
+		mfe_reg->reg_mfe_g_pic_width = (pJpgInfo->nWidth+15)&~15;
+		mfe_reg->reg_mfe_g_pic_height = (pJpgInfo->nHeight+7)&~7;
+
+		mfe_reg->reg_mfe_g_qmode = 1;	// Always with quant-tables
+		mfe_reg->reg_mfe_g_jpe_enc_mode = 1;	// current version supports 422 only
+		mfe_reg->reg_mfe_g_jpe_buffer_mode = pJpgInfo->nFrameMode;
+		if (pJpgInfo->nFrameMode==0)
+			mfe_reg->reg_mfe_g_jpe_multibuf_mode = 0;
+
+		mfe_reg->reg_mfe_g_jpe_qfactor = pJpgInfo->nQFactor;		// 3 means no altering qtable
+		mfe_reg->reg_mfe_g_packed_mode = pJpgInfo->nUseYVYU ? 0 : 1;
+#ifdef _MFE_M1_
+		mfe_reg->reg_mfe_g_jpe_mst422_mode = pJpgInfo->nUseMST422 ? 1 : 0;
+
+#ifdef _SW_BUF_MODE_
+        mfe_reg->reg_mfe_g_sw_buffer_mode = 1;
+#else
+        mfe_reg->reg_mfe_g_sw_buffer_mode = 0;
+        if (pJpgInfo->nFrameMode==0) { //hw row mode
+            // disable fs fail irq for hw handshake
+            mfe_reg->reg_mfe_g_irq_mask = IRQ_FS_FAIL;
+        }
+#endif
+#endif
+	}
+	else {
+		mfe_reg->reg_mfe_g_frame_start_sw = 0;
+	}
+
+	//////////////////////////////////////////////////////////////////////////
+	// Frame-wide settings
+#ifdef CLOCK_GATING
+    mfe_reg->reg16 = 0xffff;	// clock gating
+#endif
+	// Input buffer address: Must be 256-byte aligned.
+	MFE_ASSERT((pBufInfo->m_nCurYAddr.miuAddress&0xFF)==0);
+	MFE_ASSERT((pBufInfo->m_nCurCAddr.miuAddress&0xFF)==0);
+
+    if(pConfig->m_bFrameMode==0) {
+//	MFE_ASSERT((pBufInfo->m_nRefYAddr[0].miuAddress&0xFF)==0);
+	MFE_ASSERT((pBufInfo->m_nRefYAddr[1].miuAddress&0xFF)==0);
+//	MFE_ASSERT((pBufInfo->m_nRefCAddr[0].miuAddress&0xFF)==0);
+	MFE_ASSERT((pBufInfo->m_nRefCAddr[1].miuAddress&0xFF)==0);
+    }
+	MFE_ASSERT((pBufInfo->m_nOutBufAddr[pConfig->nOBufIndex].miuAddress&0x7)==0);
+
+	mfe_reg->reg_mfe_g_cur_y_adr_low  = (MFE_U16)((pBufInfo->m_nCurYAddr.miuAddress>>8)&0xFFFF);
+	mfe_reg->reg_mfe_g_cur_y_adr_high = (MFE_U16)(pBufInfo->m_nCurYAddr.miuAddress>>(8+16));
+	mfe_reg->reg_mfe_g_cur_c_adr_low  = (MFE_U16)((pBufInfo->m_nCurCAddr.miuAddress>>8)&0xFFFF);
+	mfe_reg->reg_mfe_g_cur_c_adr_high = (MFE_U16)(pBufInfo->m_nCurCAddr.miuAddress>>(8+16));
+
+       //if (mfe_reg->reg_mfe_g_enc_mode!=REG_ENC_MODE_JPEG)
+	{
+	//	mfe_reg->reg_mfe_g_ref_y_adr0_low  = (MFE_U16)((pBufInfo->m_nRefYAddr[0].miuAddress>>8)&0xFFFF);
+	//	mfe_reg->reg_mfe_g_ref_y_adr0_high = (MFE_U16)(pBufInfo->m_nRefYAddr[0].miuAddress>>(8+16));
+        if(pConfig->m_bFrameMode==0) {
+             mfe_reg->reg_mfe_g_ref_y_adr1_low  = (MFE_U16)((pBufInfo->m_nRefYAddr[1].miuAddress>>8)&0xFFFF);
+		mfe_reg->reg_mfe_g_ref_y_adr1_high = (MFE_U16)(pBufInfo->m_nRefYAddr[1].miuAddress>>(8+16));
+
+	//	mfe_reg->reg_mfe_g_ref_c_adr0_low  = (MFE_U16)((pBufInfo->m_nRefCAddr[0].miuAddress>>8)&0xFFFF);
+	//	mfe_reg->reg_mfe_g_ref_c_adr0_high = (MFE_U16)(pBufInfo->m_nRefCAddr[0].miuAddress>>(8+16));
+		mfe_reg->reg_mfe_g_ref_c_adr1_low  = (MFE_U16)((pBufInfo->m_nRefCAddr[1].miuAddress>>8)&0xFFFF);
+		mfe_reg->reg_mfe_g_ref_c_adr1_high = (MFE_U16)(pBufInfo->m_nRefCAddr[1].miuAddress>>(8+16));
+        }
+	//	mfe_reg->reg_mfe_g_rec_y_adr_low  = (MFE_U16)((pBufInfo->m_nRecYAddr.miuAddress>>8)&0xFFFF);
+	//	mfe_reg->reg_mfe_g_rec_y_adr_high = (MFE_U16)(pBufInfo->m_nRecYAddr.miuAddress>>(8+16));
+	//	mfe_reg->reg_mfe_g_rec_c_adr_low  = (MFE_U16)((pBufInfo->m_nRecCAddr.miuAddress>>8)&0xFFFF);
+	//	mfe_reg->reg_mfe_g_rec_c_adr_high = (MFE_U16)(pBufInfo->m_nRecCAddr.miuAddress>>(8+16));
+	}
+
+	// Output buffers: Must be 8-byte aligned.
+#ifdef _MFE_T8_
+	mfe_reg->reg_mfe_s_bspobuf_sadr_low  = (MFE_U16)((pBufInfo->m_nOutBufAddr[pConfig->nOBufIndex].miuAddress>>3)&0xFFFF);
+	mfe_reg->reg_mfe_s_bspobuf_sadr_high = (MFE_U16)(pBufInfo->m_nOutBufAddr[pConfig->nOBufIndex].miuAddress>>(3+16));
+	mfe_reg->reg_mfe_s_bspobuf_eadr_low  = (MFE_U16)(((pBufInfo->m_nOutBufAddr[pConfig->nOBufIndex].miuAddress+pBufInfo->m_OutBufferSize-8)>>3)&0xFFFF);
+	mfe_reg->reg_mfe_s_bspobuf_eadr_high = (MFE_U16)((pBufInfo->m_nOutBufAddr[pConfig->nOBufIndex].miuAddress+pBufInfo->m_OutBufferSize-8)>>(3+16));
+#elif defined(_MFE_M1_)
+	mfe_reg->reg_mfe_s_bspobuf_hw_en = 0;
+#if defined(USE_HW_DBL_OBUF)
+	mfe_reg->reg_mfe_s_bspobuf_hw_en = 1;
+#endif
+#endif
+
+	mfe_reg->reg_mfe_s_txip_irfsh_en = 0;
+
+	mfe_reg->reg_mfe_g_frame_type = 0;	// JPEG: always I-frame
+	mfe_reg->reg_mfe_s_quan_idx_last = pJpgInfo->nLastZZ;
+	if (mfe_reg->reg_mfe_s_quan_idx_last<63)
+		mfe_reg->reg_mfe_s_quan_idx_swlast = 1;
+	else
+		mfe_reg->reg_mfe_s_quan_idx_swlast = 0;
+#if defined(_MFE_M1_)
+    //enable eco item.
+    mfe_reg->reg_mfe_s_txip_eco0 = 1;
+#endif
+	//////////////////////////////////////////////////////////////////////////
+	// swcfg1 output
+	nTarWriteCount = 0;
+	nRegWriteCount = 0;
+	nTarFDCCount = 0;
+	nRegFDCCount = 0;
+	if (nFrmNum==0) {
+		MFE_ASSERT(mfe_reg->reg_mfe_g_qmode==1);
+		WriteQTable(pJpgInfo->QTable[0], pJpgInfo->QTable[1]);
+	}
+
+	nTarWriteCount = 40 +1; //add eco item.
+
+    if(pJpgInfo->fdc_mode) {
+	nTarFDCCount = PutFDC(pContext, 1);
+	nTarWriteCount += nTarFDCCount*3+1;
+    }
+#ifdef TEST_IMGBUF_FULL
+    nTarWriteCount += 2;
+#endif
+    if(pJpgInfo->fdc_mode) {
+	nTarFDCCount *= 3;
+	nTarFDCCount++;	// reg to set fdc round
+    }
+	// SW reset
+	mfe_reg->reg_mfe_g_viu_soft_rstz=1;
+
+	mfe_reg->reg_mfe_g_soft_rstz = 0;
+	WriteRegMFE(0x0, mfe_reg->reg00, "[%d] reg00", nRegWriteCount++, "SW reset 0");
+	mfe_reg->reg_mfe_g_soft_rstz = 1;
+	WriteRegMFE(0x0, mfe_reg->reg00, "[%d] reg00", nRegWriteCount++, "SW reset 1");
+
+	WriteRegMFE(0x1, mfe_reg->reg01, "[%d] reg01", nRegWriteCount++, "picture width");
+	WriteRegMFE(0x2, mfe_reg->reg02, "[%d] reg02", nRegWriteCount++, "picture height");
+	WriteRegMFE(0x3, mfe_reg->reg03, "[%d] reg03", nRegWriteCount++, "value");
+
+       WriteRegMFE(0x16, mfe_reg->reg16, "[%d] reg16", nRegWriteCount++, "Clock gating");
+
+	// Input buffers
+	WriteRegMFE(0x06, mfe_reg->reg06, "[%d] reg06", nRegWriteCount++, "current luma base address");
+	WriteRegMFE(0x07, mfe_reg->reg07, "[%d] reg07", nRegWriteCount++, "current luma base address high");
+	WriteRegMFE(0x08, mfe_reg->reg08, "[%d] reg08", nRegWriteCount++, "current chroma base address");
+	WriteRegMFE(0x09, mfe_reg->reg09, "[%d] reg09", nRegWriteCount++, "current chroma base address high");
+	WriteRegMFE(0x0a, mfe_reg->reg0a, "[%d] reg0a", nRegWriteCount++, "reference luma base address0");
+	WriteRegMFE(0x0b, mfe_reg->reg0b, "[%d] reg0b", nRegWriteCount++, "reference luma base address0 high");
+	WriteRegMFE(0x0c, mfe_reg->reg0c, "[%d] reg0c", nRegWriteCount++, "reference luma base address1");
+	WriteRegMFE(0x0d, mfe_reg->reg0d, "[%d] reg0d", nRegWriteCount++, "reference luma base address1 high");
+	WriteRegMFE(0x0e, mfe_reg->reg0e, "[%d] reg0e", nRegWriteCount++, "reference chroma base address0");
+	WriteRegMFE(0x0f, mfe_reg->reg0f, "[%d] reg0f", nRegWriteCount++, "reference chroma base address0 high");
+	WriteRegMFE(0x10, mfe_reg->reg10, "[%d] reg10", nRegWriteCount++, "reference chroma base address1");
+	WriteRegMFE(0x11, mfe_reg->reg11, "[%d] reg11", nRegWriteCount++, "reference chroma base address1 high");
+	WriteRegMFE(0x12, mfe_reg->reg12, "[%d] reg12", nRegWriteCount++, "reconstructed luma base address:");
+	WriteRegMFE(0x13, mfe_reg->reg13, "[%d] reg13", nRegWriteCount++, "reconstructed luma base address high");
+	WriteRegMFE(0x14, mfe_reg->reg14, "[%d] reg14", nRegWriteCount++, "reconstructed chroma base address:");
+	WriteRegMFE(0x15, mfe_reg->reg15, "[%d] reg15", nRegWriteCount++, "reconstructed chroma base address: high");
+
+	// Output buffer
+#ifdef _MFE_M1_
+	mfe_reg->reg_mfe_s_bspobuf_fifo_th = 1;
+	mfe_reg->reg_mfe_s_mvobuf_set_adr = 0;
+	mfe_reg->reg_mfe_s_mvobuf_fifo_th = 0;
+	mfe_reg->reg_mfe_s_bsp_fdc_skip = !pJpgInfo->fdc_mode;
+#else
+	WriteRegMFE(0x3c, mfe_reg->reg3c, "[%d] reg3c", nRegWriteCount++, "bsp obuf start address: ");
+	WriteRegMFE(0x3d, mfe_reg->reg3d, "[%d] reg3d", nRegWriteCount++, "bsp obuf start address high");
+	WriteRegMFE(0x3e, mfe_reg->reg3e, "[%d] reg3e", nRegWriteCount++, "bsp obuf end address: ");
+	WriteRegMFE(0x3f, mfe_reg->reg3f, "[%d] reg3f", nRegWriteCount++, "bsp obuf end address high");
+	//
+	mfe_reg->reg_mfe_s_bspobuf_set_adr = 1;
+	mfe_reg->reg_mfe_s_bspobuf_fifo_th = 1;
+	mfe_reg->reg_mfe_s_mvobuf_set_adr = 0;
+	mfe_reg->reg_mfe_s_mvobuf_fifo_th = 0;
+	mfe_reg->reg_mfe_s_bsp_fdc_skip = 1;
+#endif
+
+#ifdef _MFE_M1_
+    // Enable set-obuf
+    mfe_reg->reg_mfe_s_bspobuf_update_adr = 1;
+    WriteRegMFE(0x3f, mfe_reg->reg3f, "[%d] reg3f", nRegWriteCount++, "reg_mfe_s_bspobuf_update_adr");
+    mfe_reg->reg_mfe_s_bspobuf_update_adr = 0;  // write-one-clear
+#if defined(USE_HW_DBL_OBUF)
+    nRegWriteCount += SetObufAddr((MFE_U32)pBufInfo->m_nOutBufAddr, pBufInfo->m_OutBufferSize, 0, 0);
+    nRegWriteCount += SetObufAddr((MFE_U32)pBufInfo->m_nOutBufAddr+pBufInfo->m_OutBufferSize, pBufInfo->m_OutBufferSize, 1, 1);
+#else
+    nRegWriteCount += SetObufAddr((MFE_U32)pBufInfo->m_nOutBufAddr[pConfig->nOBufIndex].miuAddress, pBufInfo->m_OutBufferSize, 0, 1);
+#endif
+
+#else
+	WriteRegMFE(0x3b, mfe_reg->reg3b, "[%d] reg3b", nRegWriteCount++, "set bsp obuf");
+    mfe_reg->reg_mfe_s_bspobuf_set_adr = 0;	// HW is write-one-clear
+#endif
+
+    // Cannot use mode 3.
+    if (pJpgInfo->nFrameMode==0) {
+        mfe_reg->reg_mfe_g_jpe_fsvs_mode=2;
+    }
+    else
+        mfe_reg->reg_mfe_g_jpe_fsvs_mode=0;  // When frame mode: Don't care
+
+    WriteRegMFE(0x18, mfe_reg->reg18, "[%d] reg18", nRegWriteCount++, "JPE encode mode");
+
+    // Cross-format wrong reg setting prevention
+    WriteRegMFE(0x1b, mfe_reg->reg1b, "[%d] reg1b", nRegWriteCount++, "MPEG4 FieldDCT");
+
+#ifdef _MFE_M1_
+    if(pConfig->MfeAdvInfo.input_imi_en) {
+        mfe_reg->reg_mfe_s_marb_eimi_block = 0x1;
+        WriteRegMFE(0x68, mfe_reg->reg68, "[%d] reg68", nRegWriteCount, "IMI enable");
+    }
+    else
+        mfe_reg->reg_mfe_s_marb_eimi_block = 0x0;
+#endif
+    mfe_reg->reg_mfe_g_crc_mode = 0xC;
+    mfe_reg->reg_mfe_g_debug_tcycle_chk_en = 0x1;
+    mfe_reg->reg_mfe_g_debug_tcycle_chk_sel = 0x0;
+    mfe_reg->reg_mfe_g_debug_en = 0; // TEST
+    WriteRegMFE(0x73, mfe_reg->reg73, "[%d] reg73", nRegWriteCount++, "crc mode");
+
+    WriteRegMFE(0x2c, mfe_reg->reg2c, "[%d] reg2c", nRegWriteCount++, "Last zigzag");
+
+    // Reset any StopAndGo or StopAndDrop setting.
+    mfe_reg->reg_mfe_s_txip_sng_mb = 0;
+    WriteRegMFE(0x2d, mfe_reg->reg2d, "[%d] reg2d", nRegWriteCount++, "reg_mfe_s_txip_sng_mb=0");
+
+#ifdef _MFE_M1_
+    //enable eco item
+    WriteRegMFE(0x7d, mfe_reg->reg7d, "[%d] reg7d", nRegWriteCount++, "reg_mfe_s_txip_eco0=1");
+#endif
+
+    DumpAllReg();
+
+    // Enable HW
+    mfe_reg->reg_mfe_g_frame_start_sw = 1;
+    WriteRegMFE(0x00, mfe_reg->reg00, "[%d] reg00", nRegWriteCount++, "frame start");
+    mfe_reg->reg_mfe_g_frame_start_sw = 0;	// HW is write-one-clear
+
+    // FDC
+    if(pJpgInfo->fdc_mode) {
+    	nRegFDCCount = PutFDC(pContext, 0);
+    	nRegWriteCount += nRegFDCCount;
+    }
+
+    if(nRegFDCCount != nTarFDCCount) {
+        ms_dprintk(DRV_L4,"nRegFDCCount = %d,nTarFDCCount = %d \n",nRegFDCCount,nTarFDCCount);
+    }
+    if(nRegWriteCount != nTarWriteCount) {
+        ms_dprintk(DRV_L4,"nRegWriteCount = %d,nTarWriteCount = %d \n",nRegWriteCount,nTarWriteCount);
+    }
+    // Only for debug
+    //MFE_ASSERT(nRegWriteCount==nTarWriteCount);
+    //MFE_ASSERT(nRegFDCCount==nTarFDCCount);
+
+}
+

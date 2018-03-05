@@ -1,0 +1,8 @@
+config DRV_MVD_LITE
+
+tristate "MVD_LITE"
+default n
+
+---help---
+Enable compilation option for driver MVD_LITE
+

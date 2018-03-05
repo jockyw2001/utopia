@@ -1,0 +1,8 @@
+config DRV_SERIAL_FLASH
+
+bool "Apply serial flash device"
+default n
+
+---help---
+Enable compilation option for driver SERIAL_FLASH
+

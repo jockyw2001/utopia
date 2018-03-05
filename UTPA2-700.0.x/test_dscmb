@@ -1,0 +1,7 @@
+#!/bin/sh
+_TEMP_PATH=`pwd`
+cd $_TEMP_PATH/project/janus_nos; make clean dscmb
+cd $_TEMP_PATH/project/t2_linux; make clean dscmb
+cd $_TEMP_PATH/project/t3_linux; make clean dscmb
+cd $_TEMP_PATH/project/t4_nos_mips; make clean dscmb
+cd $_TEMP_PATH/project/u3_ecos; make clean dscmb

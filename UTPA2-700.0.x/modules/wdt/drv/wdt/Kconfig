@@ -1,0 +1,18 @@
+config DRV_WDT
+
+tristate "WDT"
+default n
+
+---help---
+Enable compilation option for driver WDT
+
+config MSTAR_UTPA2K_WDT_ENABLE
+    bool "Enable Mstar UTPA2K WDT"
+    default n
+    help
+       Select if you want to enable UTPA2K
+config MSTAR_WDT_KERNEL_MODE
+    bool "Enable WDT Kernel Mode"
+    default n
+    help
+       Select if you want to enable KernelMode

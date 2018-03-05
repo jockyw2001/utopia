@@ -1,0 +1,35 @@
+config DRV_SAR
+
+tristate "SAR"
+default n
+
+---help---
+Enable compilation option for driver SAR
+
+config MSTAR_UTPA2K_SAR_ENABLE
+    bool "Enable Mstar UTPA2K SAR"
+    default n
+    help
+       Select if you want to enable UTPA2K
+
+config MSTAR_T_SENSOR_ENABLE
+    bool "Enable Mstar T Sesnor"
+    default n
+    help
+       Select if you want to enable T Sensor
+
+config MSTAR_DVFS_ENABLE
+    bool "Enable Mstar DVFS"
+    depends on DRV_SAR
+    depends on (EXT_PLATFORM_FLAG="general") || (EXT_PLATFORM_FLAG="tvos")
+    default n
+    help
+        Select if you want to enable DVFS. If unsure, say 'N'.
+
+config MSTAR_DVFS_KERNEL_SUPPORT
+    bool "Enable Mstar DVFS Flow in Linux Kernel"
+    depends on DRV_SAR
+    depends on (EXT_PLATFORM_FLAG="general") || (EXT_PLATFORM_FLAG="tvos")
+    default n
+    help
+        Select if you want to enable DVFS. If unsure, say 'N'.

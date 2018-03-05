@@ -1,0 +1,66 @@
+#
+# Utopia framework configuration
+#
+
+menu "Utoipa framework"
+
+config UTOPIA_TEE
+	bool "Flag of CONFIG_UTOPIA_TEE"
+	default n
+
+	config UTOPIA_DRIVER_STRUCT_PACKED
+    bool "Support struct Packed"
+	default y
+
+config UTOPIA_FRAMEWORK
+	bool "Support for utopia framework"
+	default n
+if UTOPIA_FRAMEWORK	
+    config UTOPIA_FRAMEWORK_KERNEL_DRIVER
+    bool "Support for utopia2k framework"
+	default n
+	
+	config UTOPIA_FRAMEWORK_KERNEL_DRIVER_64BIT
+    bool "Support for utopia2k 64bit framework"
+	default n
+
+	config UTOPIA_FRAMEWORK_KERNEL_DRIVER_32BIT
+    bool "Support for utopia2k 32bit framework"
+	default n
+
+	config UTOPIA_FRAMEWORK_DISABLE_SYSTEM_V_IPCS
+	bool "Disable System V IPCs"
+	default n
+	
+	config UTOPIAXP_PATCH
+    bool "Enable utopia XP hard-cored patch"
+	default n
+
+	config UTOPIAXP_CONF_PATH
+	string "Default path for utopia.conf"
+	default "/applications/utopia.conf"
+
+	config UTOPIA_MODE_DEFAULT_KERNEL
+	bool "Default using kernel mode utopia"
+	default n
+	help
+		Do not reference utopia.conf, default using kernel mode utopia.
+
+endif
+
+config UTOPIA_GARBAGE_COLLECTION
+bool "Enable utopia2k garbage collection"
+default n
+
+config UTOPIA_SIZE_CUSTOMER
+	bool "Utopia API relation for reduce size"
+	default n
+
+config UTOPIA_SHM_EXPAND_SUPPORT
+	bool "Enable msos shared memory expanding"
+	default n
+
+config UTOPIA_PROC_DBG_SUPPORT
+	bool "Enable proc debug"
+	default n
+endmenu

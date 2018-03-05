@@ -1,0 +1,7 @@
+config API_DMX_TEE
+
+tristate "DMX_TEE"
+default n
+
+---help---
+Enable compilation option for API DMX_TEE

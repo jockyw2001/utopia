@@ -1,0 +1,8 @@
+config MSFS
+
+tristate "MsFS"
+default n
+
+---help---
+Enable compilation option for driver MsFS
+

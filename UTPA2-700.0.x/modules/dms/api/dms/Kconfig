@@ -1,0 +1,8 @@
+config API_DMS
+
+tristate "DMS"
+default n
+
+---help---
+Enable compilation option for API DMS
+

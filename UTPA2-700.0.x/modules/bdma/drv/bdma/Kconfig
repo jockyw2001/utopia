@@ -1,0 +1,8 @@
+config DRV_BDMA
+
+tristate "BDMA"
+default n
+
+---help---
+Enable compilation option for driver BDMA
+

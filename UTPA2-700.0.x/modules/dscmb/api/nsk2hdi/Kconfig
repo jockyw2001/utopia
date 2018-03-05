@@ -1,0 +1,7 @@
+config API_NSK2
+
+tristate "NSK2"
+default n
+
+---help---
+Enable compilation option for API NSK2

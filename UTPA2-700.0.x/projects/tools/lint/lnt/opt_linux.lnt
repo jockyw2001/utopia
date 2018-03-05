@@ -1,0 +1,41 @@
+// Please note -- this is a representative set of error suppression
+//                options.  Please adjust to suit your own policies
+//                See  manual (chapter LIVING WITH LINT)
+//                for further details.
+
+// for GNU compiler
+co-gnu3.lnt
+
++macros
+
++libclass( ansi, angle )
+-elib(27)
+-elib(14)
+
+// Suppress error
+-w1
+-e46
+-e157
+//The following are very frequent and just make a log file 50% bigger with no real inform
+-e831 //reference cited in prior message
+-e830 //location  cited in prior message
+-e160                                                               // jerry.tsao: for XC macro
+
+-emacro(78,offsetof)
+-emacro(40,offsetof)
+
+-si4
+-sp4
+
+-dasm=_to_brackets                                                  // jerry.tsao: for asmCPU
+
+-d__mips__
+-d_MIPS_SZPTR=32                                                    // jerry.tsao: for mips-linux-gnu
+-d__BYTE_ORDER=__LITTLE_ENDIAN
+
+//-os(lint_test.log)
+
+
+//bypass too large line error
+-e91
+-e156

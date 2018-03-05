@@ -1,0 +1,8 @@
+config API_MHL
+
+tristate "MHL"
+default n
+
+---help---
+Enable compilation option for API MHL
+

@@ -1,0 +1,8 @@
+config DRV_GOPSC_EX
+
+tristate "GOPSC_EX"
+default n
+
+---help---
+Enable compilation option for driver GOPSC_EX
+

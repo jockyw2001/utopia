@@ -1,0 +1,8 @@
+config DRV_MBX
+
+tristate "MBX"
+default y
+
+---help---
+Enable compilation option for driver MBX
+

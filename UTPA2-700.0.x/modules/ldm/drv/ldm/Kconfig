@@ -1,0 +1,7 @@
+config DRV_LDM
+
+tristate "local dimming"
+default n
+
+---help---
+Enable compilation option for driver local dimming

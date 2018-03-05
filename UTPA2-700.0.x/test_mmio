@@ -1,0 +1,13 @@
+#!/bin/sh
+_TEMP_PATH=`pwd`
+
+cd $_TEMP_PATH/project/janus_nos; make clean mmio
+
+cd $_TEMP_PATH/project/t2_linux; make clean mmio
+cd $_TEMP_PATH/project/t3_linux; make clean mmio
+cd $_TEMP_PATH/project/t4_nos_mips; make clean mmio
+cd $_TEMP_PATH/project/t7_nos_mips; make clean mmio
+cd $_TEMP_PATH/project/t8_nos_mips; make clean mmio
+
+cd $_TEMP_PATH/project/u3_ecos; make clean mmio
+cd $_TEMP_PATH/project/u4_linux; make clean mmio

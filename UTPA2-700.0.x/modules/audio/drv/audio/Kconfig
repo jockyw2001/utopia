@@ -1,0 +1,8 @@
+config DRV_AUDIO
+
+tristate "AUDIO"
+default n
+
+---help---
+Enable compilation option for driver AUDIO
+

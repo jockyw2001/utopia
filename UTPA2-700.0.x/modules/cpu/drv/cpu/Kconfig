@@ -1,0 +1,8 @@
+config DRV_CPU
+
+tristate "CPU"
+default n
+
+---help---
+Enable compilation option for driver CPU
+

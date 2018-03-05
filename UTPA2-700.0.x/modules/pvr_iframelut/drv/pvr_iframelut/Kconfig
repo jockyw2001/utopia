@@ -1,0 +1,15 @@
+config DRV_PVR_IFRAMELUT
+
+tristate "PVR_IFRAMELUT"
+default n
+
+---help---
+Enable compilation option for driver PVR_IFRAMELUT
+
+if DRV_PVR_IFRAMELUT
+config PVR_IFRAMELUT_UTPA2_ENABLE
+    bool "Enable PVR IframeLUT Utopia2.0"
+    default y
+    help
+       Select if you want to enable Utopia2.0
+endif

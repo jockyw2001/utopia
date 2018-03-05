@@ -1,0 +1,48 @@
+config DRV_DSCMB2
+
+tristate "DSCMB2"
+default n
+
+---help---
+Enable compilation option for driver DSCMB2
+
+if DRV_DSCMB2
+config DSCMB2_UTOPIA_20_ENABLE
+	bool "Enable DSCMB2 20"
+	default y
+	help
+	  Select if you want to enable DSCMB2 Utopia 2_0. If unsure, say 'Y'.
+
+config DSCMB2_NSK_ENABLE
+	bool "Enable DSCMB2 NSK"
+	default n
+	help
+	  Select if you want to enable DSCMB2 NSK. If unsure, say 'N'.
+
+config DSCMB2_MULTI2_ENABLE
+	bool "Enable DSCMB2 MLUTI2"
+	default n
+	help
+	  Select if you want to enable DSCMB2 MULTI2. If unsure, say 'N'.
+
+config DSCMB2_NO_PRINTF_ENABLE
+	bool "Enable No Print Message"
+	default n
+	help
+	  Select if you want to remove printf message. If unsure, say 'N'.
+
+config DSCMB2_HW_SEM_ENABLE
+	bool "Enable HW SEM"
+	default n
+	help
+	  Select if you want to enable HW SEM. If unsure, say 'N'.
+
+
+config DSCMB2_SECURE_MODE_ENABLE
+	bool "Enable Secure Mode"
+	depends on DSCMB2_HW_SEM_ENABLE
+	default n
+	help
+	  Select if you want to enable secure mode. If unsure, say 'N'.
+
+endif

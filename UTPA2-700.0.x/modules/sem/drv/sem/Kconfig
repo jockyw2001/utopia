@@ -1,0 +1,8 @@
+config DRV_SEM
+
+tristate "SEM"
+default n
+
+---help---
+Enable compilation option for driver SEM
+

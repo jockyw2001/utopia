@@ -1,0 +1,8 @@
+config DRV_TCF
+
+tristate "TCF"
+default n
+
+---help---
+Enable compilation option for driver TCF
+

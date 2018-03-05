@@ -1,0 +1,17 @@
+API_FOLDER=\
+(
+)
+
+DRV_FOLDER=\
+(
+pm
+)
+
+HAL_FOLDER=\
+(
+pm
+)
+
+ADAPTION_FOLDER=\
+(
+)

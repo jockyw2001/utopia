@@ -1,0 +1,8 @@
+config DRV_SMBX
+
+tristate "SMBX"
+default n
+
+---help---
+Enable compilation option for driver SMBX
+

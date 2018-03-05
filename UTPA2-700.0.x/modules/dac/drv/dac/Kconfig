@@ -1,0 +1,8 @@
+config DRV_DAC
+
+tristate "DAC"
+default n
+
+---help---
+Enable compilation option for driver DAC
+

@@ -1,0 +1,8 @@
+config DRV_MFE
+
+tristate "MFE"
+default n
+
+---help---
+Enable compilation option for driver MFE
+

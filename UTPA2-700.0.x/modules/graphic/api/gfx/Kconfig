@@ -1,0 +1,20 @@
+config API_GFX
+
+tristate "GFX"
+default n
+
+---help---
+Enable compilation option for API GFX
+if API_GFX
+config GFX_TEXTOUT
+	bool "Enable GFX TEXTOUT"
+	default y
+	help
+	  Select if you want to enable GFX TEXTOUT. If unsure, say 'N'.
+
+config GFX_TRAPZOID
+	bool "Enable GFX TRAPZOID"
+	default y
+	help
+	  Select if you want to enable GFX TRAPZOID. If unsure, say 'N'.
+endif

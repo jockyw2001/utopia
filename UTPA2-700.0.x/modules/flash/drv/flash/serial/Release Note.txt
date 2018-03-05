@@ -1,0 +1,35 @@
+Released:  2009-11-26 (First Release Date)
+
+Version:  0020.	Driver_if
+					0029.	HAL_T3
+					0011.	HAL_T4
+					0012.	HAL_T7
+					0033.	HAL_U3
+					0007.	HAL_U4
+					0016.	HAL_Janus
+					0010.	HAL_T8
+					0007. HAL_T9 
+
+Compatibility:	CHAKRA2, OBAMA, SUPERNOVA
+
+System requirements:  NOS, ECOS, LINUX, ANDROID
+
+Description:  This package includes the driver for the serial flash in the supported mstar DTV/SET-TOP BOX systems. The serial flash driver provides the flash-controllable interface.  
+
+Comment:
+2009-11-26:	[All CHIP]Added MsOS_FlushMemory() after flash read flushing OCP buffer to avoid non-synchronizing with flash data between OCP and MIU.
+2009-12-01:	[All CHIP]Added Performance Test for flash read nad write in verified code.
+2009-12-14: [Driver_if] Added BDMA flash to DMDMCU for T4, T7 project.
+2009-12-18: [All CHIP]Added 2 CMDs(Sector erase and 32KB erase), modify original block erase CMD from SE to 64BE.
+											Because of the 15 files limit of P4, submit 2 times (ref. CL190682,too)
+2010-01-04: [T2,3,4,7,8,9; Janus] Added new flash chip, FLASH_IC_S25FL008A (size 1MB with clock 50MB Hz).
+2010-01-07: [All CHIP]Fix COVERITY Defects.
+2010-01-11: [All CHIP]Fix some flash block erase function (because USB disk updated fails).
+2010-01-11: [All CHIP]
+											1) ONLY Trigger mode Block Erase
+											2) Add new function to change SPI clock div
+											3) Fix little endian and big endian setting
+2010-01-11: [T3,4,7,8,9,Janus] 
+											1) Add the new function to enable call back function to ask 8051 to select flash chip back.
+											2) Remove unused do-while(0) loop.
+											3) Modify some static functions without any returning value.

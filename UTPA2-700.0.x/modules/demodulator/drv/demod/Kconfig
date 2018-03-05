@@ -1,0 +1,13 @@
+config DRV_DEMOD
+
+tristate "DEMOD"
+default n
+
+config AMAZON
+prompt "External demod: amazon"
+bool
+default n
+
+---help---
+Enable compilation option for driver DEMOD
+

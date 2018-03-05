@@ -1,0 +1,18 @@
+config USBHOST
+
+tristate "USBHOST"
+default n
+
+---help---
+Enable compilation option for driver USB
+
+if USBHOST
+source "../../mxlib/drv/usbhost/source/usb_hid_p1/Kconfig"
+source "../../mxlib/drv/usbhost/source/usb_host_p1/Kconfig"
+source "../../mxlib/drv/usbhost/source2/usb_hid_p2/Kconfig"
+source "../../mxlib/drv/usbhost/source2/usb_host_p2/Kconfig"
+source "../../mxlib/drv/usbhost/source3/usb_hid_p3/Kconfig"
+source "../../mxlib/drv/usbhost/source3/usb_host_p3/Kconfig"
+source "../../mxlib/drv/usbhost/source4/usb_hid_p4/Kconfig"
+source "../../mxlib/drv/usbhost/source4/usb_host_p4/Kconfig"
+endif

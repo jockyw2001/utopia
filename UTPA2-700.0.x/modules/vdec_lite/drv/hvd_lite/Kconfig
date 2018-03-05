@@ -1,0 +1,8 @@
+config DRV_HVD_LITE
+
+tristate "HVD_LITE"
+default n
+
+---help---
+Enable compilation option for driver HVD_LITE
+

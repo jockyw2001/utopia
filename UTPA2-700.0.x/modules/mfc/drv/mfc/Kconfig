@@ -1,0 +1,8 @@
+config DRV_MFC
+
+tristate "MFC"
+default n
+
+---help---
+Enable compilation option for driver MFC
+

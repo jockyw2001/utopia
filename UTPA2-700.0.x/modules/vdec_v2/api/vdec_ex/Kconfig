@@ -1,0 +1,8 @@
+config API_VDEC_EX
+
+tristate "VDEC_EX"
+default n
+
+---help---
+Enable compilation option for API VDEC_EX
+

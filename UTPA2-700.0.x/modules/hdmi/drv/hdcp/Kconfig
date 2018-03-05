@@ -1,0 +1,8 @@
+config DRV_HDCP
+
+tristate "HDCP"
+default n
+
+---help---
+Enable compilation option for driver HDCP
+

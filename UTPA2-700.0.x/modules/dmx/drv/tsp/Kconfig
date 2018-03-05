@@ -1,0 +1,10 @@
+config DRV_TSP
+
+tristate "TSP"
+default n
+
+---help---
+Enable compilation option for driver TSP
+
+
+

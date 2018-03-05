@@ -1,0 +1,8 @@
+config DRV_USB_HOST_P2
+
+bool "Apply Host P2"
+default n
+
+---help---
+Enable compilation option for driver USB_HOST_P2
+

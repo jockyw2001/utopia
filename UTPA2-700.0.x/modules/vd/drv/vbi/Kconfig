@@ -1,0 +1,8 @@
+config DRV_VBI
+
+tristate "VBI"
+default n
+
+---help---
+Enable compilation option for driver VBI
+

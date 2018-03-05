@@ -1,0 +1,8 @@
+config DRV_IR_TX
+
+tristate "IR_TX"
+default n
+
+---help---
+Enable compilation option for driver IR TX
+

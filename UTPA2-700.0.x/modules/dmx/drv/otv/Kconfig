@@ -1,0 +1,7 @@
+config DRV_OTV
+
+tristate "OTV"
+default n
+
+---help---
+Enable compilation option for driver OTV

@@ -1,0 +1,7 @@
+config DRV_LDM_DMA
+
+tristate "LDMA"
+default n
+
+---help---
+Enable compilation option for driver Local dimming DMA

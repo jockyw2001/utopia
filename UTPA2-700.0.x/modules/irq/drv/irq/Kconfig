@@ -1,0 +1,8 @@
+config DRV_IRQ
+
+tristate "IRQ"
+default n
+
+---help---
+Enable compilation option for driver IRQ
+

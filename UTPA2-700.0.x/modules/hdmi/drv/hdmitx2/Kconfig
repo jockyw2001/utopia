@@ -1,0 +1,8 @@
+config DRV_HDMITX2
+
+tristate "HDMITX2"
+default n
+
+---help---
+Enable compilation option for driver HDMITX2
+

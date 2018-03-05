@@ -1,0 +1,10 @@
+config MSOS
+	tristate "MsOS"
+	default n
+
+config INT_SPI_MODE
+	tristate "Interrupt spi mode"
+	default n
+---help---
+Enable compilation option for driver MsOS
+

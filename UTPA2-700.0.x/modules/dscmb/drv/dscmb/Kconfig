@@ -1,0 +1,21 @@
+config DRV_DSCMB
+
+tristate "DSCMB"
+default n
+
+---help---
+Enable compilation option for driver DSCMB
+
+if DRV_DSCMB
+config DSCMB_CSA_ENABLE
+	bool "Enable dscmb CSA"
+	default n
+	help
+	  Select if you want to enable dscmb CSA. If unsure, say 'N'.
+
+config DSCMB_MULTI2_ENABLE
+	bool "Enable dscmb MLUTI2"
+	default y
+	help
+	  Select if you want to enable dscmb MULTI2. If unsure, say 'N'.
+endif

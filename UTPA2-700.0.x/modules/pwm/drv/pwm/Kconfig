@@ -1,0 +1,8 @@
+config DRV_PWM
+
+tristate "PWM"
+default n
+
+---help---
+Enable compilation option for driver PWM
+

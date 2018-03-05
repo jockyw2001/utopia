@@ -1,0 +1,8 @@
+config DRV_NSK2
+
+tristate "NSK2"
+default n
+
+---help---
+Enable compilation option for driver NSK2
+
